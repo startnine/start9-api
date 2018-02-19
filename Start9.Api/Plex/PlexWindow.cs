@@ -121,6 +121,10 @@ namespace Start9.Api.Plex
             WinApi.MoveWindow(new WindowInteropHelper((PlexWindow)d).Handle, (int)((Rect)e.NewValue).Left, (int)((Rect)e.NewValue).Top, (int)((Rect)e.NewValue).Width, (int)((Rect)e.NewValue).Height, true);
         }
 
+        public static readonly DependencyProperty FullWindowContentProperty =
+            DependencyProperty.RegisterAttached("FullWindowContent", typeof(object), typeof(PlexWindow),
+                new PropertyMetadata(null));
+
         public static readonly DependencyProperty TitleBarContentProperty =
             DependencyProperty.RegisterAttached("TitleBarContent", typeof(object), typeof(PlexWindow),
                 new PropertyMetadata(null));
@@ -334,6 +338,12 @@ namespace Start9.Api.Plex
         {
             get => (Rect)GetValue(WindowRectProperty);
             set => SetValue(WindowRectProperty, value);
+        }
+
+        public object FullWindowContent
+        {
+            get => GetValue(FullWindowContentProperty);
+            set => SetValue(FullWindowContentProperty, value);
         }
 
         public object TitleBarContent
