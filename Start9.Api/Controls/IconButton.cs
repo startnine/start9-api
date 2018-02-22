@@ -54,7 +54,7 @@ namespace Start9.Api.Controls
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconTreeViewItem),
+            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconListViewItem),
                 new PropertyMetadata(null));
 
         public IconListViewItem()
