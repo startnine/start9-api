@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FrontEndTest"
         xmlns:plex="clr-namespace:Start9.Api.Plex;assembly=Start9.Api"
+        xmlns:obj="clr-namespace:Start9.Api.Objects;assembly=Start9.Api"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <plex:PlexWindow.Resources>
@@ -12,21 +13,39 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Plex.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <obj:ImageBrushNineGridConverter x:Key="ImageBrushNineGridConverter"/>
+            <ImageBrush x:Key="TestImageBrush"/>
         </ResourceDictionary>
     </plex:PlexWindow.Resources>
     <plex:PlexWindow.Content>
-        <Button>
-            <Button.ToolTip>Test</Button.ToolTip>
-            <Button.ContextMenu>
-                <ContextMenu>
-                    <!--ItemContainerStyle="{DynamicResource {x:Type MenuItem}}"-->
-                    <MenuItem Header="Test"/>
-                    <MenuItem Header="Test">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button>
+                <Button.ToolTip>Test</Button.ToolTip>
+                <Button.ContextMenu>
+                    <ContextMenu>
+                        <!--ItemContainerStyle="{DynamicResource {x:Type MenuItem}}"-->
                         <MenuItem Header="Test"/>
-                    </MenuItem>
-                </ContextMenu>
-            </Button.ContextMenu>
-            Test Button
-        </Button>
+                        <MenuItem Header="Test">
+                            <MenuItem Header="Test"/>
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                Test Button
+            </Button>
+            <Canvas Grid.Column="1">
+                <Canvas.Background>
+                    <Binding Converter="{StaticResource ImageBrushNineGridConverter}">
+                        <Binding.ConverterParameter>
+                            <obj:ImageBrushNineGridInfo SizingImageBrush="{DynamicResource TestImageBrush}" SizingMargin="10,20,40,30" TargetWidth="100" TargetHeight="100"/>
+                        </Binding.ConverterParameter>
+                    </Binding>
+                    <!--obj:NineGridImageBrush x:Name="TestBrush" TargetWidth="100" TargetHeight="100" SizingMargins="10,10,10,10"/-->
+                </Canvas.Background>
+            </Canvas>
+        </Grid>
     </plex:PlexWindow.Content>
 </plex:PlexWindow>

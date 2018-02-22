@@ -24,4 +24,23 @@ namespace Start9.Api.Controls
 
         }
     }
+
+
+    public partial class IconTreeViewItem : TreeViewItem
+    {
+        public object Icon
+        {
+            get => GetValue(IconProperty);
+            set => SetValue(IconProperty, value);
+        }
+
+        public static readonly DependencyProperty IconProperty =
+            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconTreeViewItem),
+                new PropertyMetadata(null));
+
+        public IconTreeViewItem()
+        {
+
+        }
+    }
 }

@@ -23,6 +23,10 @@ namespace FrontEndTest
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += delegate
+            {
+                Resources["TestImageBrush"] = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%userprofile%\Documents\TestImage.png"), UriKind.RelativeOrAbsolute)));
+            };
         }
     }
 }

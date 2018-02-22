@@ -17,7 +17,7 @@ namespace Start9.Api.Objects
     [MarkupExtensionReturnType(typeof(System.Windows.Media.Brush))]
     public class NineGridImageBrush : MarkupExtension, INotifyPropertyChanged
     {
-        double targetWidth = 100;
+        double targetWidth = 1;
 
         public double TargetWidth
         {
@@ -41,9 +41,9 @@ namespace Start9.Api.Objects
             set { sizingMargins = value; OnPropertyChanged("SizingMargins"); }
         }
 
-        string brushImageSource = @"_";
+        ImageBrush brushImageSource = new ImageBrush();
 
-        public string BrushImageSource
+        public ImageBrush BrushImageSource
         {
             get { return brushImageSource; }
             set { brushImageSource = value; OnPropertyChanged("BrushImageSource"); }
@@ -59,13 +59,13 @@ namespace Start9.Api.Objects
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (File.Exists(BrushImageSource))
+            if (brushImageSource.ImageSource != null)
             {
                 BitmapImage bitmap = new BitmapImage();
 
                 using (MemoryStream memory = new MemoryStream())
                 {
-                    (InsetResize(new System.Drawing.Bitmap(brushImageSource), new System.Drawing.Size((int)TargetWidth, (int)TargetHeight), SizingMargins)).Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                    (InsetResize(Tools.MiscTools.GetSysDrawingBitmapFromImageSource(brushImageSource.ImageSource), new System.Drawing.Size((int)TargetWidth, (int)TargetHeight), SizingMargins)).Save(memory, System.Drawing.Imaging.ImageFormat.Png);
                     memory.Position = 0;
                     bitmap.BeginInit();
                     bitmap.StreamSource = memory;

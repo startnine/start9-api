@@ -1,8 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Start9.Api"
-                    xmlns:Fluent="urn:fluent-ribbon"
-                    xmlns:FluentClr="clr-namespace:Fluent;assembly=Fluent"
                     xmlns:plex="clr-namespace:Start9.Api.Plex"
                     xmlns:controls="clr-namespace:Start9.Api.Controls"
                     xmlns:obj="clr-namespace:Start9.Api.Objects">

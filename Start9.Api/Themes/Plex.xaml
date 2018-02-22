@@ -53,6 +53,32 @@
     <!--#endregion Focus Visuals-->
 
 
+
+    <!--#region Path Styles-->
+
+    <Style x:Key="IconPathStyle" TargetType="Path">
+        <Setter Property="Stroke" Value="{DynamicResource IconPathStrokeBrush}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Fill" Value="{DynamicResource IconPathFillBrush}"/>
+    </Style>
+
+    <!--#endregion Path Styles-->
+
+
+    <!--#region Icons-->
+
+    <Path x:Key="SmallBackArrowPathIcon" Data="M 0 7 L 8 0 L 10 0 L 10 14 L 8 14 Z" Style="{DynamicResource IconPathStyle}"/>
+
+    <Path x:Key="LargeBackArrowPathIcon" Data="M 0 11 L 12 0 L 15 0 L 15 21 L 12 21 Z" Style="{DynamicResource IconPathStyle}"/>
+
+    <Path x:Key="SmallForwardArrowPathIcon" Data="M 10 7 L 2 0 L 0 0 L 0 14 L 2 14 Z" Style="{DynamicResource IconPathStyle}"/>
+
+    <Path x:Key="LargeForwardArrowPathIcon" Data="M 15 11 L 3 0 L 0 0 L 0 21 L 3 21 Z" Style="{DynamicResource IconPathStyle}"/>
+
+    <!--#endregion Icons-->
+
     <!--#region TextBlock Styles-->
 
     <Style x:Key="{x:Type TextBlock}" TargetType="TextBlock">
@@ -3149,30 +3175,4 @@
     <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}" BasedOn="{StaticResource PlexScrollViewerStyle}"/>
 
     <!--#endregion ScrollBar and ScrollViewer Styles-->
-
-
-
-    <!--#region Path Styles-->
-
-    <Style x:Key="IconPathStyle" TargetType="Path">
-        <Setter Property="Stroke" Value="{DynamicResource IconPathStrokeBrush}"/>
-        <Setter Property="StrokeThickness" Value="1"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Fill" Value="{DynamicResource IconPathFillBrush}"/>
-    </Style>
-
-    <!--#endregion Path Styles-->
-
-    <!--#region Icons-->
-    
-    <Path x:Key="SmallBackArrowPathIcon" Data="M 0 7 L 8 0 L 10 0 L 10 14 L 8 14 Z" Style="{DynamicResource IconPathStyle}"/>
-
-    <Path x:Key="LargeBackArrowPathIcon" Data="M 0 11 L 12 0 L 15 0 L 15 21 L 12 21 Z" Style="{DynamicResource IconPathStyle}"/>
-
-    <Path x:Key="SmallForwardArrowPathIcon" Data="M 10 7 L 2 0 L 0 0 L 0 14 L 2 14 Z" Style="{DynamicResource IconPathStyle}"/>
-
-    <Path x:Key="LargeForwardArrowPathIcon" Data="M 15 11 L 3 0 L 0 0 L 0 21 L 3 21 Z" Style="{DynamicResource IconPathStyle}"/>
-
-    <!--#endregion Icons-->
 </ResourceDictionary>

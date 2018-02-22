@@ -54,10 +54,12 @@
     <Compile Include="Controls\CommandLinkButton.cs" />
     <Compile Include="Controls\NineGridCanvas.cs" />
     <Compile Include="Controls\Planerator.cs" />
+    <Compile Include="Controls\SmoothScrollViewer.cs" />
     <Compile Include="Controls\TaskItemGroup.cs" />
     <Compile Include="Controls\ToggleSwitch.cs" />
     <Compile Include="Controls\VariableSizedWrapGrid.cs" />
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
+    <Compile Include="Controls\IconButton.cs" />
     <Compile Include="Modules\Message.cs" />
     <Compile Include="Objects\WidthToOffsetMarginConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">

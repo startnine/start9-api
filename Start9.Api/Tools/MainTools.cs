@@ -9,6 +9,7 @@ using BitmapImage = System.Windows.Media.Imaging.BitmapImage;
 using BitmapCacheOption = System.Windows.Media.Imaging.BitmapCacheOption;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Windows.Interop;
 
 namespace Start9.Api.Tools
 {
@@ -163,6 +164,45 @@ namespace Start9.Api.Tools
             {
                 return (Bitmap)(Bitmap.FromFile(bitmapImage.UriSource.AbsolutePath));
             }*/
+        }
+
+        public static System.Drawing.Bitmap GetSysDrawingBitmapFromImageSource(System.Windows.Media.ImageSource src)
+        {
+            //https://stackoverflow.com/questions/32073767/convert-system-windows-media-imagesource-to-system-drawing-bitmap
+            BitmapImage source = src as BitmapImage;
+            int width = (int)src.Width;
+            int height = (int)src.Height;
+            int stride = width * ((source.Format.BitsPerPixel + 7) / 8);
+            IntPtr ptr = IntPtr.Zero;
+            try
+            {
+                ptr = System.Runtime.InteropServices.Marshal.AllocHGlobal(height * stride);
+                source.CopyPixels(new Int32Rect(0, 0, width, height), ptr, height * stride, stride);
+                using (var bmp = new System.Drawing.Bitmap(width, height, stride, System.Drawing.Imaging.PixelFormat.Format1bppIndexed, ptr))
+                {
+                    return new System.Drawing.Bitmap(bmp);
+                }
+            }
+            finally
+            {
+                if (ptr != IntPtr.Zero)
+                {
+                    System.Runtime.InteropServices.Marshal.FreeHGlobal(ptr);
+                }
+            }
+        }
+
+        public static System.Windows.Media.ImageSource GetIconFromFilePath(string path)
+        {
+            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
+            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), 0x000000001 | 0x100);
+            System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
+            System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
+            entryIcon.Handle,
+            Int32Rect.Empty,
+            BitmapSizeOptions.FromWidthAndHeight(Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(16)), Convert.ToInt32(Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(16))))
+            );
+            return entryIconImageSource;
         }
     }
 }

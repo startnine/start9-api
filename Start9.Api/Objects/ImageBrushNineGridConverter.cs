@@ -14,14 +14,14 @@ namespace Start9.Api.Objects
 {
     public class ImageBrushNineGridInfo : DependencyObject
     {
-        public Bitmap SizingBitmap
+        public ImageBrush SizingImageBrush
         {
-            get => (Bitmap)GetValue(SizingMarginProperty);
-            set => SetValue(SizingMarginProperty, value);
+            get => (ImageBrush)GetValue(SizingImageBrushProperty);
+            set => SetValue(SizingImageBrushProperty, value);
         }
 
-        public static readonly DependencyProperty SizingBitmapProperty =
-            DependencyProperty.Register("SizingBitmap", typeof(Bitmap), typeof(ImageBrushNineGridInfo), new PropertyMetadata(new Bitmap(10, 10)));
+        public static readonly DependencyProperty SizingImageBrushProperty =
+            DependencyProperty.Register("SizingImageBrush", typeof(ImageBrush), typeof(ImageBrushNineGridInfo), new PropertyMetadata(new ImageBrush()));
 
         public Thickness SizingMargin
         {
@@ -62,18 +62,23 @@ namespace Start9.Api.Objects
             if (parameter is ImageBrushNineGridInfo)
             {
                 var paramNineGridInfo = parameter as ImageBrushNineGridInfo;
-                BitmapImage bitmap = new BitmapImage();
-                using (MemoryStream memory = new MemoryStream())
+                if (paramNineGridInfo.SizingImageBrush.ImageSource != null)
                 {
-                    (InsetResize(paramNineGridInfo.SizingBitmap, new System.Drawing.Size((int)paramNineGridInfo.TargetWidth, (int)paramNineGridInfo.TargetHeight), paramNineGridInfo.SizingMargin)).Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+                    BitmapImage bitmap = new BitmapImage();
+                    Bitmap b = (InsetResize(Tools.MiscTools.GetSysDrawingBitmapFromImageSource(paramNineGridInfo.SizingImageBrush.ImageSource), new System.Drawing.Size((int)paramNineGridInfo.TargetWidth, (int)paramNineGridInfo.TargetHeight), paramNineGridInfo.SizingMargin));
+                    MemoryStream memory = new MemoryStream();
                     memory.Position = 0;
+                    b.Save(memory, System.Drawing.Imaging.ImageFormat.Png); //(memory, System.Drawing.Imaging.ImageFormat.Png);
                     bitmap.BeginInit();
                     bitmap.StreamSource = memory;
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    //bitmap.CacheOption = BitmapCacheOption.OnLoad;
                     bitmap.EndInit();
+                    return new ImageBrush(bitmap);
                 }
-
-                return new ImageBrush(bitmap);
+                else
+                {
+                    return new ImageBrush();
+                }
             }
             else
             {
