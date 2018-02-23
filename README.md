@@ -1,4 +1,4 @@
-# Start9 API ![Start9](https://startnine.github.io/assets/img/iconsmol.png)
+# Start9 API ![Start9](https://startnine.github.io/assets/img/icon32.png)
 This is the home to the Start9 API, a way for module and application developers to integrate their application with Start9. Developers will be able to use this to create open, univeral modules for Start9 that support interoperability with Windows and other modules and open-ended customization with little restrictions, while still being secure. Application developers will be able to send metadata about their applications for module developers to take advantage of.
 
 ## Contributing and Conduct
