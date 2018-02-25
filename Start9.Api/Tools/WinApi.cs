@@ -260,5 +260,14 @@ namespace Start9.Api.Tools
             public int Right;
             public int Bottom;
         }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+        [DllImport("user32.dll")]
+        public static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y,
+           int nReserved, IntPtr hWnd, IntPtr prcRect);
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
+        struct RECT { public int left, top, right, bottom; }
     }
 }
