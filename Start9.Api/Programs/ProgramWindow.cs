@@ -100,14 +100,24 @@ namespace Start9.Api.Programs
                 {
                     try
                     {
-                        if ((TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt32())) && ((WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW))
+                        if (Environment.Is64BitProcess)
                         {
-                            yield return new ProgramWindow(hwnd);
+                            if ((TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt64())) && ((WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt64() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW))
+                            {
+                                yield return new ProgramWindow(hwnd);
+                            }
+                        }
+                        else
+                        {
+                            if ((TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt32())) && ((WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW))
+                            {
+                                yield return new ProgramWindow(hwnd);
+                            }
                         }
                     }
                     finally
                     {
-                        
+
                     }
                 }
             }
