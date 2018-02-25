@@ -141,13 +141,13 @@ namespace Start9.Api.Programs
 		public static event EventHandler<WindowEventArgs> WindowClosed;
 
 		/// <summary>
-		///     Makes this window the active window.
+		///     Makes this window the active window, moving it to the front of the Z-Order (bar topmost windows) and enabling full user interaction.
 		/// </summary>
 		public void Show()
 		{
 			try
 			{
-				WinApi.ShowWindow(Hwnd, 10);
+				WinApi.ShowWindow(Hwnd, 5);
 				WinApi.SetForegroundWindow(Hwnd);
 			}
 			catch (Exception ex)
@@ -156,10 +156,10 @@ namespace Start9.Api.Programs
 			}
 		}
 
-		/// <summary>
-		///     Minimizes the window to the taskbar.
-		/// </summary>
-		public void Minimize()
+        /// <summary>
+        ///     Minimizes the window, hiding it from view, but leaving its indicator visible in the taskbar or other comparable module.
+        /// </summary>
+        public void Minimize()
 		{
 			try
 			{
@@ -172,14 +172,19 @@ namespace Start9.Api.Programs
 		}
 
 		/// <summary>
-		///     Un-minimizes the window.
+		///     Maximizes the Window, causing it to forcibly fill the Working Area
 		/// </summary>
-		public void Maximize() { throw new NotImplementedException(); }
+		public void Maximize() { WinApi.ShowWindow(Hwnd, 3); }
 
-		/// <summary>
-		///     Closes the window.
-		/// </summary>
-		public void Close() { WinApi.SendMessage(Hwnd, 0x0010, 0, 0); }
+        /// <summary>
+        ///     Restores the Window, reducing its size, un-minimizing it, and displaying its resize borders (if any).
+        /// </summary>
+        public void Restore() { WinApi.ShowWindow(Hwnd, 1); }
+
+        /// <summary>
+        ///     Closes the window.
+        /// </summary>
+        public void Close() { WinApi.SendMessage(Hwnd, 0x0010, 0, 0); }
 
 		public string Name
 		{
