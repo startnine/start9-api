@@ -181,6 +181,17 @@ namespace Start9.Api.Programs
         /// </summary>
         public void Restore() { WinApi.ShowWindow(Hwnd, 1); }
 
+
+        public void ShowSystemMenu()
+        {
+            //https://stackoverflow.com/questions/21825352/how-to-open-window-system-menu-on-right-click
+            WinApi.Rect pos;
+            WinApi.GetWindowRect(Hwnd, out pos);
+            IntPtr hMenu = WinApi.GetSystemMenu(Hwnd, false);
+            int cmd = WinApi.TrackPopupMenu(hMenu, 0x100, pos.Left, pos.Top, 0, Hwnd, IntPtr.Zero);
+            if (cmd > 0) WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
+        }
+
         /// <summary>
         ///     Closes the window.
         /// </summary>
