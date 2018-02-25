@@ -188,8 +188,8 @@ namespace Start9.Api.Programs
             WinApi.Rect pos;
             WinApi.GetWindowRect(Hwnd, out pos);
             IntPtr hMenu = WinApi.GetSystemMenu(Hwnd, false);
-            int cmd = WinApi.TrackPopupMenu(hMenu, 0x100, pos.Left, pos.Top, 0, Hwnd, IntPtr.Zero);
-            if (cmd > 0) WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
+            int cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 | 0x0020, MainTools.GetDpiScaledCursorPosition().X, MainTools.GetDpiScaledCursorPosition().Y, 0, Hwnd, IntPtr.Zero);
+            WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
         }
 
         /// <summary>
