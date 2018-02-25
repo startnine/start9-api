@@ -53,6 +53,7 @@
     <Compile Include="Controls\SmoothScrollViewer.cs" />
     <Compile Include="Controls\TaskItemGroup.cs" />
     <Compile Include="Controls\ToggleSwitch.cs" />
+    <Compile Include="Controls\TouchableContextMenu.cs" />
     <Compile Include="Controls\VariableSizedWrapGrid.cs" />
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
     <Compile Include="Controls\IconButton.cs" />

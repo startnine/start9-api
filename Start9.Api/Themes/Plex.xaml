@@ -1356,6 +1356,7 @@
     <Style x:Key="{x:Type MenuItem}" TargetType="MenuItem">
         <Setter Property="OverridesDefaultStyle" Value="True"/>
         <Setter Property="Height" Value="25" />
+        <Setter Property="MinWidth" Value="175"/>
         <Setter Property="Background" Value="#01000000" />
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontFamily" Value="Franklin Gothic Book" />
@@ -1393,6 +1394,43 @@
         <Setter Property="Padding" Value="3,3,3,0"/>
         <Setter Property="HasDropShadow" Value="False" />
         <Setter Property="ItemContainerStyle" Value="{DynamicResource PlexMenuItemStyle}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ContextMenu">
+                    <Grid Margin="{TemplateBinding Margin}">
+                        <Border IsHitTestVisible="False" Background="Black" BorderBrush="Transparent">
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
+                            </Border.Effect>
+                        </Border>
+                        <Border BorderThickness="1" CornerRadius="0" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContextMenuBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}">
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="{x:Type controls:TouchableContextMenu}" TargetType="{x:Type controls:TouchableContextMenu}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+        <Setter Property="Margin" Value="5,0,0,5"/>
+        <Setter Property="Padding" Value="3,3,3,0"/>
+        <Setter Property="HasDropShadow" Value="False" />
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}">
+                    <Setter Property="ItemContainerStyle" Value="{Binding Path=Style, RelativeSource={RelativeSource Mode=Self}}"/>
+                    <Setter Property="IsManipulationEnabled" Value="{Binding OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TouchableContextMenu}}}"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsManipulationEnabled" Value="True">
+                            <Setter Property="Height" Value="46.590925" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">

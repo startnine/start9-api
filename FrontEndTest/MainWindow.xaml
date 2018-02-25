@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:FrontEndTest"
         xmlns:plex="clr-namespace:Start9.Api.Plex;assembly=Start9.Api"
         xmlns:obj="clr-namespace:Start9.Api.Objects;assembly=Start9.Api"
+        xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <plex:PlexWindow.Resources>
@@ -45,6 +46,19 @@
                     </Binding>
                     <!--obj:NineGridImageBrush x:Name="TestBrush" TargetWidth="100" TargetHeight="100" SizingMargins="10,10,10,10"/-->
                 </Canvas.Background>
+                <Canvas.ContextMenu>
+                    <apictrl:TouchableContextMenu>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Sub-item Test">
+                            <MenuItem Header="Test"/>
+                            <MenuItem Header="Test"/>
+                            <MenuItem Header="Test"/>
+                        </MenuItem>
+                    </apictrl:TouchableContextMenu>
+                </Canvas.ContextMenu>
             </Canvas>
         </Grid>
     </plex:PlexWindow.Content>
