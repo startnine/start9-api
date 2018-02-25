@@ -182,13 +182,16 @@ namespace Start9.Api.Programs
         public void Restore() { WinApi.ShowWindow(Hwnd, 1); }
 
 
+        /// <summary>
+        ///     Doesn't actually work yet, but will display the window's System Menu, containing various window management options
+        /// </summary>
         public void ShowSystemMenu()
         {
             //https://stackoverflow.com/questions/21825352/how-to-open-window-system-menu-on-right-click
             WinApi.Rect pos;
             WinApi.GetWindowRect(Hwnd, out pos);
             IntPtr hMenu = WinApi.GetSystemMenu(Hwnd, false);
-            int cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 | 0x0020, MainTools.GetDpiScaledCursorPosition().X, MainTools.GetDpiScaledCursorPosition().Y, 0, Hwnd, IntPtr.Zero);
+            int cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 & 0x0020, MainTools.GetDpiScaledCursorPosition().X, MainTools.GetDpiScaledCursorPosition().Y, 0, Hwnd, IntPtr.Zero);
             WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
         }
 
