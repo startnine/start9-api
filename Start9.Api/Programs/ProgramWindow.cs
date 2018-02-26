@@ -154,7 +154,7 @@ namespace Start9.Api.Programs
                 //if ((style & Convert.ToInt64(WinApi.WsMinimize)) == WinApi.WsMinimize)
                 //{
                     //if ((style & Convert.ToInt64(WinApi.WsMaximize)) == WinApi.WsMaximize)
-                    if ((placement.showCmd == (3 & 6)) | (placement.showCmd == 6))
+                    if ((placement.showCmd == (3 & 6)) | (placement.showCmd == 3))
                     {
                         WinApi.ShowWindow(Hwnd, 3);
                     }
