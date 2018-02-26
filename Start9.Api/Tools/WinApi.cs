@@ -202,6 +202,9 @@ namespace Start9.Api.Tools
         public const int SwShowmaximized = 3;
 
         public const int GwlStyle = -16;
+        public const int WsMaximize = 0x01000000;
+        public const int WsMinimize = 0x20000000;
+
         public const int GwlExstyle = -20;
         public const int Taskstyle = 0x10000000 | 0x00800000;
         public const int WsExTransparent = 0x00000020;

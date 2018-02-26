@@ -148,7 +148,19 @@ namespace Start9.Api.Programs
 			try
 			{
 				WinApi.ShowWindow(Hwnd, 5);
-				WinApi.SetForegroundWindow(Hwnd);
+                var style = WinApi.GetWindowLong(Hwnd, GWL_STYLE).ToInt64();
+                if ((style & Convert.ToInt64(WinApi.WsMinimize)) == WinApi.WsMinimize)
+                {
+                    if ((style & Convert.ToInt64(WinApi.WsMaximize)) == WinApi.WsMaximize)
+                    {
+                        WinApi.ShowWindow(Hwnd, 3);
+                    }
+                    else
+                    {
+                        WinApi.ShowWindow(Hwnd, 1);
+                    }
+                }
+                WinApi.SetForegroundWindow(Hwnd);
 			}
 			catch (Exception ex)
 			{
