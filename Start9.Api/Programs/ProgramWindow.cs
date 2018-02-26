@@ -148,10 +148,13 @@ namespace Start9.Api.Programs
 			try
 			{
 				WinApi.ShowWindow(Hwnd, 5);
-                var style = WinApi.GetWindowLong(Hwnd, GWL_STYLE).ToInt64();
-                if ((style & Convert.ToInt64(WinApi.WsMinimize)) == WinApi.WsMinimize)
-                {
-                    if ((style & Convert.ToInt64(WinApi.WsMaximize)) == WinApi.WsMaximize)
+                WinApi.WINDOWPLACEMENT placement = new WinApi.WINDOWPLACEMENT();
+                WinApi.GetWindowPlacement(Hwnd, ref placement);
+                //var style = WinApi.GetWindowLong(Hwnd, GWL_STYLE).ToInt64();
+                //if ((style & Convert.ToInt64(WinApi.WsMinimize)) == WinApi.WsMinimize)
+                //{
+                    //if ((style & Convert.ToInt64(WinApi.WsMaximize)) == WinApi.WsMaximize)
+                    if ((placement.showCmd == (3 & 6)) | (placement.showCmd == 6))
                     {
                         WinApi.ShowWindow(Hwnd, 3);
                     }
@@ -159,7 +162,7 @@ namespace Start9.Api.Programs
                     {
                         WinApi.ShowWindow(Hwnd, 1);
                     }
-                }
+                //}
                 WinApi.SetForegroundWindow(Hwnd);
 			}
 			catch (Exception ex)
