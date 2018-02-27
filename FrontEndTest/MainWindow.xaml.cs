@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Start9.Api.Plex;
+using Start9.Api.Tools;
 
 namespace FrontEndTest
 {
@@ -27,6 +28,7 @@ namespace FrontEndTest
             {
                 Resources["TestImageBrush"] = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%userprofile%\Documents\TestImage.png"), UriKind.RelativeOrAbsolute)));
             };
+            AppxTools.GetLiveTileNotification(@"http://{language}.appex-rf.msn.com/cgtile/v1/{language}/News/Today.xml");
         }
     }
 }
