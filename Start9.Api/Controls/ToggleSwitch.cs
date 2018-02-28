@@ -1,241 +1,271 @@
-﻿using System;
+﻿using Start9.Api.Tools;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using System.Timers;
+using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Start9.Api.Tools;
 
 namespace Start9.Api.Controls
 {
-	[TemplatePart(Name = PartGrip, Type = typeof(Button))]
-	[TemplatePart(Name = PartOffsetter, Type = typeof(Canvas))]
-	[TemplatePart(Name = PartStateText, Type = typeof(TextBlock))]
-	public class ToggleSwitch : CheckBox
-	{
-		private const string PartGrip = "PART_Grip";
-		private const string PartOffsetter = "PART_Offsetter";
-		private const string PartStateText = "PART_StateText";
+    [TemplatePart(Name = PartGrip, Type = typeof(Button))]
+    [TemplatePart(Name = PartOffsetter, Type = typeof(Canvas))]
+    [TemplatePart(Name = PartStateText, Type = typeof(TextBlock))]
 
-		public static readonly DependencyProperty TrueTextProperty =
-			DependencyProperty.RegisterAttached("TrueText", typeof(string), typeof(ToggleSwitch),
-				new PropertyMetadata("True"));
+    public partial class ToggleSwitch : CheckBox
+    {
+        const string PartGrip = "PART_Grip";
+        const string PartOffsetter = "PART_Offsetter";
+        const string PartStateText = "PART_StateText";
 
-		public static readonly DependencyProperty FalseTextProperty =
-			DependencyProperty.RegisterAttached("FalseText", typeof(string), typeof(ToggleSwitch),
-				new PropertyMetadata("False"));
+        public string TrueText
+        {
+            get => (string)GetValue(TrueTextProperty);
+            set => SetValue(TrueTextProperty, value);
+        }
 
-		public static readonly DependencyProperty NullTextProperty =
-			DependencyProperty.RegisterAttached("NullText", typeof(string), typeof(ToggleSwitch),
-				new PropertyMetadata("Null"));
+        public static readonly DependencyProperty TrueTextProperty =
+            DependencyProperty.RegisterAttached("TrueText", typeof(string), typeof(ToggleSwitch),
+                new PropertyMetadata("True"));
 
-		public static readonly DependencyProperty OffsetterWidthProperty =
-			DependencyProperty.RegisterAttached("OffsetterWidth", typeof(double), typeof(ToggleSwitch),
-				new PropertyMetadata((double) 0));
+        public string FalseText
+        {
+            get => (string)GetValue(FalseTextProperty);
+            set => SetValue(FalseTextProperty, value);
+        }
 
-		private Button _grip = new Button();
-		private Canvas _offsetter = new Canvas();
-		private TextBlock _stateText = new TextBlock();
+        public static readonly DependencyProperty FalseTextProperty =
+            DependencyProperty.RegisterAttached("FalseText", typeof(string), typeof(ToggleSwitch),
+                new PropertyMetadata("False"));
 
-		static ToggleSwitch()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
-			IsCheckedProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, OnIsCheckedChanged));
-		}
+        public string NullText
+        {
+            get => (string)GetValue(NullTextProperty);
+            set => SetValue(NullTextProperty, value);
+        }
 
-		public string TrueText
-		{
-			get => (string) GetValue(TrueTextProperty);
-			set => SetValue(TrueTextProperty, value);
-		}
+        public static readonly DependencyProperty NullTextProperty =
+            DependencyProperty.RegisterAttached("NullText", typeof(string), typeof(ToggleSwitch),
+                new PropertyMetadata("Null"));
 
-		public string FalseText
-		{
-			get => (string) GetValue(FalseTextProperty);
-			set => SetValue(FalseTextProperty, value);
-		}
+        public double OffsetterWidth
+        {
+            get => (double)GetValue(OffsetterWidthProperty);
+            set => SetValue(OffsetterWidthProperty, value);
+        }
 
-		public string NullText
-		{
-			get => (string) GetValue(NullTextProperty);
-			set => SetValue(NullTextProperty, value);
-		}
+        public static readonly DependencyProperty OffsetterWidthProperty =
+            DependencyProperty.RegisterAttached("OffsetterWidth", typeof(double), typeof(ToggleSwitch),
+                new PropertyMetadata((double)0));
 
-		public double OffsetterWidth
-		{
-			get => (double) GetValue(OffsetterWidthProperty);
-			set => SetValue(OffsetterWidthProperty, value);
-		}
+        static ToggleSwitch()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(typeof(ToggleSwitch)));
+            IsCheckedProperty.OverrideMetadata(typeof(ToggleSwitch), new FrameworkPropertyMetadata(false, OnIsCheckedChanged));
+        }
 
-		/*protected override void OnChildDesiredSizeChanged(UIElement child)
-	    {
-	        base.OnChildDesiredSizeChanged(child);
-	        HalfWidth = Width / 2;
-	    }*/
+        public ToggleSwitch()
+        {
+            //Click += delegate { OnClick(); };
+        }
 
-		private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-		{
-			var toggle = d as ToggleSwitch;
+        /*protected override void OnChildDesiredSizeChanged(UIElement child)
+        {
+            base.OnChildDesiredSizeChanged(child);
+            HalfWidth = Width / 2;
+        }*/
 
-			toggle.AnimateGripPosition();
+        static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var toggle = (d as ToggleSwitch);
 
-			try
-			{
-				if (toggle.IsChecked == true)
-					toggle._stateText.Text = toggle.TrueText;
-				else if (toggle.IsChecked == false)
-					toggle._stateText.Text = toggle.FalseText;
-				else
-					toggle._stateText.Text = toggle.NullText;
-			}
-			catch
-			{
-			}
-		}
+            toggle.AnimateGripPosition();
 
-		public void AnimateGripPosition()
-		{
-			var animation = new DoubleAnimation
-			{
-				Duration = TimeSpan.FromMilliseconds(125)
-			};
+            try
+            {
+                if (toggle.IsChecked == true)
+                {
+                    toggle._stateText.Text = toggle.TrueText;
+                }
+                else if (toggle.IsChecked == false)
+                {
+                    toggle._stateText.Text = toggle.FalseText;
+                }
+                else
+                {
+                    toggle._stateText.Text = toggle.NullText;
+                }
+            } catch { }
+        }
 
-			double targetWidth = 0;
+        public void AnimateGripPosition()
+        {
+            DoubleAnimation animation = new DoubleAnimation()
+            {
+                Duration = TimeSpan.FromMilliseconds(125)
+            };
 
-			if ((IsChecked == null) & IsThreeState)
-				targetWidth = 16;
-			else if (IsChecked == false)
-				targetWidth = 0;
-			else
-				targetWidth = 32;
+            double targetWidth = 0;
 
-			animation.To = targetWidth;
+            if ((IsChecked == null) & (IsThreeState))
+            {
+                //toggle.OffsetterWidth
+                targetWidth = 16;
+                //animation.To = (toggle.ActualWidth / 2) - 18;
 
-			animation.Completed += (sender, args) =>
-			{
-				OffsetterWidth = targetWidth;
-				BeginAnimation(OffsetterWidthProperty, null);
-				try
-				{
-					Debug.WriteLine(IsChecked.Value.ToString());
-				}
-				catch
-				{
-				}
-			};
+            }
+            else if (IsChecked == false)
+            {
+                targetWidth = 0;
+            }
+            else
+            {
+                targetWidth = 32;
+                //animation.To = toggle.ActualWidth - 18;
+            }
 
-			BeginAnimation(OffsetterWidthProperty, animation);
-		}
+            animation.To = targetWidth;
 
-		public override void OnApplyTemplate()
-		{
-			base.OnApplyTemplate();
+            animation.Completed += delegate
+            {
+                OffsetterWidth = targetWidth;
+                BeginAnimation(ToggleSwitch.OffsetterWidthProperty, null);
+                try
+                {
+                    Debug.WriteLine(IsChecked.Value.ToString());
+                } catch { }
+            };
 
-			_grip = GetTemplateChild(PartGrip) as Button;
-			_grip.PreviewMouseLeftButtonDown += (sendurr, args) => ToggleSwitch_PreviewMouseLeftButtonDown(this, args);
-			_offsetter = GetTemplateChild(PartOffsetter) as Canvas;
-			_stateText = GetTemplateChild(PartStateText) as TextBlock;
-			OnIsCheckedChanged(this, new DependencyPropertyChangedEventArgs());
-		}
+            BeginAnimation(ToggleSwitch.OffsetterWidthProperty, animation);
+        }
 
-		private void ToggleSwitch_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			var originalValue = (sender as ToggleSwitch).IsChecked;
-			//var toggleSwitch = (sender as ToggleSwitch);
+        Button _grip = new Button();
+        Canvas _offsetter = new Canvas();
+        TextBlock _stateText = new TextBlock();
 
-			var isDragging = false;
-			var offsetter = OffsetterWidth;
-			//var grip = toggleSwitch._grip;
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
 
-			double toggleX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new Point(0, 0)).X);
-			double gripInitialX =
-				DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new Point(0, 0)).X);
-			double gripX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new Point(0, 0)).X);
+            _grip = GetTemplateChild(PartGrip) as Button;
+            _grip.PreviewMouseLeftButtonDown += (sendurr, args) => ToggleSwitch_PreviewMouseLeftButtonDown(this, args);
+            _offsetter = GetTemplateChild(PartOffsetter) as Canvas;
+            _stateText = GetTemplateChild(PartStateText) as TextBlock;
+            OnIsCheckedChanged(this, new DependencyPropertyChangedEventArgs());
+        }
 
-			double cursorStartX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
-			double cursorCurrentX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
-			var cursorChange = cursorCurrentX - cursorStartX;
-			var offset = gripX - toggleX + (cursorCurrentX - cursorStartX);
-			//System.Windows.Point cursorStartOffsetPoint = new System.Windows.Point(toggleSwitch.Margin.Left, grip.Margin.Top);
+        private void ToggleSwitch_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            bool? originalValue = (sender as ToggleSwitch).IsChecked;
+            //var toggleSwitch = (sender as ToggleSwitch);
 
-			var timer = new Timer(1);
+            bool isDragging = false;
+            double offsetter = OffsetterWidth;
+            //var grip = toggleSwitch._grip;
 
-			timer.Elapsed += (o, args) => Dispatcher.Invoke(new Action(() =>
-			{
-				if (Mouse.LeftButton == MouseButtonState.Pressed)
-				{
-					//toggleX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
-					cursorCurrentX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            double toggleX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
+            double gripInitialX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
+            double gripX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
 
-					cursorChange = cursorCurrentX - cursorStartX;
+            double cursorStartX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            double cursorCurrentX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            double cursorChange = (cursorCurrentX - cursorStartX);
+            double offset = (gripX - toggleX) + (cursorCurrentX - cursorStartX);
+            //System.Windows.Point cursorStartOffsetPoint = new System.Windows.Point(toggleSwitch.Margin.Left, grip.Margin.Top);
 
-					offset = cursorChange + (gripX - toggleX);
-					Debug.WriteLine(cursorChange + "," + offset);
+            var timer = new System.Timers.Timer(1);
 
-					if ((cursorChange > 2) | (cursorChange < -2)) isDragging = true;
+            timer.Elapsed += delegate
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (Mouse.LeftButton == MouseButtonState.Pressed)
+                    {
+                        //toggleX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
+                        cursorCurrentX = DpiManager.ConvertPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
 
-					OffsetterWidth = offsetter + cursorChange;
-				}
-				else
-				{
-					timer.Stop();
-					//offset = (cursorCurrentX - cursorStartX);
-					if (isDragging)
-					{
-						double isCheckedOffset = 0;
-						if (IsChecked == true)
-							isCheckedOffset = 32;
-						else if (IsChecked == null) isCheckedOffset = 16;
+                        cursorChange = (cursorCurrentX - cursorStartX);
 
-						var toggleChange = cursorChange + isCheckedOffset;
-						if (IsThreeState)
-						{
-							if (toggleChange < 10.666666666666666666666666666667)
-							{
-								IsChecked = false;
-								Debug.WriteLine("VERTICT: false");
-							}
-							else if (toggleChange > 21.333333333333333333333333333333)
-							{
-								IsChecked = true;
-								Debug.WriteLine("VERTICT: true");
-							}
-							else
-							{
-								IsChecked = null;
-								Debug.WriteLine("VERTICT: null");
-							}
-						}
-						else
-						{
-							if (toggleChange < 16)
-							{
-								IsChecked = false;
-								Debug.WriteLine("VERTICT: false");
-							}
-							else
-							{
-								IsChecked = true;
-								Debug.WriteLine("VERTICT: true");
-							}
-						}
-					}
-					else
-					{
-						base.OnClick();
-					}
+                        offset = cursorChange + (gripX - toggleX);
+                        Debug.WriteLine(cursorChange.ToString() + "," + offset.ToString());
 
-					if (originalValue == IsChecked) AnimateGripPosition();
-				}
-			}));
-			timer.Start();
-		}
+                        if ((cursorChange > 2) | (cursorChange < -2))
+                        {
+                            isDragging = true;
+                        }
 
-		protected override void OnClick()
-		{
-			Debug.WriteLine("C L I C C");
-			base.OnClick();
-		}
-	}
+                        OffsetterWidth = offsetter + cursorChange;
+                    }
+                    else
+                    {
+                        timer.Stop();
+                        //offset = (cursorCurrentX - cursorStartX);
+                        if (isDragging)
+                        {
+                            double isCheckedOffset = 0;
+                            if (IsChecked == true)
+                            {
+                                isCheckedOffset = 32;
+                            }
+                            else if (IsChecked == null)
+                            {
+                                isCheckedOffset = 16;
+                            }
+
+                            double toggleChange = cursorChange + isCheckedOffset;
+                            if (IsThreeState)
+                            {
+                                if (toggleChange < 10.666666666666666666666666666667)
+                                {
+                                    IsChecked = false;
+                                    Debug.WriteLine("VERTICT: false");
+                                }
+                                else if (toggleChange > 21.333333333333333333333333333333)
+                                {
+                                    IsChecked = true;
+                                    Debug.WriteLine("VERTICT: true");
+                                }
+                                else
+                                {
+                                    IsChecked = null;
+                                    Debug.WriteLine("VERTICT: null");
+                                }
+                            }
+                            else
+                            {
+                                if (toggleChange < 16)
+                                {
+                                    IsChecked = false;
+                                    Debug.WriteLine("VERTICT: false");
+                                }
+                                else
+                                {
+                                    IsChecked = true;
+                                    Debug.WriteLine("VERTICT: true");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            base.OnClick();
+                        }
+                        if (originalValue == IsChecked)
+                        {
+                            AnimateGripPosition();
+                        }
+                    }
+                }));
+            };
+            timer.Start();
+        }
+
+        protected override void OnClick()
+        {
+            Debug.WriteLine("C L I C C");
+            base.OnClick();
+        }
+    }
 }

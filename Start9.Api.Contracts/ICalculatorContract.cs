@@ -6,15 +6,15 @@ namespace Start9.Api.Contracts
 	[AddInContract]
 	public interface ILibraryManagerContract : IContract
 	{
-		// Get a IBookInfoContract object
-		// from the add-in of the
-		// the best selling book.
-		IBookInfoContract BestSeller { get; }
-
 		// Pass a collection of books,
 		// of type IBookInfoContract
 		// to the add-in for processing.
 		void ProcessBooks(IListContract<IBookInfoContract> books);
+
+		// Get a IBookInfoContract object
+		// from the add-in of the
+		// the best selling book.
+		IBookInfoContract BestSeller { get; }
 
 		// This method has has arbitrary
 		// uses and shows how you can

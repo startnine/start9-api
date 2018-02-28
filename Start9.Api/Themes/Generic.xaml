@@ -8,28 +8,28 @@
         <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Plex.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Colors/PlexBlue.xaml"/>
     </ResourceDictionary.MergedDictionaries-->
-
+    
     <!-- Converters -->
 
-    <obj:WidthToHalfWidthConverter x:Key="WidthToHalfWidthConverter" />
+    <obj:WidthToHalfWidthConverter x:Key="WidthToHalfWidthConverter"/>
 
     <!-- End Converters -->
-
+    
     <!-- Window Styles -->
 
     <Style x:Key="PlexWindowStyle" TargetType="{x:Type plex:PlexWindow}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="WindowStyle" Value="None" />
-        <Setter Property="Opacity" Value="0" />
+        <Setter Property="Opacity" Value="0"/>
         <Setter Property="AllowsTransparency" Value="True" />
         <Setter Property="ResizeMode" Value="CanResize" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BodyBrush" Value="{DynamicResource DefaultWindowBodyBrush}" />
-        <Setter Property="FooterBrush" Value="{DynamicResource DefaultWindowFooterBrush}" />
-        <Setter Property="FontFamily" Value="Franklin Gothic Book" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="BodyBrush" Value="{DynamicResource DefaultWindowBodyBrush}"/>
+        <Setter Property="FooterBrush" Value="{DynamicResource DefaultWindowFooterBrush}"/>
+        <Setter Property="FontFamily" Value="Franklin Gothic Book"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type plex:PlexWindow}">
@@ -63,8 +63,7 @@
                                         <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                     </Canvas.Background>
                                 </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}"
-                                       HorizontalAlignment="Stretch"
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top" HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center" Height="26" Margin="0,-2"
                                        FontFamily="Franklin Gothic Book" FontSize="12" Foreground="White">
@@ -79,8 +78,7 @@
                                             Style="{DynamicResource CaptionButtonStyle}">
                                         0
                                     </Button>
-                                    <Grid x:Name="MaxRestButtonGrid" Width="18" VerticalAlignment="Stretch"
-                                          Margin="1,1,-1,-1">
+                                    <Grid x:Name="MaxRestButtonGrid"  Width="18" VerticalAlignment="Stretch" Margin="1,1,-1,-1">
                                         <Button x:Name="PART_MaximizeButton" HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Style="{DynamicResource CaptionButtonStyle}">
@@ -103,21 +101,14 @@
                                   Height="{TemplateBinding ToolBarHeight}" Visibility="Visible" DockPanel.Dock="Top">
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
                                     <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0"
-                                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                                Background="{DynamicResource WindowToolbarBackgroundBrush}"
-                                                BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
+                                        <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
                                             <Border x:Name="ToolBarSecondaryBorder" CornerRadius="8,8,0,0"
-                                                    BorderThickness="0,1,0,0"
-                                                    Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}"
+                                                    BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}"
                                                     BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
                                         </Border>
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="0"
-                                                Background="{DynamicResource WindowToolbarBackgroundBrush}" />
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="1"
-                                                Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}" />
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="2"
-                                                Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}" />
+                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
+                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
+                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
                                     </Grid>
                                     <ContentPresenter Content="{TemplateBinding ToolBarContent}" />
                                 </Grid>
@@ -125,30 +116,20 @@
                             <Grid x:Name="Footer" HorizontalAlignment="Stretch" Margin="0"
                                   Height="{TemplateBinding FooterHeight}" Visibility="Visible" DockPanel.Dock="Bottom">
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-12,0,0">
-                                    <Border x:Name="FooterBorder" HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Stretch" Background="{TemplateBinding FooterBrush}"
-                                            CornerRadius="0,0,12,12" />
+                                    <Border x:Name="FooterBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding FooterBrush}" CornerRadius="0,0,12,12" />
                                     <ContentPresenter Content="{TemplateBinding FooterContent}" />
                                 </Grid>
                             </Grid>
-                            <Border x:Name="BodyBase" CornerRadius="12"
-                                    BorderBrush="{DynamicResource WindowToolbarBackgroundBrush}"
-                                    BorderThickness="0,1,0,0" HorizontalAlignment="Stretch" Margin="0" Padding="0">
-                                <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0"
-                                        HorizontalAlignment="Stretch" Margin="0" Padding="0"
-                                        Background="{TemplateBinding BodyBrush}">
+                            <Border x:Name="BodyBase" CornerRadius="12" BorderBrush="{DynamicResource WindowToolbarBackgroundBrush}" BorderThickness="0,1,0,0" HorizontalAlignment="Stretch" Margin="0" Padding="0">
+                                <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding BodyBrush}">
                                     <ContentPresenter Content="{TemplateBinding Content}" />
                                 </Border>
                             </Border>
                         </DockPanel>
-                        <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                              Visibility="Visible" Margin="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding FullWindowContent}"
-                                              HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                              Visibility="Visible" />
+                        <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
                         </Grid>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                              Margin="{TemplateBinding Padding}">
+                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition />
@@ -184,49 +165,49 @@
                                    Grid.Row="3" Grid.Column="0" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
                         </Grid>
-                        <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden" />
+                        <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ShowTitle" Value="False">
-                            <Setter TargetName="TitleText" Property="Visibility" Value="Hidden" />
+                            <Setter TargetName="TitleText" Property="Visibility" Value="Hidden"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ResizeMode" Value="Manual" />
-                                <Condition Property="ShowCloseButton" Value="False" />
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowCloseButton" Value="False"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="PART_CloseButton" Property="Width" Value="0" />
-                                <Setter TargetName="PART_CloseButton" Property="Height" Value="0" />
+                                <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="PART_CloseButton" Property="Width" Value="0"/>
+                                <Setter TargetName="PART_CloseButton" Property="Height" Value="0"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ResizeMode" Value="Manual" />
-                                <Condition Property="ShowMaxRestButton" Value="False" />
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowMaxRestButton" Value="False"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0" />
-                                <Setter TargetName="MaxRestButtonGrid" Property="Height" Value="0" />
+                                <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0"/>
+                                <Setter TargetName="MaxRestButtonGrid" Property="Height" Value="0"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ResizeMode" Value="Manual" />
-                                <Condition Property="ShowMinButton" Value="False" />
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowMinButton" Value="False"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Hidden" />
-                                <Setter TargetName="PART_MinimizeButton" Property="Width" Value="0" />
-                                <Setter TargetName="PART_MinimizeButton" Property="Height" Value="0" />
+                                <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="PART_MinimizeButton" Property="Width" Value="0"/>
+                                <Setter TargetName="PART_MinimizeButton" Property="Height" Value="0"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ResizeMode" Value="Manual" />
-                                <Condition Property="ShowResizeEdges" Value="False" />
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowResizeEdges" Value="False"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
                                 <Setter TargetName="PART_ThumbBottom" Property="Visibility" Value="Hidden" />
@@ -241,8 +222,8 @@
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
-                                <Condition Property="ResizeMode" Value="Manual" />
-                                <Condition Property="ShowResizeGrip" Value="True" />
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowResizeGrip" Value="True"/>
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
                                 <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
@@ -255,14 +236,10 @@
                         <Trigger Property="IsActive" Value="False">
                             <Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="PART_MinimizeButton" Property="Foreground"
-                                    Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
-                            <Setter TargetName="PART_MaximizeButton" Property="Foreground"
-                                    Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
-                            <Setter TargetName="PART_RestoreButton" Property="Foreground"
-                                    Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
-                            <Setter TargetName="PART_CloseButton" Property="Foreground"
-                                    Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
+                            <Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
+                            <Setter TargetName="PART_MaximizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
+                            <Setter TargetName="PART_RestoreButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -389,8 +366,8 @@
                             <Setter TargetName="ToolBar" Property="Visibility" Value="Hidden" />
                         </Trigger>
                         <Trigger Property="ShowToolBar" Value="True">
-                            <Setter TargetName="BodyBase" Property="BorderBrush" Value="Transparent" />
-                            <Setter TargetName="BodyBase" Property="BorderThickness" Value="0" />
+                            <Setter TargetName="BodyBase" Property="BorderBrush" Value="Transparent"/>
+                            <Setter TargetName="BodyBase" Property="BorderThickness" Value="0"/>
                         </Trigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
@@ -398,8 +375,7 @@
                                 <Condition Property="IsActive" Value="False" />
                             </MultiTrigger.Conditions>
                             <MultiTrigger.Setters>
-                                <Setter TargetName="BodyBase" Property="BorderBrush"
-                                        Value="{DynamicResource InactiveTitlebarBorderBrush}" />
+                                <Setter TargetName="BodyBase" Property="BorderBrush" Value="{DynamicResource InactiveTitlebarBorderBrush}"/>
                             </MultiTrigger.Setters>
                         </MultiTrigger>
                         <Trigger Property="ShowFooter" Value="False">
@@ -423,35 +399,28 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="WindowRoot"
-                                                            Storyboard.TargetProperty="Margin" BeginTime="0:0:0.0"
-                                                            Duration="0:0:0.0" From="0" To="3, 3, -3, -3" />
+                                        <ThicknessAnimation Storyboard.TargetName="WindowRoot" Storyboard.TargetProperty="Margin" BeginTime="0:0:0.0" Duration="0:0:0.0" From="0" To="3, 3, -3, -3"/>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ThicknessAnimation Storyboard.TargetName="WindowRoot"
-                                                            Storyboard.TargetProperty="Margin" BeginTime="0:0:0.0"
-                                                            Duration="0:0:0.375" From="3, 3, -3, -3"
-                                                            To="107, 107, 93, 93">
+                                        <ThicknessAnimation Storyboard.TargetName="WindowRoot" Storyboard.TargetProperty="Margin" BeginTime="0:0:0.0" Duration="0:0:0.375" From="3, 3, -3, -3" To="107, 107, 93, 93">
                                             <ThicknessAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
+                                                <CircleEase EasingMode="EaseOut"/>
                                             </ThicknessAnimation.EasingFunction>
                                         </ThicknessAnimation>
-                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="WindowRoot"
-                                                                          Storyboard.TargetProperty="Margin"
-                                                                          BeginTime="0:0:0.376" Duration="0">
-                                            <DiscreteThicknessKeyFrame Value="0" KeyTime="0:0:0.0" />
+                                        <ThicknessAnimationUsingKeyFrames Storyboard.TargetName="WindowRoot" Storyboard.TargetProperty="Margin" BeginTime="0:0:0.376" Duration="0">
+                                            <DiscreteThicknessKeyFrame Value="0" KeyTime="0:0:0.0"/>
                                         </ThicknessAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="ResizeMode" Value="CanMinimize">
-                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0" />
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0"/>
                             <Setter TargetName="PART_ThumbBottom" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="PART_ThumbTop" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="PART_ThumbBottomRightCorner" Property="Visibility" Value="Hidden" />
@@ -462,10 +431,10 @@
                             <Setter TargetName="PART_ThumbLeft" Property="Visibility" Value="Hidden" />
                         </Trigger>
                         <Trigger Property="ResizeMode" Value="NoResize">
-                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0" />
-                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="PART_MinimizeButton" Property="Width" Value="0" />
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Width" Value="0"/>
                             <Setter TargetName="PART_ThumbBottom" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="PART_ThumbTop" Property="Visibility" Value="Hidden" />
                             <Setter TargetName="PART_ThumbBottomRightCorner" Property="Visibility" Value="Hidden" />
@@ -501,7 +470,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="{x:Type plex:PlexWindow}" />
+    <Style TargetType="{x:Type plex:PlexWindow}"/>
 
     <!-- End Window Styles -->
 </ResourceDictionary>
