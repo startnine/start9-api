@@ -159,6 +159,18 @@ namespace Start9.Api.Tools
             return tempUri;
         }
 
+        public static string GetUpdateAddressFromApp(string app)
+        {
+            XmlDocument appxManifest = new XmlDocument();
+            //%programfiles%/WindowsApps/Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe/AppxManifest.xml
+            string appxManifestPath = Environment.ExpandEnvironmentVariables(@"%programfiles%/WindowsApps/") + app + @"/AppxManifest.xml";
+            appxManifest.Load(appxManifestPath);
+            XmlNodeList tileUpdate = appxManifest.GetElementsByTagName("wb:TileUpdate");
+            return tileUpdate[0].Attributes["UriTemplate"].Value;
+            //XmlNode root = appxManifest.DocumentElement;
+            //wb: TileUpdate
+        }
+
         public static NotificationInfo GetLiveTileNotification(string app)
         {
             NotificationInfo notifyInfo = new NotificationInfo();
