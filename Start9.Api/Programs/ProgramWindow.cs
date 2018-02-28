@@ -148,7 +148,22 @@ namespace Start9.Api.Programs
 			try
 			{
 				WinApi.ShowWindow(Hwnd, 5);
-				WinApi.SetForegroundWindow(Hwnd);
+                WinApi.WINDOWPLACEMENT placement = new WinApi.WINDOWPLACEMENT();
+                WinApi.GetWindowPlacement(Hwnd, ref placement);
+                //var style = WinApi.GetWindowLong(Hwnd, GWL_STYLE).ToInt64();
+                //if ((style & Convert.ToInt64(WinApi.WsMinimize)) == WinApi.WsMinimize)
+                //{
+                    //if ((style & Convert.ToInt64(WinApi.WsMaximize)) == WinApi.WsMaximize)
+                    if ((placement.showCmd == (3 & 6)) | (placement.showCmd == 3)) 
+                    {
+                        WinApi.ShowWindow(Hwnd, 3);
+                    }
+                    else
+                    {
+                        WinApi.ShowWindow(Hwnd, 1);
+                    }
+                //}
+                WinApi.SetForegroundWindow(Hwnd);
 			}
 			catch (Exception ex)
 			{
@@ -163,11 +178,19 @@ namespace Start9.Api.Programs
 		{
 			try
 			{
-				WinApi.ShowWindow(Hwnd, 11);
+                WinApi.ShowWindow(Hwnd, 6);
 			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine("Window not minimized!\r\n" + ex);
+			catch (Exception e)
+            {
+                try
+                {
+                    Debug.WriteLine("Window not minimized on first attempt!\r\n" + e);
+                    WinApi.ShowWindow(Hwnd, 11);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Window not minimized on second attempt!\r\n" + ex);
+                }
 			}
 		}
 

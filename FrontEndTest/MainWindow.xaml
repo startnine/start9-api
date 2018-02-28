@@ -37,16 +37,8 @@
                 </Button.ContextMenu>
                 Test Button
             </Button>
-            <Canvas Grid.Column="1">
-                <Canvas.Background>
-                    <Binding Converter="{StaticResource ImageBrushNineGridConverter}">
-                        <Binding.ConverterParameter>
-                            <obj:ImageBrushNineGridInfo SizingImageBrush="{DynamicResource TestImageBrush}" SizingMargin="10,20,40,30" TargetWidth="100" TargetHeight="100"/>
-                        </Binding.ConverterParameter>
-                    </Binding>
-                    <!--obj:NineGridImageBrush x:Name="TestBrush" TargetWidth="100" TargetHeight="100" SizingMargins="10,10,10,10"/-->
-                </Canvas.Background>
-                <Canvas.ContextMenu>
+            <StackPanel x:Name="TileTestStackPanel" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                <StackPanel.ContextMenu>
                     <apictrl:TouchableContextMenu>
                         <MenuItem Header="Test"/>
                         <MenuItem Header="Test"/>
@@ -58,8 +50,8 @@
                             <MenuItem Header="Test"/>
                         </MenuItem>
                     </apictrl:TouchableContextMenu>
-                </Canvas.ContextMenu>
-            </Canvas>
+                </StackPanel.ContextMenu>
+            </StackPanel>
         </Grid>
     </plex:PlexWindow.Content>
 </plex:PlexWindow>
