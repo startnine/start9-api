@@ -197,7 +197,8 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <RadialGradientBrush x:Key="StandardButtonHoverGlowBrush" GradientOrigin="0.5,1" Center="0.5,1" RadiusX="0.5" RadiusY="0.75">
+    <RadialGradientBrush x:Key="StandardButtonHoverGlowBrush" GradientOrigin="0.5,1" Center="0.5,1" RadiusX="0.5"
+                         RadiusY="0.75">
         <RadialGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="White" />
             <GradientStop Offset="0.25" Color="#FFD4FFBF" />
@@ -280,8 +281,7 @@
             <GradientStop Offset="1" Color="#40D5D5D5" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
-    
-    
+
 
     <LinearGradientBrush x:Key="RoundButtonIdlePrimaryFillBrush" StartPoint="0,0" EndPoint="1,1">
         <LinearGradientBrush.GradientStops>
@@ -355,7 +355,8 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <RadialGradientBrush x:Key="RoundButtonDisabledSecondaryFillBrush" GradientOrigin="0.625,0.375" Center="0.625,0.375">
+    <RadialGradientBrush x:Key="RoundButtonDisabledSecondaryFillBrush" GradientOrigin="0.625,0.375"
+                         Center="0.625,0.375">
         <RadialGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="Transparent" />
             <GradientStop Offset="1.25" Color="#50B9D9B7" />
@@ -430,15 +431,15 @@
 
     <LinearGradientBrush x:Key="ContextMenuBackgroundBrush" StartPoint="0.25,0" EndPoint="0.75,1">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF79E767"/>
-            <GradientStop Offset="0.75" Color="#FF1B3D17"/>
+            <GradientStop Offset="0" Color="#FF79E767" />
+            <GradientStop Offset="0.75" Color="#FF1B3D17" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="ContextMenuBorderBrush" StartPoint="0.25,0" EndPoint="0.75,1">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF44743B"/>
-            <GradientStop Offset="0.75" Color="#FF010101"/>
+            <GradientStop Offset="0" Color="#FF44743B" />
+            <GradientStop Offset="0.75" Color="#FF010101" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
@@ -449,7 +450,7 @@
 
     <SolidColorBrush x:Key="TextBoxPrimaryBorderBrush">#FF7B9F6C</SolidColorBrush>
     <SolidColorBrush x:Key="TextBoxPrimaryBackgroundBrush">White</SolidColorBrush>
-    
+
     <GradientStopCollection x:Key="TextBoxGlowGradientStops">
         <GradientStop Offset="0" Color="#FFC2DDBE" />
         <GradientStop Offset="1" Color="Transparent" />

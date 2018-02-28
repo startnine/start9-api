@@ -1,33 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
 
 namespace Start9.Api.Modules
 {
 	[Serializable]
 	public abstract class Module
 	{
-		static readonly List<Module> _modules = new List<Module>();
-
-		public static ReadOnlyCollection<Module> Modules => _modules.AsReadOnly();
+		private static readonly List<Module> _modules = new List<Module>();
 
 		static Module()
 		{
-
 		}
+
+		public static ReadOnlyCollection<Module> Modules => _modules.AsReadOnly();
+
+		public abstract string Name { get; }
+
+		public Guid Guid { get; } = Guid.NewGuid();
 
 		public static void Poke()
 		{
 			//this runs the ctor
 		}
-		
-		public abstract string Name { get; }
-
-		public Guid Guid { get; } = Guid.NewGuid();
 
 		protected virtual void MessageRecieved<T>(Message<T> message)
 		{
@@ -36,10 +31,12 @@ namespace Start9.Api.Modules
 
 		protected virtual void MessageRecieved(Message message)
 		{
-
 		}
 
 
-		public override string ToString() => $"[{GetType().Assembly}]\"{Name}\":{Guid}";
+		public override string ToString()
+		{
+			return $"[{GetType().Assembly}]\"{Name}\":{Guid}";
+		}
 	}
 }

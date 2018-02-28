@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Automation;
 using Start9.Api.Objects;
@@ -21,19 +19,22 @@ namespace Start9.Api.Programs
 				AutomationElement.RootElement,
 				TreeScope.Children,
 				(sender, e) => WindowOpened?.Invoke(null,
-													new WindowEventArgs(
-														new ProgramWindow(new IntPtr(((AutomationElement) sender).Current.NativeWindowHandle)))));
+					new WindowEventArgs(
+						new ProgramWindow(new IntPtr(((AutomationElement) sender).Current.NativeWindowHandle)))));
 
 			Automation.AddAutomationEventHandler(
 				WindowPattern.WindowClosedEvent,
 				AutomationElement.RootElement,
 				TreeScope.Subtree,
 				(sender, e) => WindowClosed?.Invoke(null,
-													new WindowEventArgs(
-														new ProgramWindow(new IntPtr(((AutomationElement) sender).Cached.NativeWindowHandle)))));
+					new WindowEventArgs(
+						new ProgramWindow(new IntPtr(((AutomationElement) sender).Cached.NativeWindowHandle)))));
 		}
 
-		public ProgramWindow(IntPtr hwnd) { Hwnd = hwnd; }
+		public ProgramWindow(IntPtr hwnd)
+		{
+			Hwnd = hwnd;
+		}
 
 		public IntPtr Hwnd { get; }
 
@@ -72,133 +73,51 @@ namespace Start9.Api.Programs
 			}
 		}
 
-        /*public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows => ProgramWindows.Where(
+		/*public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows => ProgramWindows.Where(
 			hwnd => TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd.Hwnd, GWL_STYLE).ToInt32()) &
 					(WinApi.GetWindowLong(hwnd.Hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW);*/
-        public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows
-        {
-            get
-            {
-                var collection = new List<IntPtr>();
-
-                bool Filter(IntPtr hWnd, int lParam)
-                {
-                    var strbTitle = new StringBuilder(WinApi.GetWindowTextLength(hWnd));
-                    WinApi.GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
-                    var strTitle = strbTitle.ToString();
-
-
-                    if (WinApi.IsWindowVisible(hWnd) && string.IsNullOrEmpty(strTitle) == false)
-                        collection.Add(hWnd);
-
-                    return true;
-                }
-
-                if (!WinApi.EnumDesktopWindows(IntPtr.Zero, Filter, IntPtr.Zero)) yield break;
-
-                foreach (var hwnd in collection)
-                {
-                    try
-                    {
-                        if (Environment.Is64BitProcess)
-                        {
-                            if ((TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt64())) && ((WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt64() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW))
-                            {
-                                yield return new ProgramWindow(hwnd);
-                            }
-                        }
-                        else
-                        {
-                            if ((TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt32())) && ((WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW))
-                            {
-                                yield return new ProgramWindow(hwnd);
-                            }
-                        }
-                    }
-                    finally
-                    {
-
-                    }
-                }
-            }
-        }
-
-        static void AddClosedHandler(IntPtr handle)
+		public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows
 		{
-			Automation.AddAutomationEventHandler(
-				WindowPattern.WindowClosedEvent,
-				AutomationElement.FromHandle(handle),
-				TreeScope.Subtree,
-				(sender, e) =>
+			get
+			{
+				var collection = new List<IntPtr>();
+
+				bool Filter(IntPtr hWnd, int lParam)
 				{
-					Debug.WriteLine(handle.ToString() + " IS KILL");
-					WindowClosed?.Invoke(null, new WindowEventArgs(new ProgramWindow(handle)));
-				});
-		}
+					var strbTitle = new StringBuilder(WinApi.GetWindowTextLength(hWnd));
+					WinApi.GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
+					var strTitle = strbTitle.ToString();
 
-		public static event EventHandler<WindowEventArgs> WindowOpened;
 
-		public static event EventHandler<WindowEventArgs> WindowClosed;
+					if (WinApi.IsWindowVisible(hWnd) && string.IsNullOrEmpty(strTitle) == false)
+						collection.Add(hWnd);
 
-		/// <summary>
-		///     Makes this window the active window, moving it to the front of the Z-Order (bar topmost windows) and enabling full user interaction.
-		/// </summary>
-		public void Show()
-		{
-			try
-			{
-				WinApi.ShowWindow(Hwnd, 5);
-				WinApi.SetForegroundWindow(Hwnd);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine("Window not focused!\r\n" + ex);
-			}
-		}
+					return true;
+				}
 
-        /// <summary>
-        ///     Minimizes the window, hiding it from view, but leaving its indicator visible in the taskbar or other comparable module.
-        /// </summary>
-        public void Minimize()
-		{
-			try
-			{
-				WinApi.ShowWindow(Hwnd, 11);
-			}
-			catch (Exception ex)
-			{
-				Debug.WriteLine("Window not minimized!\r\n" + ex);
+				if (!WinApi.EnumDesktopWindows(IntPtr.Zero, Filter, IntPtr.Zero)) yield break;
+
+				foreach (var hwnd in collection)
+					try
+					{
+						if (Environment.Is64BitProcess)
+						{
+							if (TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt64()) &&
+							    (WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt64() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW)
+								yield return new ProgramWindow(hwnd);
+						}
+						else
+						{
+							if (TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd, GWL_STYLE).ToInt32()) &&
+							    (WinApi.GetWindowLong(hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW)
+								yield return new ProgramWindow(hwnd);
+						}
+					}
+					finally
+					{
+					}
 			}
 		}
-
-		/// <summary>
-		///     Maximizes the Window, causing it to forcibly fill the Working Area
-		/// </summary>
-		public void Maximize() { WinApi.ShowWindow(Hwnd, 3); }
-
-        /// <summary>
-        ///     Restores the Window, reducing its size, un-minimizing it, and displaying its resize borders (if any).
-        /// </summary>
-        public void Restore() { WinApi.ShowWindow(Hwnd, 1); }
-
-
-        /// <summary>
-        ///     Doesn't actually work yet, but will display the window's System Menu, containing various window management options
-        /// </summary>
-        public void ShowSystemMenu()
-        {
-            //https://stackoverflow.com/questions/21825352/how-to-open-window-system-menu-on-right-click
-            WinApi.Rect pos;
-            WinApi.GetWindowRect(Hwnd, out pos);
-            IntPtr hMenu = WinApi.GetSystemMenu(Hwnd, false);
-            int cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 & 0x0020, MainTools.GetDpiScaledCursorPosition().X, MainTools.GetDpiScaledCursorPosition().Y, 0, Hwnd, IntPtr.Zero);
-            WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
-        }
-
-        /// <summary>
-        ///     Closes the window.
-        /// </summary>
-        public void Close() { WinApi.SendMessage(Hwnd, 0x0010, 0, 0); }
 
 		public string Name
 		{
@@ -255,18 +174,107 @@ namespace Start9.Api.Programs
 			}
 		}
 
+		private static void AddClosedHandler(IntPtr handle)
+		{
+			Automation.AddAutomationEventHandler(
+				WindowPattern.WindowClosedEvent,
+				AutomationElement.FromHandle(handle),
+				TreeScope.Subtree,
+				(sender, e) =>
+				{
+					Debug.WriteLine(handle.ToString() + " IS KILL");
+					WindowClosed?.Invoke(null, new WindowEventArgs(new ProgramWindow(handle)));
+				});
+		}
+
+		public static event EventHandler<WindowEventArgs> WindowOpened;
+
+		public static event EventHandler<WindowEventArgs> WindowClosed;
+
+		/// <summary>
+		///     Makes this window the active window, moving it to the front of the Z-Order (bar topmost windows) and enabling full
+		///     user interaction.
+		/// </summary>
+		public void Show()
+		{
+			try
+			{
+				WinApi.ShowWindow(Hwnd, 5);
+				WinApi.SetForegroundWindow(Hwnd);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("Window not focused!\r\n" + ex);
+			}
+		}
+
+		/// <summary>
+		///     Minimizes the window, hiding it from view, but leaving its indicator visible in the taskbar or other comparable
+		///     module.
+		/// </summary>
+		public void Minimize()
+		{
+			try
+			{
+				WinApi.ShowWindow(Hwnd, 11);
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine("Window not minimized!\r\n" + ex);
+			}
+		}
+
+		/// <summary>
+		///     Maximizes the Window, causing it to forcibly fill the Working Area
+		/// </summary>
+		public void Maximize()
+		{
+			WinApi.ShowWindow(Hwnd, 3);
+		}
+
+		/// <summary>
+		///     Restores the Window, reducing its size, un-minimizing it, and displaying its resize borders (if any).
+		/// </summary>
+		public void Restore()
+		{
+			WinApi.ShowWindow(Hwnd, 1);
+		}
+
+
+		/// <summary>
+		///     Doesn't actually work yet, but will display the window's System Menu, containing various window management options
+		/// </summary>
+		public void ShowSystemMenu()
+		{
+			//https://stackoverflow.com/questions/21825352/how-to-open-window-system-menu-on-right-click
+			WinApi.Rect pos;
+			WinApi.GetWindowRect(Hwnd, out pos);
+			var hMenu = WinApi.GetSystemMenu(Hwnd, false);
+			var cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 & 0x0020, MainTools.GetDpiScaledCursorPosition().X,
+				MainTools.GetDpiScaledCursorPosition().Y, 0, Hwnd, IntPtr.Zero);
+			WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
+		}
+
+		/// <summary>
+		///     Closes the window.
+		/// </summary>
+		public void Close()
+		{
+			WinApi.SendMessage(Hwnd, 0x0010, 0, 0);
+		}
+
 		#region p/invoke stuff don't touch lpz
 
-		const int GclHiconsm       = -34;
-		const int GclHicon         = -14;
-		const int IconSmall        = 0;
-		const int IconBig          = 1;
-		const int IconSmall2       = 2;
-		const int WmGeticon        = 0x7F;
-		const int GWL_STYLE        = -16;
-		const int GWL_EXSTYLE      = -20;
-		const int TASKSTYLE        = 0x10000000 | 0x00800000;
-		const int WS_EX_TOOLWINDOW = 0x00000080;
+		private const int GclHiconsm = -34;
+		private const int GclHicon = -14;
+		private const int IconSmall = 0;
+		private const int IconBig = 1;
+		private const int IconSmall2 = 2;
+		private const int WmGeticon = 0x7F;
+		private const int GWL_STYLE = -16;
+		private const int GWL_EXSTYLE = -20;
+		private const int TASKSTYLE = 0x10000000 | 0x00800000;
+		private const int WS_EX_TOOLWINDOW = 0x00000080;
 
 		#endregion
 	}

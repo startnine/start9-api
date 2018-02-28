@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
 
 namespace Start9.Api.Tools
 {
@@ -12,8 +11,14 @@ namespace Start9.Api.Tools
 			return g.DpiY / 96;
 		}
 
-		public static int ConvertWpfUnitsToPixels(double wpfUnits) => (int) (wpfUnits * GetScalingFactor());
+		public static int ConvertWpfUnitsToPixels(double wpfUnits)
+		{
+			return (int) (wpfUnits * GetScalingFactor());
+		}
 
-		public static int ConvertPixelsToWpfUnits(double pixels) => (int) (pixels / GetScalingFactor());
+		public static int ConvertPixelsToWpfUnits(double pixels)
+		{
+			return (int) (pixels / GetScalingFactor());
+		}
 	}
 }
