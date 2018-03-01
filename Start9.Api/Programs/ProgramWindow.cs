@@ -178,14 +178,14 @@ namespace Start9.Api.Programs
 		{
 			try
 			{
-                WinApi.ShowWindow(Hwnd, 6);
+                WinApi.ShowWindow(Hwnd, 11);
 			}
 			catch (Exception e)
             {
                 try
                 {
                     Debug.WriteLine("Window not minimized on first attempt!\r\n" + e);
-                    WinApi.ShowWindow(Hwnd, 11);
+                    WinApi.ShowWindow(Hwnd, 6);
                 }
                 catch (Exception ex)
                 {
