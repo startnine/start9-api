@@ -30,27 +30,34 @@ namespace FrontEndTest
             };
             //@"http://{language}.appex-rf.msn.com/cgtile/v1/{language}/News/Today.xml"
             //Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe
-            AppxTools.NotificationInfo notify = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp("Microsoft.BingSports_3.0.4.212_x64__8wekyb3d8bbwe"));
-
-            foreach (ImageBrush i in notify.Images)
+            //AppxTools.NotificationInfo notify;// = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp("Microsoft.BingSports_3.0.4.212_x64__8wekyb3d8bbwe"));
+            AppxTools.TileInfo Info = new AppxTools.TileInfo("Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe");
+            Info.NotificationReceived += (object sneder, AppxTools.NotificationInfoEventArgs args) =>
             {
-                Canvas c = new Canvas()
+                Dispatcher.Invoke(new Action(() =>
                 {
-                    Width = 100,
-                    Height = 100,
-                    Background = i
-                };
-                TileTestStackPanel.Children.Add(c);
-            }
+                    TileTestStackPanel.Children.Clear();
+                    foreach (ImageBrush i in args.NewNotification.Images)
+                    {
+                        Canvas c = new Canvas()
+                        {
+                            Width = 100,
+                            Height = 100,
+                            Background = i
+                        };
+                        TileTestStackPanel.Children.Add(c);
+                    }
 
-            foreach (string s in notify.Text)
-            {
-                TextBlock t = new TextBlock()
-                {
-                    Text = s
-                };
-                TileTestStackPanel.Children.Add(t);
-            }
+                    foreach (string s in args.NewNotification.Text)
+                    {
+                        TextBlock t = new TextBlock()
+                        {
+                            Text = s
+                        };
+                        TileTestStackPanel.Children.Add(t);
+                    }
+                }));
+            };
         }
     }
 }

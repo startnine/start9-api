@@ -16,6 +16,7 @@
             </ResourceDictionary.MergedDictionaries>
             <obj:ImageBrushNineGridConverter x:Key="ImageBrushNineGridConverter"/>
             <ImageBrush x:Key="TestImageBrush"/>
+            <obj:CutCornerGeometryConverter x:Key="CutCornerGeometryConverter"/>
         </ResourceDictionary>
     </plex:PlexWindow.Resources>
     <plex:PlexWindow.Content>
@@ -24,19 +25,18 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button>
-                <Button.ToolTip>Test</Button.ToolTip>
-                <Button.ContextMenu>
-                    <ContextMenu>
-                        <!--ItemContainerStyle="{DynamicResource {x:Type MenuItem}}"-->
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test">
-                            <MenuItem Header="Test"/>
-                        </MenuItem>
-                    </ContextMenu>
-                </Button.ContextMenu>
-                Test Button
-            </Button>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="#4000FF00">
+                <Grid x:Name="SizeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#40FF00FF" Margin="10,10,10,10"/>
+                <Path Fill="#FF7B767A" Width="{Binding ActualWidth, Source={x:Reference Name=SizeGrid}}" Height="{Binding ActualHeight, Source={x:Reference Name=SizeGrid}}">
+                    <Path.Data>
+                        <Binding Converter="{StaticResource CutCornerGeometryConverter}">
+                            <Binding.ConverterParameter>
+                                <obj:CutCornerInfo CornerDistance="25,50,75,100" Width="{Binding ActualWidth, Source={x:Reference Name=SizeGrid}, NotifyOnSourceUpdated=True}" Height="{Binding ActualHeight, Source={x:Reference Name=SizeGrid}, NotifyOnSourceUpdated=True}"/>
+                            </Binding.ConverterParameter>
+                        </Binding>
+                    </Path.Data>
+                </Path>
+            </Grid>
             <StackPanel x:Name="TileTestStackPanel" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <StackPanel.ContextMenu>
                     <apictrl:TouchableContextMenu>

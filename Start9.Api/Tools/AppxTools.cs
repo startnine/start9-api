@@ -7,6 +7,8 @@ using System.Xml;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Timers;
+using System.Windows;
 
 namespace Start9.Api.Tools
 {
@@ -139,6 +141,55 @@ namespace Start9.Api.Tools
             TileWideText09,
             TileWideText10,
             TileWideText11
+        }
+
+        public class NotificationInfoEventArgs : EventArgs
+        {
+            public NotificationInfo OldNotification;
+            public NotificationInfo NewNotification;
+        }
+
+        public class TileInfo
+        {
+            public string Name;
+            public ImageBrush Icon;
+            public Color Color;
+
+            public NotificationInfo CurrentNotification;
+
+            Timer notificationTimer;
+
+            public event EventHandler<NotificationInfoEventArgs> NotificationReceived;
+
+            public TileInfo(string App)
+            {
+                notificationTimer = new Timer(5000);
+                Name = "App Name (TEMP)"; //Get App name here
+                Icon = new ImageBrush(); //Get App icon here
+                Color = Color.FromArgb(0xFF, 0xFF, 0, 0xFF); //Get App color here
+
+                //"Microsoft.BingSports_3.0.4.212_x64__8wekyb3d8bbwe"
+
+                CurrentNotification = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp(App));
+                UIElement element = new UIElement();
+                notificationTimer.Elapsed += delegate
+                {
+                    element.Dispatcher.Invoke(new Action(() =>
+                    {
+                        var NewNotification = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp(App));
+                        if (CurrentNotification != NewNotification)
+                        {
+                            NotificationReceived?.Invoke(this, new NotificationInfoEventArgs()
+                            {
+                                OldNotification = CurrentNotification,
+                                NewNotification = NewNotification
+                            });
+                            CurrentNotification = NewNotification;
+                        }
+                    }));
+                };
+                notificationTimer.Start();
+            }
         }
 
         public class NotificationInfo
