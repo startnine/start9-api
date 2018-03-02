@@ -175,7 +175,7 @@ namespace Start9.Api.Tools
         public static System.Windows.Media.ImageSource GetIconFromFilePath(string path, int width, int height, uint flags)
         {
             WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
-            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), 0x000000001 | 0x100);
+            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
             System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
             System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
             entryIcon.Handle,
