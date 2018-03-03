@@ -7,12 +7,24 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Start9.Api.Objects
 {
+    //THERE WAS AN ATTEMPT
+    //THIS ENTIRE FILE IS SUPERSEDED BY CutCornerBorder
     public class CutCornerInfo : DependencyObject
     {
-        public CornerRadius CornerDistance
+        /*public Path Target
+        {
+            get => (Path)GetValue(TargetProperty);
+            set => SetValue(TargetProperty, value);
+        }
+
+        public static readonly DependencyProperty TargetProperty =
+            DependencyProperty.Register("Target", typeof(Path), typeof(CutCornerInfo), new PropertyMetadata(null));
+
+        */public CornerRadius CornerDistance
         {
             get => (CornerRadius)GetValue(CornerDistanceProperty);
             set => SetValue(CornerDistanceProperty, value);
@@ -27,8 +39,8 @@ namespace Start9.Api.Objects
             set => SetValue(WidthProperty, value);
         }
 
-        public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.Register("Width", typeof(double), typeof(CutCornerInfo), new PropertyMetadata((double)100));
+        public static DependencyProperty WidthProperty =
+            DependencyProperty.RegisterAttached("Width", typeof(double), typeof(CutCornerInfo), new FrameworkPropertyMetadata((double)100, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public double Height
         {
@@ -36,8 +48,8 @@ namespace Start9.Api.Objects
             set => SetValue(HeightProperty, value);
         }
 
-        public static readonly DependencyProperty HeightProperty =
-            DependencyProperty.Register("Height", typeof(double), typeof(CutCornerInfo), new PropertyMetadata((double)100));
+        public static DependencyProperty HeightProperty =
+            DependencyProperty.RegisterAttached("Height", typeof(double), typeof(CutCornerInfo), new FrameworkPropertyMetadata((double)100, FrameworkPropertyMetadataOptions.AffectsRender));
     }
 
 

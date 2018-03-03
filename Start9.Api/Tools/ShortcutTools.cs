@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
 using Start9.Api.Tools;
+using System.Windows;
 
 namespace Start9.Api.Tools
 {
+
     public static class ShortcutTools
     {
         public static string GetTargetPath(string filePath)

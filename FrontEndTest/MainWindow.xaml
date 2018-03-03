@@ -25,17 +25,21 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Background="#4000FF00">
-                <Grid x:Name="SizeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#40FF00FF" Margin="10,10,10,10"/>
-                <Path Fill="#FF7B767A" Width="{Binding ActualWidth, Source={x:Reference Name=SizeGrid}}" Height="{Binding ActualHeight, Source={x:Reference Name=SizeGrid}}">
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Grid x:Name="SizeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <Canvas  x:Name="Sizer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <!--Path Fill="#FF7B767A" Stretch="None">
                     <Path.Data>
-                        <Binding Converter="{StaticResource CutCornerGeometryConverter}">
+                        <Binding Converter="{StaticResource CutCornerGeometryConverter}" UpdateSourceTrigger="PropertyChanged" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
                             <Binding.ConverterParameter>
-                                <obj:CutCornerInfo CornerDistance="25,50,75,100" Width="{Binding ActualWidth, Source={x:Reference Name=SizeGrid}, NotifyOnSourceUpdated=True}" Height="{Binding ActualHeight, Source={x:Reference Name=SizeGrid}, NotifyOnSourceUpdated=True}"/>
+                                <obj:CutCornerInfo CornerDistance="25,50,75,100" Width="{Binding ActualWidth, Source={x:Reference Name=Sizer}, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Height="{Binding ActualHeight, Source={x:Reference Name=Sizer}, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" />
                             </Binding.ConverterParameter>
                         </Binding>
                     </Path.Data>
-                </Path>
+                </Path-->
+                <apictrl:CutCornerBorder Background="Blue" BorderBrush="Red" BorderThickness="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerDistance="25,50,75,100">
+                    <Canvas Width="100" Height="100" Background="Green"/>
+                </apictrl:CutCornerBorder>
             </Grid>
             <StackPanel x:Name="TileTestStackPanel" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Visible">
                 <StackPanel.ContextMenu>
