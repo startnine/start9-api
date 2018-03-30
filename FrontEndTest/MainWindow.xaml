@@ -24,6 +24,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid x:Name="SizeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
@@ -56,6 +57,7 @@
                     </apictrl:TouchableContextMenu>
                 </StackPanel.ContextMenu>
             </StackPanel>
+            <TreeView x:Name="AllAppsTree" Grid.Column="2"/>
         </Grid>
     </plex:PlexWindow.Content>
 </plex:PlexWindow>

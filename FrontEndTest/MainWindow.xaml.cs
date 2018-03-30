@@ -10,9 +10,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 using Start9.Api.Plex;
 using Start9.Api.Tools;
+using Start9.Api.DiskFiles;
+using System.Diagnostics;
 
 namespace FrontEndTest
 {
@@ -24,10 +26,7 @@ namespace FrontEndTest
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += delegate
-            {
-                Resources["TestImageBrush"] = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%userprofile%\Documents\TestImage.png"), UriKind.RelativeOrAbsolute)));
-            };
+            Loaded += MainWindow_Loaded;
             //@"http://{language}.appex-rf.msn.com/cgtile/v1/{language}/News/Today.xml"
             //Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe
             //AppxTools.NotificationInfo notify;// = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp("Microsoft.BingSports_3.0.4.212_x64__8wekyb3d8bbwe"));
@@ -57,6 +56,50 @@ namespace FrontEndTest
                         TileTestStackPanel.Children.Add(t);
                     }
                 }));
+            };
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Resources["TestImageBrush"] = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%userprofile%\Documents\TestImage.png"), UriKind.RelativeOrAbsolute)));
+
+            foreach (DiskItem d in DiskItem.AllApps)
+            {
+                TreeViewItem t = GetTreeViewItemFromDiskItem(d);
+                if (t.Tag.GetType().Name.Contains("DiskFolder"))
+                {
+                    t.Expanded += (object sneder, RoutedEventArgs args) =>
+                    {
+                        foreach (DiskItem i in (t.Tag as DiskFolder).SubItems)
+                        {
+                            t.Items.Add(GetTreeViewItemFromDiskItem(i));
+                        }
+                    };
+
+                    t.MouseDoubleClick += (object sneder, MouseButtonEventArgs args) =>
+                    {
+                        Process.Start((t.Tag as DiskFolder).Path);
+                    };
+                }
+                else
+                {
+                    t.Expanded += (object sneder, RoutedEventArgs args) =>
+                    {
+                        Process.Start((t.Tag as DiskItem).Path);
+                    };
+                }
+                AllAppsTree.Items.Add(d);
+            }
+        }
+
+        private TreeViewItem GetTreeViewItemFromDiskItem(DiskItem d)
+        {
+            string p = Path.GetFileNameWithoutExtension(d.Path);
+            return new TreeViewItem()
+            {
+                Tag = d,
+                Header = p,
+                Style = (Style)Resources[typeof(TreeViewItem)]
             };
         }
     }
