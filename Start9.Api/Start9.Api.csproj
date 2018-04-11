@@ -59,7 +59,6 @@
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="DiskFiles\DiskFile.cs" />
-    <Compile Include="Modules\Message.cs" />
     <Compile Include="Objects\GeometryConverter.cs" />
     <Compile Include="Objects\WidthToOffsetMarginConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -73,7 +72,6 @@
     <Compile Include="Objects\NineGridImageBrush.cs" />
     <Compile Include="Tools\DpiManager.cs" />
     <Compile Include="Tools\Extensions.cs" />
-    <Compile Include="Modules\Module.cs" />
     <Compile Include="Programs\IProgramItem.cs" />
     <Compile Include="Tools\MainTools.cs" />
     <Compile Include="Plex\PlexWindow.cs" />
