@@ -15,6 +15,9 @@ using Start9.Api.Plex;
 using Start9.Api.Tools;
 using Start9.Api.DiskFiles;
 using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace FrontEndTest
 {
@@ -25,11 +28,19 @@ namespace FrontEndTest
     {
         public MainWindow()
         {
+            Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
+        }
+
+
+        /*public MainWindow(bool f)
+        {
             InitializeComponent();
             Loaded += MainWindow_Loaded;
-            //@"http://{language}.appex-rf.msn.com/cgtile/v1/{language}/News/Today.xml"
-            //Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe
-            //AppxTools.NotificationInfo notify;// = AppxTools.GetLiveTileNotification(AppxTools.GetUpdateAddressFromApp("Microsoft.BingSports_3.0.4.212_x64__8wekyb3d8bbwe"));
             AppxTools.TileInfo Info = new AppxTools.TileInfo("Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe");
             Info.NotificationReceived += (object sneder, AppxTools.NotificationInfoEventArgs args) =>
             {
@@ -59,7 +70,7 @@ namespace FrontEndTest
             };
         }
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_oldLoaded(object sender, RoutedEventArgs e)
         {
             //Resources["TestImageBrush"] = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%userprofile%\Documents\TestImage.png"), UriKind.RelativeOrAbsolute)));
 
@@ -90,7 +101,7 @@ namespace FrontEndTest
                 }
                 AllAppsTree.Items.Add(d);
             }
-        }
+        }*/
 
         private TreeViewItem GetTreeViewItemFromDiskItem(DiskItem d)
         {
@@ -101,6 +112,56 @@ namespace FrontEndTest
                 Header = p,
                 Style = (Style)Resources[typeof(TreeViewItem)]
             };
+        }
+    }/*
+
+    public class ReplacementIconNameToReplacedCanvasConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            string source = value.ToString();
+            return new Canvas()
+            {
+                Width = 48,
+                Height = 48,
+                Background = new ImageBrush(new BitmapImage(new Uri(Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\IconOverrides\" + source), UriKind.RelativeOrAbsolute)))
+            };
+        }
+
+        public object ConvertBack(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }*/
+
+    class ReplacementIconNameToOriginalCanvasConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            string source = value.ToString();
+            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
+            WinApi.SHGetFileInfo(Environment.ExpandEnvironmentVariables(source), 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), 0x000000000 | 0x100);
+            System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
+            ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
+            entryIcon.Handle,
+            Int32Rect.Empty,
+            BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(48)), System.Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(48)))
+            );
+            return new Canvas()
+            {
+                Width = 48,
+                Height = 48,
+                Background = new ImageBrush(entryIconImageSource)  //MiscTools.GetIconFromFilePath(Environment.ExpandEnvironmentVariables(source)))
+            };
+        }
+
+        public object ConvertBack(object value, Type targetType,
+            object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

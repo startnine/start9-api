@@ -8,19 +8,21 @@
         xmlns:obj="clr-namespace:Start9.Api.Objects;assembly=Start9.Api"
         xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Width="640" Height="350">
     <plex:PlexWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Plex.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            <obj:ImageBrushNineGridConverter x:Key="ImageBrushNineGridConverter"/>
+            <!--obj:ImageBrushNineGridConverter x:Key="ImageBrushNineGridConverter"/>
             <ImageBrush x:Key="TestImageBrush"/>
-            <obj:CutCornerGeometryConverter x:Key="CutCornerGeometryConverter"/>
+            <obj:CutCornerGeometryConverter x:Key="CutCornerGeometryConverter"/-->
+            <!--local:ReplacementIconNameToReplacedCanvasConverter x:Key="ReplacementIconNameToReplacedCanvasConverter"/-->
+            <local:ReplacementIconNameToOriginalCanvasConverter x:Key="ReplacementIconNameToOriginalCanvasConverter"/>
         </ResourceDictionary>
     </plex:PlexWindow.Resources>
     <plex:PlexWindow.Content>
-        <Grid>
+        <!--Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -29,7 +31,7 @@
             <Grid Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid x:Name="SizeGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
                 <Canvas  x:Name="Sizer" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <!--Path Fill="#FF7B767A" Stretch="None">
+                <!-Path Fill="#FF7B767A" Stretch="None">
                     <Path.Data>
                         <Binding Converter="{StaticResource CutCornerGeometryConverter}" UpdateSourceTrigger="PropertyChanged" NotifyOnSourceUpdated="True" NotifyOnTargetUpdated="True">
                             <Binding.ConverterParameter>
@@ -37,7 +39,7 @@
                             </Binding.ConverterParameter>
                         </Binding>
                     </Path.Data>
-                </Path-->
+                </Path->
                 <apictrl:CutCornerBorder Background="Blue" BorderBrush="Red" BorderThickness="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerDistance="25,50,75,100">
                     <Canvas Width="100" Height="100" Background="Green"/>
                 </apictrl:CutCornerBorder>
@@ -58,6 +60,52 @@
                 </StackPanel.ContextMenu>
             </StackPanel>
             <TreeView x:Name="AllAppsTree" Grid.Column="2"/>
+        </Grid-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0"/>
+            </Grid.ColumnDefinitions>
+            <ListView x:Name="FileIconOverrides">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding TargetName}">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="TargetName">Target File name</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding IsFullPath}">
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="IsFullPath">Is full path</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="OriginalIcon">Original icon</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ContentControl Content="{Binding TargetName, Converter={StaticResource ReplacementIconNameToOriginalCanvasConverter}}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn>
+                            <GridViewColumn.Header>
+                                <GridViewColumnHeader Tag="ReplacementBrush">Replacement icon</GridViewColumnHeader>
+                            </GridViewColumn.Header>
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Canvas Width="48" Height="48" Background="{Binding ReplacementBrush}"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                
+            </ListView>
+            <ListView x:Name="ProcessIconOverrides" Grid.Column="1">
+                <ListViewItem>AAAA</ListViewItem>
+            </ListView>
         </Grid>
     </plex:PlexWindow.Content>
 </plex:PlexWindow>
