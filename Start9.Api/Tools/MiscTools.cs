@@ -174,15 +174,38 @@ namespace Start9.Api.Tools
 
         public static System.Windows.Media.ImageSource GetIconFromFilePath(string path, int width, int height, uint flags)
         {
-            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
-            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
-            System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
-            System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
-            entryIcon.Handle,
-            Int32Rect.Empty,
-            BitmapSizeOptions.FromWidthAndHeight(Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(width)), Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(height)))
-            );
-            return entryIconImageSource;
+            IconOverride over = null;
+            foreach (IconOverride i in IconPref.FileIconOverrides)
+            {
+                if (
+                    (Environment.ExpandEnvironmentVariables(i.TargetName) == Environment.ExpandEnvironmentVariables(path))
+                    |   
+                    (
+                    (i.IsFullPath)
+                    && Path.GetFileName(Environment.ExpandEnvironmentVariables(i.TargetName)) == Path.GetFileName(Environment.ExpandEnvironmentVariables(path)))
+                    )
+                {
+                    over = i;
+                }
+            }
+
+            if (over != null)
+            {
+                return over.ReplacementBrush.ImageSource;
+                //BitmapSource source = BitmapSource.Create()
+            }
+            else
+            {
+                WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
+                WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
+                System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
+                System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
+                entryIcon.Handle,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight(Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(width)), Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(height)))
+                );
+                return entryIconImageSource;
+            }
         }
     }
 }
