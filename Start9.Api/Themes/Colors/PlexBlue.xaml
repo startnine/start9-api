@@ -426,6 +426,15 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="PlexGlowToggleButtonHoverBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.5" Color="#FFB5FFFF" />
+            <GradientStop Offset="0.875" Color="#FFFFFFFF" />
+            <GradientStop Offset="1" Color="#FFB5FFFF" />
+        </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="PlexGlowToggleButtonHoverBackground">#7FB5FFFF</SolidColorBrush>
+
     <!-- End ToggleButton Brushes -->
 
 

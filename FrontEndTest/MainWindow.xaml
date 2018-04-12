@@ -61,12 +61,12 @@
             </StackPanel>
             <TreeView x:Name="AllAppsTree" Grid.Column="2"/>
         </Grid-->
-        <Grid>
+        <Grid Background="#FF000040">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0"/>
             </Grid.ColumnDefinitions>
-            <ListView x:Name="FileIconOverrides">
+            <ListView x:Name="FileIconOverrides" Visibility="Hidden">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn DisplayMemberBinding="{Binding TargetName}">
@@ -101,8 +101,9 @@
                         </GridViewColumn>
                     </GridView>
                 </ListView.View>
-                
+
             </ListView>
+            <ToggleButton Style="{DynamicResource PlexGlowToggleButtonStyle}" Width="100" Height="40">Test</ToggleButton>
             <ListView x:Name="ProcessIconOverrides" Grid.Column="1">
                 <ListViewItem>AAAA</ListViewItem>
             </ListView>
