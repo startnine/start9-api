@@ -104,6 +104,8 @@
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="IsManipulationEnabled" Value="True"/>
         <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="Effect">
             <Setter.Value>
                 <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3"
@@ -114,11 +116,16 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="{TemplateBinding Padding}">
-                        <Label x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        <!--Label x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" RenderOptions.EdgeMode="Aliased" IsTabStop="False"
-                               Margin="0" Padding="0" />
+                               Margin="0" Padding="0" /-->
+                        <ContentControl x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

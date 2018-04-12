@@ -76,18 +76,21 @@
                                             Orientation="Horizontal" Height="22" Margin="5,0">
                                     <Button x:Name="PART_MinimizeButton" Width="18" VerticalAlignment="Stretch"
                                             Style="{DynamicResource CaptionButtonStyle}">
-                                        0
+                                        <Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
                                     </Button>
                                     <Grid x:Name="MaxRestButtonGrid"  Width="18" VerticalAlignment="Stretch" Margin="1,1,-1,-1">
                                         <Button x:Name="PART_MaximizeButton" HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Style="{DynamicResource CaptionButtonStyle}">
-                                            1
+                                            <Border Width="10" Height="9" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
                                         </Button>
                                         <Button x:Name="PART_RestoreButton" HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Style="{DynamicResource CaptionButtonStyle}" Visibility="Hidden">
-                                            2
+                                            <Grid Width="9" Height="9">
+                                                <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                                                <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                                            </Grid>
                                         </Button>
                                     </Grid>
                                     <Button x:Name="PART_CloseButton" Width="18" VerticalAlignment="Stretch"
