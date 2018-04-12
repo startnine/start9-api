@@ -1189,7 +1189,17 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Border x:Name="Background" Background="{DynamicResource PlexGlowToggleButtonHoverBackground}" BorderBrush="{DynamicResource PlexGlowToggleButtonHoverBorderBrush}" BorderThickness="2" Opacity="0">
+                        <Border x:Name="HoverBackground" Background="{DynamicResource PlexGlowToggleButtonHoverBackground}" BorderBrush="{DynamicResource PlexGlowToggleButtonHoverBorderBrush}" BorderThickness="2" Opacity="0">
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Offset="0" Color="#00000000"/>
+                                        <GradientStop Offset="0.875" Color="#FF000000"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                        </Border>
+                        <Border x:Name="SelectedBackground" Background="{DynamicResource PlexGlowToggleButtonHoverBackground}" BorderBrush="{DynamicResource PlexGlowToggleButtonHoverBorderBrush}" BorderThickness="2" Opacity="0">
                             <Border.OpacityMask>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                     <LinearGradientBrush.GradientStops>
@@ -1210,14 +1220,14 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
@@ -1226,14 +1236,14 @@
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.EnterActions>
                             <Trigger.ExitActions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="Background" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
