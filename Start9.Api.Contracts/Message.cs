@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Start9.Api
+namespace Start9.Api.Contracts
 {
 	[Serializable]
 	public struct Message<TObject, TReceiver>
