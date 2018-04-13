@@ -5,7 +5,7 @@ namespace Start9.Api
 	[Serializable]
 	public struct Message<TObject, TReceiver>
 	{
-        public Message(TReceiver receiver, TObject o = default, String message = default)
+        public Message(TReceiver receiver, TObject o = default(TObject), String message = default(String))
         {
             Receiver = receiver;
             Object = o;
