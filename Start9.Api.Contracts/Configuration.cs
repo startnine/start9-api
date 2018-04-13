@@ -9,6 +9,8 @@ namespace Start9.Api.Contracts
     [Serializable] 
     public abstract class Configuration
     {
-
+        public static Configuration Default { get; } = new ConfigurationBase();
     }
+
+    class ConfigurationBase : Configuration { }
 }
