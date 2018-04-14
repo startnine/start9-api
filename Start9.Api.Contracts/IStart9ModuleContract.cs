@@ -1,14 +1,15 @@
-﻿using System;
-using Start9.Api;
-using System.AddIn.Contract;
+﻿using System.AddIn.Contract;
 using System.AddIn.Pipeline;
+using System;
 
 namespace Start9.Api.Contracts
 {
     [AddInContract]
-    public interface IStart9ModuleContract : IContract
+    public interface ICalc1Contract : IContract
     {
-        void MessageReceived<TObject, TReceiver>(Message<TObject, TReceiver> message);
-        Configuration Configuration { get; }
+        Double Add(Double a, Double b);
+        Double Subtract(Double a, Double b);
+        Double Multiply(Double a, Double b);
+        Double Divide(Double a, Double b);
     }
 }

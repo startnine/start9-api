@@ -21,5 +21,7 @@ namespace Start9.Api.Contracts
             // Reminder to convert this to use shapes when those come out. Right now it'll throw an exception, which is bad because generics are supposed to remove exceptions from the programming model
             typeof(TReceiver).GetMethod("MessageRevieved").MakeGenericMethod(new[] { typeof(TObject), typeof(TReceiver) }).Invoke(Receiver, new Object[] { this });
         }
+
+        public override String ToString() => Text;
     }
 }

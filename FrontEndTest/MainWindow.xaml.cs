@@ -10,7 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;
+using System.IO;    
 using Start9.Api.Plex;
 using Start9.Api.Tools;
 using Start9.Api.DiskFiles;
@@ -33,7 +33,7 @@ namespace FrontEndTest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
+            //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
         }
 
 
