@@ -126,21 +126,75 @@
                                Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
+                        <ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                        <ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                        <ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsManipulationEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsManipulationEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}" />
-            </Trigger>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActiveHoverBrush}" />
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActivePressedBrush}" />
-            </Trigger>
-        </Style.Triggers>
     </Style>
     
     <!--#endregion Window Styles-->

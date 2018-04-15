@@ -109,6 +109,15 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
+    <LinearGradientBrush x:Key="WindowDialogBodyBrush" StartPoint="0,0" EndPoint="0,0.5">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF093166"/>
+            <GradientStop Offset="1" Color="#FF5C75B5"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="WindowDialogFooterBrush">#FF5C75B5</SolidColorBrush>
+
     <!-- End Window Brushes -->
 
 

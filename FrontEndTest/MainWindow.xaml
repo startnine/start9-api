@@ -103,7 +103,7 @@
                 </ListView.View>
 
             </ListView>
-            <ToggleButton Style="{DynamicResource PlexGlowToggleButtonStyle}" Width="100" Height="40">Test</ToggleButton>
+            <ToggleButton Style="{DynamicResource PlexGlowToggleButtonStyle}" Width="100" Height="40" Click="ToggleButton_Click">Test</ToggleButton>
             <ListView x:Name="ProcessIconOverrides" Grid.Column="1">
                 <ListViewItem>AAAA</ListViewItem>
             </ListView>

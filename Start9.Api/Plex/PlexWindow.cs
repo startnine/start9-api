@@ -479,11 +479,24 @@ namespace Start9.Api.Plex
 
         new public void Show()
         {
+            /*Dispatcher.Invoke(new Action(() =>
+            {*/
             ShiftShadowBehindWindow();
             base.Show();
             ShiftShadowBehindWindow();
             ShowWindow();
             ShiftShadowBehindWindow();
+            /*}
+            ));*/
+        }
+
+        new public bool? ShowDialog()
+        {
+            ShiftShadowBehindWindow();
+            ShowWindow();
+            bool? value = base.ShowDialog();
+            ShiftShadowBehindWindow();
+            return value;
         }
 
         private void ShowWindow()
@@ -1125,6 +1138,63 @@ namespace Start9.Api.Plex
             }
             SyncShadowToWindow();
             SyncShadowToWindowSize();
+        }
+    }
+
+    public static class MessageBox
+    {
+        public static bool? Show(String text, String caption)
+        {
+            return Show(text, caption, new MessageBoxButtons(), new MessageBoxIcon(), new MessageBoxDefaultButton(), new System.Windows.MessageBoxOptions(), null, new HelpNavigator(), null, new List<ResourceDictionary>());
+        }
+
+        public static bool? Show(String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, System.Windows.MessageBoxOptions options, String helpFilePath, HelpNavigator navigator, Object param, List<ResourceDictionary> dictionaries)
+        {
+            PlexWindow MessageBox = new PlexWindow()
+            {
+                Width = 450,
+                Height = 200,
+                ResizeMode = PlexResizeMode.NoResize,
+                ShowFooter = true,
+                FooterHeight = 48
+            };
+            MessageBox.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("/Start9.Api;component/Themes/Plex.xaml", UriKind.Relative)
+            });
+            foreach (ResourceDictionary d in dictionaries)
+            {
+                MessageBox.Resources.MergedDictionaries.Add(d);
+            }
+            MessageBox.BodyBrush = (Brush)MessageBox.Resources["WindowDialogBodyBrush"];
+            MessageBox.FooterBrush = (Brush)MessageBox.Resources["WindowDialogFooterBrush"];
+            MessageBox.Content = new TextBlock()
+            {
+                //Margin = new Thickness
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                TextWrapping = TextWrapping.Wrap,
+                Foreground = new SolidColorBrush(Colors.White),
+                Text = text
+            };
+            MessageBox.Title = caption;
+            Button acknowledge = new Button()
+            {
+                Content = "OK",
+                MinWidth = 150,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Center
+            };
+            //acknowledge.Margin = new Thickness(acknowledge.Margin.Left, acknowledge.Margin.Top + 12, acknowledge.Margin.Right, acknowledge.Margin.Bottom);
+            acknowledge.Click += (sneder, args) =>
+            {
+                MessageBox.Close();
+            };
+            MessageBox.FooterContent = new Grid()
+            {
+                Margin = new Thickness(0,12,0,0)
+            };
+            (MessageBox.FooterContent as Grid).Children.Add(acknowledge);
+            return MessageBox.ShowDialog();
         }
     }
 

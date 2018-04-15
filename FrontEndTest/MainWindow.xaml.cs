@@ -113,6 +113,11 @@ namespace FrontEndTest
                 Style = (Style)Resources[typeof(TreeViewItem)]
             };
         }
+
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        {
+            Start9.Api.Plex.MessageBox.Show("Yes, I'm working on these for some reason.\n\n...blame Fleccy :P", "This is a Plex MessageBox");
+        }
     }/*
 
     public class ReplacementIconNameToReplacedCanvasConverter : IValueConverter
