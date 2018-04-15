@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Start9.Api
+namespace Start9.Api.Contracts
 {
 	[Serializable]
 	public struct Message<TObject, TReceiver>
@@ -21,5 +21,7 @@ namespace Start9.Api
             // Reminder to convert this to use shapes when those come out. Right now it'll throw an exception, which is bad because generics are supposed to remove exceptions from the programming model
             typeof(TReceiver).GetMethod("MessageRevieved").MakeGenericMethod(new[] { typeof(TObject), typeof(TReceiver) }).Invoke(Receiver, new Object[] { this });
         }
+
+        public override String ToString() => Text;
     }
 }
