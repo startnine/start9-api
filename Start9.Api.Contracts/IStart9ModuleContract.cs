@@ -10,6 +10,6 @@ namespace Start9.Api.Contracts
         Double Add(Double a, Double b);
         Double Subtract(Double a, Double b);
         Double Multiply(Double a, Double b);
-        Double Divide(Double a, Double b);
+        Double Divide(Double a, Double b);  
     }
 }
