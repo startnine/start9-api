@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace Start9.Api.Contracts
@@ -12,5 +13,6 @@ namespace Start9.Api.Contracts
         public static Configuration Default { get; } = new ConfigurationBase();
     }
 
-    class ConfigurationBase : Configuration { }
+    [Serializable]
+    sealed class ConfigurationBase : Configuration { }
 }
