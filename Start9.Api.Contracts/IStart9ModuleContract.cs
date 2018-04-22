@@ -6,7 +6,7 @@ namespace Start9.Api.Contracts
     [AddInContract]
     public interface IModuleContract : IContract
     {
-        Message MessageRecieved<T>(Message<T> message);
+        Message MessageRecieved<T>(Message message);
         Configuration Configuration { get; }
         Skin Skin { get; set; }
     }
