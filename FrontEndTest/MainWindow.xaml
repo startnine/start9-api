@@ -61,7 +61,7 @@
             </StackPanel>
             <TreeView x:Name="AllAppsTree" Grid.Column="2"/>
         </Grid-->
-        <Grid Background="#FF000040">
+        <Grid Background="#FF000040" Margin="0,32">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="0"/>
@@ -104,6 +104,113 @@
 
             </ListView>
             <ToggleButton Style="{DynamicResource PlexGlowToggleButtonStyle}" Width="100" Height="40" Click="ToggleButton_Click">Test</ToggleButton>
+            <Grid HorizontalAlignment="Left" Width="128" Height="128" VerticalAlignment="Center" Margin="64">
+                <Grid Margin="2">
+                    <Rectangle x:Name="PlexMaskSizingAid" Margin="0,-64"/>
+                    <Border BorderBrush="#7F7BA3E5" BorderThickness="2" CornerRadius="6">
+                        <Border.Effect>
+                            <BlurEffect KernelType="Gaussian" Radius="2"/>
+                        </Border.Effect>
+                        <Border.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Width="{Binding ActualWidth, Source={x:Reference PlexMaskSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference PlexMaskSizingAid}}" BorderThickness="2" BorderBrush="Black" Background="Transparent" CornerRadius="10"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.OpacityMask>
+                    </Border>
+                    <Border BorderBrush="#FF9EC9F3" BorderThickness="1" CornerRadius="2" Margin="2">
+                        <Border BorderBrush="#FF70B3E3" BorderThickness="1">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Offset="0" Color="#FFA1D3F3"/>
+                                        <GradientStop Offset="0.05" Color="#C07CC2F0"/>
+                                        <GradientStop Offset="0.95" Color="#C07CC2F0"/>
+                                        <GradientStop Offset="1" Color="#FFA1D3F3"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Grid>
+                                <!--Canvas x:Name="TestSizingAidCanvas"/>
+                <Canvas x:Name="TestHoverCanvas" Background="Blue" Width="32" Height="32" Visibility="Hidden"/>
+                <Canvas x:Name="TestDestinationCanvas">
+                    <Canvas.Background>
+                        <obj:RevealBrush Destination="{x:Reference TestSizingAidCanvas}" Hover="{x:Reference TestHoverCanvas}"/>
+                    </Canvas.Background>
+                </Canvas-->
+                                <Canvas x:Name="RevealPlexDemoSizingAid"/>
+                                <apictrl:Reveal HoverWidth="512" HoverHeight="512">
+                                    <apictrl:Reveal.Hover>
+                                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                                            <RadialGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#FFEEFEFE"/>
+                                                <GradientStop Offset="0.5" Color="#C076BDEF"/>
+                                                <GradientStop Offset="0.75" Color="#C076BEEF"/>
+                                                <GradientStop Offset="1" Color="#0076BEEF"/>
+                                            </RadialGradientBrush.GradientStops>
+                                        </RadialGradientBrush>
+                                    </apictrl:Reveal.Hover>
+                                    <apictrl:Reveal.OpacityMask>
+                                        <!--LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="#7FFFFFFF"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush-->
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Border Width="{Binding ActualWidth, Source={x:Reference RevealPlexDemoSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference RevealPlexDemoSizingAid}}" BorderThickness="1" BorderBrush="Black" Background="Transparent">
+                                                    <Border BorderBrush="#C0000000" BorderThickness="1">
+                                                        <Border BorderBrush="#7F000000" BorderThickness="1">
+                                                            <Border BorderBrush="#40000000" BorderThickness="1"/>
+                                                        </Border>
+                                                    </Border>
+                                                </Border>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </apictrl:Reveal.OpacityMask>
+                                </apictrl:Reveal>
+                                <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White" TextWrapping="Wrap">Here, have a Plex Reveal demo.</TextBlock>
+                            </Grid>
+                        </Border>
+                    </Border>
+                </Grid>
+            </Grid>
+            <Grid HorizontalAlignment="Right" Width="256" VerticalAlignment="Stretch" Margin="64" Background="Black">
+                <!--Canvas x:Name="TestSizingAidCanvas"/>
+                <Canvas x:Name="TestHoverCanvas" Background="Blue" Width="32" Height="32" Visibility="Hidden"/>
+                <Canvas x:Name="TestDestinationCanvas">
+                    <Canvas.Background>
+                        <obj:RevealBrush Destination="{x:Reference TestSizingAidCanvas}" Hover="{x:Reference TestHoverCanvas}"/>
+                    </Canvas.Background>
+                </Canvas-->
+                <Canvas x:Name="RevealDemoSizingAid"/>
+                <apictrl:Reveal HoverWidth="1024" HoverHeight="1024">
+                    <apictrl:Reveal.Hover>
+                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                            <RadialGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                <GradientStop Offset="1" Color="Transparent"/>
+                            </RadialGradientBrush.GradientStops>
+                        </RadialGradientBrush>
+                    </apictrl:Reveal.Hover>
+                    <apictrl:Reveal.OpacityMask>
+                        <!--LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="#7FFFFFFF"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush-->
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Width="{Binding ActualWidth, Source={x:Reference RevealDemoSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference RevealDemoSizingAid}}" BorderThickness="5" BorderBrush="Black" Background="Transparent"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </apictrl:Reveal.OpacityMask>
+                </apictrl:Reveal>
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White">Here, have a Fluent Reveal demo.</TextBlock>
+            </Grid>
             <ListView x:Name="ProcessIconOverrides" Grid.Column="1">
                 <ListViewItem>AAAA</ListViewItem>
             </ListView>

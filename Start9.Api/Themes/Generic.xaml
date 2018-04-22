@@ -102,6 +102,7 @@
                                     </Button>
                                 </StackPanel>
                                 <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
+                                <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
                             </Grid>
                             <Grid x:Name="ToolBar" HorizontalAlignment="Stretch" Margin="0"
                                   Height="{TemplateBinding ToolBarHeight}" Visibility="Visible" DockPanel.Dock="Top">
@@ -452,6 +453,9 @@
                         </Trigger>
                         <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
                             <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="DisplayDialogFilm" Value="True">
+                            <Setter TargetName="DialogFilm" Property="Visibility" Value="Visible" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

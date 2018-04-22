@@ -58,6 +58,15 @@ namespace Start9.Api.Plex
         public static readonly DependencyProperty AnimateOnShowHideProperty =
             DependencyProperty.Register("AnimateOnShowHide", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
 
+        internal bool DisplayDialogFilm
+        {
+            get => (bool)GetValue(DisplayDialogFilmProperty);
+            set => SetValue(DisplayDialogFilmProperty, (value));
+        }
+
+        internal static readonly DependencyProperty DisplayDialogFilmProperty =
+            DependencyProperty.Register("DisplayDialogFilm", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+
         public double ShadowOpacity
         {
             get
@@ -494,8 +503,37 @@ namespace Start9.Api.Plex
         {
             ShiftShadowBehindWindow();
             ShowWindow();
-            bool? value = base.ShowDialog();
-            ShiftShadowBehindWindow();
+            /*System.Threading.Thread thread = new System.Threading.Thread(() =>
+            {*/
+            bool? value = false;
+            Dispatcher.BeginInvoke(
+            new Action(() =>
+            {
+                value = base.ShowDialog();
+                ShiftShadowBehindWindow();
+            }));
+            //System.Threading.Thread.Sleep(1000);
+            PlexWindow owner = null;
+            if ((Owner != null) && (Owner is PlexWindow))
+            {
+                owner = Owner as PlexWindow;
+            }
+
+            /*var win = Window.GetWindow(this);
+            if ((win != null) && (win is PlexWindow))
+            {
+                owner = win as PlexWindow;
+            }*/
+            
+            if (owner != null)
+            {
+                owner.DisplayDialogFilm = true;
+                Closing += (sneder, args) =>
+                {
+                    owner.DisplayDialogFilm = false;
+                };
+            }
+
             return value;
         }
 
@@ -1143,12 +1181,12 @@ namespace Start9.Api.Plex
 
     public static class MessageBox
     {
-        public static bool? Show(String text, String caption)
+        public static bool? Show(PlexWindow parent, String text, String caption)
         {
-            return Show(text, caption, new MessageBoxButtons(), new MessageBoxIcon(), new MessageBoxDefaultButton(), new System.Windows.MessageBoxOptions(), null, new HelpNavigator(), null, new List<ResourceDictionary>());
+            return Show(parent, text, caption, new MessageBoxButtons(), new MessageBoxIcon(), new MessageBoxDefaultButton(), new System.Windows.MessageBoxOptions(), null, new HelpNavigator(), null, new List<ResourceDictionary>());
         }
 
-        public static bool? Show(String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, System.Windows.MessageBoxOptions options, String helpFilePath, HelpNavigator navigator, Object param, List<ResourceDictionary> dictionaries)
+        public static bool? Show(PlexWindow parent, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, System.Windows.MessageBoxOptions options, String helpFilePath, HelpNavigator navigator, Object param, List<ResourceDictionary> dictionaries)
         {
             PlexWindow MessageBox = new PlexWindow()
             {
@@ -1156,7 +1194,8 @@ namespace Start9.Api.Plex
                 Height = 200,
                 ResizeMode = PlexResizeMode.NoResize,
                 ShowFooter = true,
-                FooterHeight = 48
+                FooterHeight = 48,
+                Owner = parent
             };
             MessageBox.Resources.MergedDictionaries.Add(new ResourceDictionary()
             {

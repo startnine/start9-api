@@ -252,8 +252,8 @@ namespace Start9.Api.Tools
                         }
                         else if (node.Name.ToLower() == "text")
                         {
-                            notifyInfo.Text.Add(node.InnerText);
-                            Debug.WriteLine("Text added: " + node.InnerText);
+                            notifyInfo.Text.Add(Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.Default.GetBytes(node.InnerText))));
+                            Debug.WriteLine("Text added: " + Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.Default.GetBytes(node.InnerText))));
                         }
                     }
                     try
