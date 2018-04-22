@@ -2,7 +2,7 @@
 using System.Windows.Interop;
 using System.Diagnostics;
 using System.Windows;
-using static Start9.Api.Tools.WinApi;
+using static Start9.Api.WinApi;
 using Rect = System.Windows.Rect;
 
 namespace Start9.Api.Tools
@@ -19,7 +19,7 @@ namespace Start9.Api.Tools
         {
             Debug.WriteLine($"{hWnd} {targetElement}");
 			DwmRegisterThumbnail(new WindowInteropHelper(Window.GetWindow(targetElement)).Handle, hWnd, out var thumbHandle);
-            var targetElementPoint = MainTools.GetDpiScaledGlobalControlPosition(targetElement);
+            var targetElementPoint = targetElement.PointToScreenInWpfUnits(new Point(0, 0));
             Point targetElementOppositePoint;
             if (targetElement.GetType().IsAssignableFrom(typeof(System.Windows.Controls.Control)))
             {

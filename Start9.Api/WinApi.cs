@@ -4,7 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Start9.Api.Tools
+namespace Start9.Api
 {
     public static class WinApi
     {

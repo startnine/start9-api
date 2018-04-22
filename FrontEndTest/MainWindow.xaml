@@ -7,6 +7,7 @@
         xmlns:plex="clr-namespace:Start9.Api.Plex;assembly=Start9.Api"
         xmlns:obj="clr-namespace:Start9.Api.Objects;assembly=Start9.Api"
         xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
+        xmlns:disk="clr-namespace:Start9.Api.DiskItems;assembly=Start9.Api"
         mc:Ignorable="d"
         Title="MainWindow" Width="640" Height="350">
     <plex:PlexWindow.Background>
@@ -656,6 +657,25 @@
                 </Setter>
             </Style>
 
+            <DataTemplate x:Key="DiskItemTemplate" DataType="{x:Type disk:DiskItem}">
+                <TreeViewItem ItemsSource="{Binding SubItems}" ItemTemplate="{DynamicResource DiskItemTemplate}">
+                    <TreeViewItem.Header>
+                        <DockPanel Margin="0,2">
+                            <Canvas Width="16" Height="16" DockPanel.Dock="Left">
+                                <Canvas.Background>
+                                    <Binding ConverterParameter="16">
+                                        <Binding.Converter>
+                                            <disk:DiskItemToIconImageBrushConverter/>
+                                        </Binding.Converter>
+                                    </Binding>
+                                </Canvas.Background>
+                            </Canvas>
+                            <TextBlock Text="{Binding ItemName}"/>
+                        </DockPanel>
+                    </TreeViewItem.Header>
+                </TreeViewItem>
+            </DataTemplate>
+
         </ResourceDictionary>
     </plex:PlexWindow.Resources>
     <plex:PlexWindow.Style>
@@ -1125,6 +1145,13 @@
             </Grid>
         </Grid>
     </plex:PlexWindow.TitleBarContent>
+    <plex:PlexWindow.Content>
+        <Grid>
+            <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}"/>
+            <!--TreeView.ItemTemplate>
+                </TreeView.ItemTemplate-->
+        </Grid>
+    </plex:PlexWindow.Content>
     <!--plex:PlexWindow.Content-->
     <!--Grid>
             <Grid.ColumnDefinitions>

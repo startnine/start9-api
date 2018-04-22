@@ -897,8 +897,8 @@ namespace Start9.Api.Plex
                 Maximized = true;
                 _maxButton.Visibility = Visibility.Hidden;
                 _restButton.Visibility = Visibility.Visible;
-                MaxWidth = Tools.DpiManager.ConvertPixelsToWpfUnits(s.WorkingArea.Width);
-                MaxHeight = Tools.DpiManager.ConvertPixelsToWpfUnits(s.WorkingArea.Height);
+                MaxWidth = s.WorkingArea.Width.RealPixelsToWpfUnits();
+                MaxHeight = s.WorkingArea.Height.RealPixelsToWpfUnits();
                 CircleEase circleEase = new CircleEase()
                 {
                     EasingMode = EasingMode.EaseOut

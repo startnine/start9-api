@@ -32,23 +32,6 @@ namespace Start9.Api.Tools
 		}
 
 
-		public static Point GetDpiScaledCursorPosition()
-		{
-			var p = Cursor.Position;
-			p.X = DpiManager.ConvertPixelsToWpfUnits(p.X);
-			p.Y = DpiManager.ConvertPixelsToWpfUnits(p.Y);
-			return p;
-		}
-
-		public static Point GetDpiScaledGlobalControlPosition(UIElement uiElement)
-		{
-			var uiPoint = uiElement.PointToScreen(new System.Windows.Point(0, 0));
-
-			var uiDrawPoint = new Point(DpiManager.ConvertPixelsToWpfUnits(uiPoint.X),
-										DpiManager.ConvertPixelsToWpfUnits(uiPoint.Y));
-			return uiDrawPoint;
-		}
-
 		public enum DeviceCap
 		{
 			Vertres = 10,

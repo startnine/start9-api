@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 using Start9.Api.Tools;
+using Start9.Api;
 
 namespace Start9.Api.Controls
 {
@@ -127,8 +128,8 @@ namespace Start9.Api.Controls
                 {
                     if (IsLoaded & IsVisible)
                     {
-                        var c = MainTools.GetDpiScaledCursorPosition();
-                        var p = MainTools.GetDpiScaledGlobalControlPosition(this);
+                        var c = SystemScaling.CursorPosition;
+                        var p = PointToScreen(new Point(0,0));
                         var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
                         /*bg.Viewbox = new Rect(
                             ((c.X - p.X) - (ActualWidth / 2)) * -1,

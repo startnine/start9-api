@@ -10,10 +10,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.IO;    
+using System.IO;
+using Start9.Api;
 using Start9.Api.Plex;
 using Start9.Api.Tools;
-using Start9.Api.DiskFiles;
+using Start9.Api.DiskItems;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -103,6 +104,7 @@ namespace FrontEndTest
                 hRgnBlur = IntPtr.Zero
             };
             DwmEnableBlurBehindWindow(helper, ref blur);
+            TestTreeView.ItemsSource = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures")).SubItems;
             //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
         }
 
@@ -175,7 +177,7 @@ namespace FrontEndTest
 
         private TreeViewItem GetTreeViewItemFromDiskItem(DiskItem d)
         {
-            string p = Path.GetFileNameWithoutExtension(d.Path);
+            string p = Path.GetFileNameWithoutExtension(d.ItemPath);
             return new TreeViewItem()
             {
                 Tag = d,
@@ -223,7 +225,7 @@ namespace FrontEndTest
             ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
             entryIcon.Handle,
             Int32Rect.Empty,
-            BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(48)), System.Convert.ToInt32(DpiManager.ConvertPixelsToWpfUnits(48)))
+            BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32((48).RealPixelsToWpfUnits()), System.Convert.ToInt32((48).RealPixelsToWpfUnits()))
             );
             return new Canvas()
             {

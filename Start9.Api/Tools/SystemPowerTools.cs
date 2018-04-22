@@ -4,10 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using Start9.Api;
 
-namespace Start9.Api.Tools
+namespace Start9.Api
 {
-    public class SystemPowerTools
+    public class SystemPower
     {
         public static void LockUserAccount()
         {

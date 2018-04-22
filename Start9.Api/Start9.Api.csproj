@@ -59,21 +59,18 @@
     <Compile Include="Controls\VariableSizedWrapGrid.cs" />
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
     <Compile Include="Controls\IconButton.cs" />
-    <Compile Include="DiskFiles\DiskFile.cs" />
+    <Compile Include="DiskItems\DiskItem.cs" />
     <Compile Include="Objects\GeometryConverter.cs" />
-    <Compile Include="Objects\RevealBrush.cs" />
     <Compile Include="Objects\WidthToOffsetMarginConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SystemScaling.cs" />
     <Compile Include="Tools\AppxTools.cs" />
     <Compile Include="Tools\DwmTools.cs" />
-    <Compile Include="Objects\ImageBrushNineGridConverter.cs" />
-    <Compile Include="Objects\NineGridImageBrush.cs" />
-    <Compile Include="Tools\DpiManager.cs" />
-    <Compile Include="Tools\Extensions.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Programs\IProgramItem.cs" />
     <Compile Include="Tools\IconPref.cs" />
     <Compile Include="Tools\MainTools.cs" />
@@ -87,7 +84,7 @@
     <Compile Include="Tools\MiscTools.cs" />
     <Compile Include="Tools\ShortcutTools.cs" />
     <Compile Include="Tools\SystemPowerTools.cs" />
-    <Compile Include="Tools\WinApi.cs" />
+    <Compile Include="WinApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Plex\PlexStyles.xaml">
