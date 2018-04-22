@@ -26,13 +26,83 @@ namespace FrontEndTest
     /// </summary>
     public partial class MainWindow : PlexWindow
     {
+        [DllImport("dwmapi.dll")]
+        static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
+
+        [StructLayout(LayoutKind.Sequential)]
+        struct DWM_BLURBEHIND
+        {
+            public DWM_BB dwFlags;
+            public Boolean fEnable;
+            public IntPtr hRgnBlur;
+            public Boolean fTransitionOnMaximized;
+
+            public DWM_BLURBEHIND(Boolean enabled)
+            {
+                fEnable = enabled ? true : false;
+                hRgnBlur = IntPtr.Zero;
+                fTransitionOnMaximized = false;
+                dwFlags = DWM_BB.Enable;
+            }
+
+            public System.Drawing.Region Region
+            {
+                get { return System.Drawing.Region.FromHrgn(hRgnBlur); }
+            }
+
+            public Boolean TransitionOnMaximized
+            {
+                get { return fTransitionOnMaximized != false; }
+                set
+                {
+                    fTransitionOnMaximized = value ? true : false;
+                    dwFlags |= DWM_BB.TransitionMaximized;
+                }
+            }
+
+            public void SetRegion(System.Drawing.Graphics graphics, System.Drawing.Region region)
+            {
+                hRgnBlur = region.GetHrgn(graphics);
+                dwFlags |= DWM_BB.BlurRegion;
+            }
+        }
+
+        [Flags]
+        enum DWM_BB
+        {
+            Enable = 1,
+            BlurRegion = 2,
+            TransitionMaximized = 4
+        }
+
+        IntPtr helper;
+
         public MainWindow()
         {
+            ResizeMode = PlexResizeMode.NoResize;
+            AllowsTransparency = false;
             Loaded += MainWindow_Loaded;
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            helper = new WindowInteropHelper(this).EnsureHandle();
+            base.Background = new SolidColorBrush(Colors.Transparent);
+            Background = new SolidColorBrush(Colors.Transparent);
+            var hs = HwndSource.FromHwnd(helper);
+            hs.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
+            base.OnSourceInitialized(e);
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            DWM_BLURBEHIND blur = new DWM_BLURBEHIND()
+            {
+                dwFlags = DWM_BB.Enable,
+                fEnable = true,
+                hRgnBlur = IntPtr.Zero
+            };
+            DwmEnableBlurBehindWindow(helper, ref blur);
             //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
         }
 

@@ -58,6 +58,38 @@ namespace Start9.Api.Plex
         public static readonly DependencyProperty AnimateOnShowHideProperty =
             DependencyProperty.Register("AnimateOnShowHide", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
 
+        public Thickness ShadowOffsetThickness
+        {
+            get => (Thickness)GetValue(ShadowOffsetThicknessProperty);
+            set => SetValue(ShadowOffsetThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowOffsetThicknessProperty =
+            DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(PlexWindow), new PropertyMetadata(new Thickness(49, 14, 14, 60)));
+
+
+        public object ShadowWindowContent
+        {
+            get => GetValue(ShadowWindowContentProperty);
+            set => SetValue(ShadowWindowContentProperty, (value));
+        }
+
+        public static readonly DependencyProperty ShadowWindowContentProperty =
+            DependencyProperty.Register("ShadowWindowContent", typeof(object), typeof(PlexWindow), new PropertyMetadata(null, OnShadowWindowContentPropertyChangedCallback));
+
+        static void OnShadowWindowContentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            (d as PlexWindow).SetShadowWindowContent(e.NewValue as FrameworkElement);
+        }
+
+        private void SetShadowWindowContent(object obj)
+        {
+            if (obj != null)
+            {
+                _shadowWindow.Content = obj;
+            }
+        }
+
         internal bool DisplayDialogFilm
         {
             get => (bool)GetValue(DisplayDialogFilmProperty);
@@ -114,6 +146,32 @@ namespace Start9.Api.Plex
             {
                 WinApi.SetWindowLong(hwnd, GWL_STYLE, 0x16C80000);
             }
+
+            if (window.ResizeMode == PlexResizeMode.NoResize)
+            {
+                window.SetResizeMode(PlexResizeMode.NoResize);
+            }
+        }
+
+        private void SetResizeMode(PlexResizeMode p)
+        {
+            if (p == PlexResizeMode.CanResize) 
+            {
+                base.ResizeMode = System.Windows.ResizeMode.CanResize;
+            }
+            else if (p == PlexResizeMode.CanResizeWithGrip)
+            {
+                base.ResizeMode = System.Windows.ResizeMode.CanResizeWithGrip;
+            }
+            else if (p == PlexResizeMode.CanMinimize)
+            {
+                base.ResizeMode = System.Windows.ResizeMode.CanMinimize;
+            }
+            else
+            {
+                base.ResizeMode = System.Windows.ResizeMode.NoResize;
+            }
+                //if (p == PlexResizeMode.Manual | p == PlexResizeMode.NoResize)
         }
 
         public static readonly DependencyProperty MaximizedProperty =
@@ -295,6 +353,7 @@ namespace Start9.Api.Plex
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(PlexWindow), new FrameworkPropertyMetadata(typeof(PlexWindow)));
 
             //Opacity = 0;
+            base.Background = new SolidColorBrush(Colors.Transparent);
             _shadowWindow = new ShadowWindow(this);
             WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
@@ -456,7 +515,6 @@ namespace Start9.Api.Plex
         Button _minButton;
         Button _restButton;
         
-        Thickness _shadowOffsetThickness = new Thickness(49, 14, 14, 60);
         Thumb _thumbBottom;
         Thumb _thumbBottomLeftCorner;
         Thumb _thumbBottomRightCorner;
@@ -1054,14 +1112,14 @@ namespace Start9.Api.Plex
 
         public void SyncShadowToWindow()
         {
-            _shadowWindow.Left = Left - _shadowOffsetThickness.Left;
-            _shadowWindow.Top = Top - _shadowOffsetThickness.Top;
+            _shadowWindow.Left = Left - ShadowOffsetThickness.Left;
+            _shadowWindow.Top = Top - ShadowOffsetThickness.Top;
         }
 
         public void SyncShadowToWindowSize()
         {
-            _shadowWindow.Width = Width + _shadowOffsetThickness.Left + _shadowOffsetThickness.Right;
-            _shadowWindow.Height = Height + _shadowOffsetThickness.Top + _shadowOffsetThickness.Bottom;
+            _shadowWindow.Width = Width + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
+            _shadowWindow.Height = Height + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
         }
 
         public void SyncShadowToWindowScale()
