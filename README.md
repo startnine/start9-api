@@ -14,8 +14,8 @@ In addition, Please follow the [contributing guidelines](https://github.com/Star
 - WPF related assemblies (PresentationFramework, etc.)
 	- These assemblies make Start9 incompatible with .NET Core and other non-Microsoft .NET implementations. 
 - System.Windows.Forms
-	- This is used for abstractions like Screen and Mouse.
--UIAutomationTypes and UIAutomationClient
+	- This is used for abstractions like Screen and Mouse. 
+- UIAutomationTypes and UIAutomationClient
 	- Currently, these are used for global window closed and opened hooks. The uses may expand in the future.
 - System.AddIn
 	- This represents the Microsoft Addin Framework assembly. We use this in Start9 for the contracts part of the addin pipeline.
