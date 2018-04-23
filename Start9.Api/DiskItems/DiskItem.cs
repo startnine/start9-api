@@ -14,6 +14,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Icon = System.Drawing.Icon;
+using static Start9.Api.SystemScaling;
 
 namespace Start9.Api.DiskItems
 {
@@ -264,7 +265,7 @@ namespace Start9.Api.DiskItems
                 System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
                 target.Handle,
                 Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(size.RealPixelsToWpfUnits()), System.Convert.ToInt32(size.RealPixelsToWpfUnits()))
+                BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(RealPixelsToWpfUnits(size)), System.Convert.ToInt32(RealPixelsToWpfUnits(size)))
                 );
                 return new ImageBrush(entryIconImageSource);
             }

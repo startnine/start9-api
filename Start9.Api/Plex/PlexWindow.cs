@@ -14,7 +14,7 @@ using System.Windows.Media.Animation;
 using Button = System.Windows.Controls.Button;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Timer = System.Timers.Timer;
-using Start9.Api.Tools;
+using static Start9.Api.SystemScaling;
 using System.Text;
 
 namespace Start9.Api.Plex
@@ -897,8 +897,8 @@ namespace Start9.Api.Plex
                 Maximized = true;
                 _maxButton.Visibility = Visibility.Hidden;
                 _restButton.Visibility = Visibility.Visible;
-                MaxWidth = s.WorkingArea.Width.RealPixelsToWpfUnits();
-                MaxHeight = s.WorkingArea.Height.RealPixelsToWpfUnits();
+                MaxWidth = RealPixelsToWpfUnits(s.WorkingArea.Width);
+                MaxHeight = RealPixelsToWpfUnits(s.WorkingArea.Height);
                 CircleEase circleEase = new CircleEase()
                 {
                     EasingMode = EasingMode.EaseOut

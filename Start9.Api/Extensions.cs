@@ -7,27 +7,13 @@ using System.Windows.Media;
 using Icon = System.Drawing.Icon;
 using Bitmap = System.Drawing.Bitmap;
 using Graphics = System.Drawing.Graphics;
+using static Start9.Api.SystemScaling;
 using System.IO;
 
 namespace Start9.Api
 {
 	public static class Extensions
     {
-        /*Begin number-related extensions*/
-
-        public static double WpfUnitsToRealPixels(this double wpfUnits) => (wpfUnits * SystemScaling.ScalingFactor);
-
-        public static double RealPixelsToWpfUnits(this double realPixels) => (realPixels / SystemScaling.ScalingFactor);
-
-        public static float WpfUnitsToRealPixels(this float wpfUnits) => (float)(wpfUnits * SystemScaling.ScalingFactor);
-
-        public static float RealPixelsToWpfUnits(this float realPixels) => (float)(realPixels / SystemScaling.ScalingFactor);
-
-        public static int WpfUnitsToRealPixels(this int wpfUnits) => (int)(wpfUnits * SystemScaling.ScalingFactor);
-
-        public static int RealPixelsToWpfUnits(this int realPixels) => (int)(realPixels / SystemScaling.ScalingFactor);
-
-        /*End number-related extensions*/
 
         /*Begin Point-related extensions*/
 
@@ -126,7 +112,7 @@ namespace Start9.Api
         {
             var uiPoint = uiElement.PointToScreen(point);
 
-            return new Point(uiPoint.X.RealPixelsToWpfUnits(), uiPoint.Y.RealPixelsToWpfUnits());
+            return new Point(RealPixelsToWpfUnits(uiPoint.X), RealPixelsToWpfUnits(uiPoint.Y));
         }
 
         public static Point OffsetFromCursor(this UIElement uiElement)
@@ -134,7 +120,7 @@ namespace Start9.Api
             var cursor = SystemScaling.CursorPosition;
             var uiPoint = uiElement.PointToScreen(new Point(0, 0));
 
-            return new Point(cursor.X - uiPoint.X.RealPixelsToWpfUnits(), cursor.Y - uiPoint.Y.RealPixelsToWpfUnits());
+            return new Point(cursor.X - RealPixelsToWpfUnits(uiPoint.X), cursor.Y - RealPixelsToWpfUnits(uiPoint.Y));
         }
 
         /*End UIElement extensions*/

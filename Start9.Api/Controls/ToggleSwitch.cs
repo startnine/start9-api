@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using static Start9.Api.SystemScaling;
 
 namespace Start9.Api.Controls
 {
@@ -166,12 +167,12 @@ namespace Start9.Api.Controls
             double offsetter = OffsetterWidth;
             //var grip = toggleSwitch._grip;
 
-            double toggleX = ((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X).RealPixelsToWpfUnits();
-            double gripInitialX = ((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X).RealPixelsToWpfUnits();
-            double gripX = ((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X).RealPixelsToWpfUnits();
+            double toggleX = RealPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
+            double gripInitialX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
+            double gripX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
 
-            double cursorStartX = (System.Windows.Forms.Cursor.Position.X).RealPixelsToWpfUnits();
-            double cursorCurrentX = (System.Windows.Forms.Cursor.Position.X).RealPixelsToWpfUnits();
+            double cursorStartX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            double cursorCurrentX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
             double cursorChange = (cursorCurrentX - cursorStartX);
             double offset = (gripX - toggleX) + (cursorCurrentX - cursorStartX);
             //System.Windows.Point cursorStartOffsetPoint = new System.Windows.Point(toggleSwitch.Margin.Left, grip.Margin.Top);
@@ -185,7 +186,7 @@ namespace Start9.Api.Controls
                     if (Mouse.LeftButton == MouseButtonState.Pressed)
                     {
                         //toggleX = DpiManager.ConvertPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
-                        cursorCurrentX = (System.Windows.Forms.Cursor.Position.X).RealPixelsToWpfUnits();
+                        cursorCurrentX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
 
                         cursorChange = (cursorCurrentX - cursorStartX);
 

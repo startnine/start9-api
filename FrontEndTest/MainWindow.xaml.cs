@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using static Start9.Api.SystemScaling;
 
 namespace FrontEndTest
 {
@@ -225,7 +226,7 @@ namespace FrontEndTest
             ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
             entryIcon.Handle,
             Int32Rect.Empty,
-            BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32((48).RealPixelsToWpfUnits()), System.Convert.ToInt32((48).RealPixelsToWpfUnits()))
+            BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(RealPixelsToWpfUnits(48)), System.Convert.ToInt32(RealPixelsToWpfUnits(48)))
             );
             return new Canvas()
             {
