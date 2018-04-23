@@ -60,6 +60,7 @@
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="DiskItems\DiskItem.cs" />
+    <Compile Include="UserInfo.cs" />
     <Compile Include="Objects\GeometryConverter.cs" />
     <Compile Include="Objects\WidthToOffsetMarginConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
