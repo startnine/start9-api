@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Xml;
 using System.IO;
 
-namespace Start9.Api.Tools
+namespace Start9.Api
 {
     public static class IconPref
     {

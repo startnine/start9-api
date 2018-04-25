@@ -60,7 +60,7 @@
     <Compile Include="Controls\VariableSizedWrapGridView.cs" />
     <Compile Include="Controls\IconButton.cs" />
     <Compile Include="DiskItems\DiskItem.cs" />
-    <Compile Include="UserInfo.cs" />
+    <Compile Include="SystemState.cs" />
     <Compile Include="Objects\GeometryConverter.cs" />
     <Compile Include="Objects\WidthToOffsetMarginConverter.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -69,11 +69,11 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SystemScaling.cs" />
-    <Compile Include="Tools\AppxTools.cs" />
+    <Compile Include="Appx.cs" />
     <Compile Include="Tools\DwmTools.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Programs\IProgramItem.cs" />
-    <Compile Include="Tools\IconPref.cs" />
+    <Compile Include="IconPref.cs" />
     <Compile Include="Tools\MainTools.cs" />
     <Compile Include="Plex\PlexWindow.cs" />
     <Compile Include="Programs\ProgramWindow.cs" />
@@ -83,8 +83,7 @@
     </Compile>
     <Compile Include="Programs\WindowEventArgs.cs" />
     <Compile Include="Tools\MiscTools.cs" />
-    <Compile Include="Tools\ShortcutTools.cs" />
-    <Compile Include="Tools\SystemPowerTools.cs" />
+    <Compile Include="Shortcuts.cs" />
     <Compile Include="WinApi.cs" />
   </ItemGroup>
   <ItemGroup>

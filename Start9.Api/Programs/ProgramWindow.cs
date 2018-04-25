@@ -46,7 +46,7 @@ namespace Start9.Api.Programs
 			}
 		}
 
-		public static IEnumerable<ProgramWindow> ProgramWindows
+		public static IEnumerable<ProgramWindow> RealProgramWindows
 		{
 			get
 			{
@@ -75,7 +75,8 @@ namespace Start9.Api.Programs
         /*public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows => ProgramWindows.Where(
 			hwnd => TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd.Hwnd, GWL_STYLE).ToInt32()) &
 					(WinApi.GetWindowLong(hwnd.Hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW);*/
-        public static IEnumerable<ProgramWindow> UserPerceivedProgramWindows
+
+        public static IEnumerable<ProgramWindow> ProgramWindows
         {
             get
             {

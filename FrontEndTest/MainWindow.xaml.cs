@@ -20,6 +20,8 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using static Start9.Api.SystemScaling;
+using AppInfo = Start9.Api.Appx.AppInfo;
+using System.Collections.ObjectModel;
 
 namespace FrontEndTest
 {
@@ -79,6 +81,15 @@ namespace FrontEndTest
 
         IntPtr helper;
 
+        public ObservableCollection<DiskItem> DiskItems
+        {
+            get => (ObservableCollection<DiskItem>)GetValue(DiskItemsProperty);
+            set => SetValue(DiskItemsProperty, value);
+        }
+
+        public static readonly DependencyProperty DiskItemsProperty =
+            DependencyProperty.Register("DiskItems", typeof(ObservableCollection<DiskItem>), typeof(MainWindow), new PropertyMetadata(new ObservableCollection<DiskItem>()));
+
         public MainWindow()
         {
             ResizeMode = PlexResizeMode.NoResize;
@@ -107,6 +118,35 @@ namespace FrontEndTest
             DwmEnableBlurBehindWindow(helper, ref blur);
             TestTreeView.ItemsSource = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures")).SubItems;
             //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
+            DiskItem item = new DiskItem("Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe");
+            item.ItemAppInfo.NotificationReceived += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    /*TestTileStackPanel.Children.Clear();
+                    foreach (ImageBrush i in args.NewNotification.Images)
+                    {
+                        Canvas c = new Canvas()
+                        {
+                            Width = 100,
+                            Height = 100,
+                            Background = i
+                        };
+                        TestTileStackPanel.Children.Add(c);
+                    }
+                    */
+                    foreach (string s in args.NewNotification.Text)
+                    {
+                        /*TextBlock t = new TextBlock()
+                        {
+                            Text = s
+                        };
+                        TestTileStackPanel.Children.Add(t);*/
+                        Debug.WriteLine(s);
+                    }
+                }));
+            };
+            DiskItems.Add(item);
         }
 
 

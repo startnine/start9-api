@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Icon = System.Drawing.Icon;
 using static Start9.Api.SystemScaling;
+using AppInfo = Start9.Api.Appx.AppInfo;
 
 namespace Start9.Api.DiskItems
 {
@@ -119,7 +120,7 @@ namespace Start9.Api.DiskItems
                 }
                 else
                 {
-                    return "If you see this text, remind me to look into getting Apps' display names.";
+                    return ItemAppInfo.DisplayName;// "If you see this text, remind me to look into getting Apps' display names.";
                 }
             }
         }/*
@@ -129,12 +130,118 @@ namespace Start9.Api.DiskItems
 
         public string ItemPath
         {
-            get => (string)GetValue(ItemPathProperty);
+            get
+            {
+                if (ItemType == DiskItemType.Shortcut)
+                {
+                    string raw = (string)GetValue(ItemPathProperty);
+
+                    string targetPath = GetMsiShortcut(raw);
+
+                    if (targetPath == null)
+                    {
+                        targetPath = ResolveShortcut(raw);
+                    }
+
+                    if (targetPath == null)
+                    {
+                        targetPath = GetInternetShortcut(raw);
+                    }
+
+                    if (targetPath == null | targetPath == "" | targetPath.Replace(" ", "") == "")
+                    {
+                        return raw;
+                    }
+                    else
+                    {
+                        return targetPath;
+                    }
+                }
+                else return (string)GetValue(ItemPathProperty);
+            }
             set => SetValue(ItemPathProperty, (value));
         }
 
         public static readonly DependencyProperty ItemPathProperty =
             DependencyProperty.Register("ItemPath", typeof(string), typeof(DiskItem), new PropertyMetadata(""));
+
+        string GetInternetShortcut(string _rawPath)
+        {
+            try
+            {
+                string url = "";
+
+                using (TextReader reader = new StreamReader(_rawPath))
+                {
+                    string line = "";
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (line.StartsWith("URL="))
+                        {
+                            string[] splitLine = line.Split('=');
+                            if (splitLine.Length > 0)
+                            {
+                                url = splitLine[1];
+                                break;
+                            }
+                        }
+                    }
+                }
+                return url;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        string ResolveShortcut(string _rawPath)
+        {
+            // IWshRuntimeLibrary is in the COM library "Windows Script Host Object Model"
+            IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
+
+            try
+            {
+                IWshRuntimeLibrary.IWshShortcut shortcut = (IWshRuntimeLibrary.IWshShortcut)shell.CreateShortcut(_rawPath);
+                return shortcut.TargetPath;
+            }
+            catch
+            {
+                // A COMException is thrown if the file is not a valid shortcut (.lnk) file 
+                return null;
+            }
+        }
+
+        string GetMsiShortcut(string _rawPath)
+        {
+            StringBuilder product = new StringBuilder(WinApi.MaxGuidLength + 1);
+            StringBuilder feature = new StringBuilder(WinApi.MaxFeatureLength + 1);
+            StringBuilder component = new StringBuilder(WinApi.MaxGuidLength + 1);
+
+            WinApi.MsiGetShortcutTarget(_rawPath, product, feature, component);
+
+            int pathLength = WinApi.MaxPathLength;
+            StringBuilder path = new StringBuilder(pathLength);
+
+            WinApi.InstallState installState = WinApi.MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
+            if (installState == WinApi.InstallState.Local)
+            {
+                return path.ToString();
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public AppInfo ItemAppInfo
+        {
+            get => (AppInfo)GetValue(ItemAppInfoProperty);
+            set => SetValue(ItemAppInfoProperty, (value));
+        }
+
+        public static readonly DependencyProperty ItemAppInfoProperty =
+            DependencyProperty.Register("ItemAppInfo", typeof(AppInfo), typeof(DiskItem), new PropertyMetadata(null));
 
 
         /*public Icon ItemIcon
@@ -148,6 +255,7 @@ namespace Start9.Api.DiskItems
         public enum DiskItemType
         {
             File,
+            Shortcut,
             Directory,
             App
         }
@@ -208,7 +316,19 @@ namespace Start9.Api.DiskItems
             ItemPath = path;
             if (File.Exists(ItemPath))
             {
+                if (Path.GetExtension(path).EndsWith("lnk"))
+                {
+                    ItemType = DiskItemType.Shortcut;
+                }
                 ItemType = DiskItemType.File;
+            }
+            else if (!(Directory.Exists(ItemPath)))
+            {
+                if (Directory.Exists(Environment.ExpandEnvironmentVariables(@"%programfiles%\WindowsApps\" + path)))
+                {
+                    ItemType = DiskItemType.App;
+                    ItemAppInfo = new AppInfo(path);
+                }
             }
         }
 
@@ -254,7 +374,7 @@ namespace Start9.Api.DiskItems
                 return over.ReplacementBrush;
                 //BitmapSource source = BitmapSource.Create()
             }
-            else
+            else if (info.ItemType != DiskItem.DiskItemType.App)
             {
                 uint flags = (0x00000000 | 0x100);
                 if (size <= 20)
@@ -268,6 +388,10 @@ namespace Start9.Api.DiskItems
                 BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(RealPixelsToWpfUnits(size)), System.Convert.ToInt32(RealPixelsToWpfUnits(size)))
                 );
                 return new ImageBrush(entryIconImageSource);
+            }
+            else
+            {
+                return info.ItemAppInfo.Icon;
             }
         }
 

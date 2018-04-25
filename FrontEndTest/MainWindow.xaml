@@ -9,6 +9,7 @@
         xmlns:apictrl="clr-namespace:Start9.Api.Controls;assembly=Start9.Api"
         xmlns:disk="clr-namespace:Start9.Api.DiskItems;assembly=Start9.Api"
         xmlns:api="clr-namespace:Start9.Api;assembly=Start9.Api"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         Title="MainWindow" Width="640" Height="350">
     <plex:PlexWindow.Background>
@@ -572,7 +573,7 @@
                                 <Grid x:Name="DisabledBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                               Margin="0" Background="Transparent" Opacity="0">
                                 </Grid>
-                                <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" />
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsEnabled" Value="False">
@@ -677,6 +678,183 @@
                 </TreeViewItem>
             </DataTemplate>
 
+            <QuinticEase x:Key="TileScalingEase" EasingMode="EaseOut"/>
+
+            <Style x:Key="TileStyle" TargetType="{x:Type apictrl:IconButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type apictrl:IconButton}">
+                            <Grid>
+                                <apictrl:Planerator x:Name="Rotator" UseLayoutRounding="True">
+                                    <Grid HorizontalAlignment="Stretch" Background="#01000000">
+                                        <Grid x:Name="ScaleGrid" RenderTransformOrigin="0.5,0.5">
+                                            <Grid.RenderTransform>
+                                                <ScaleTransform x:Name="Scaler"/>
+                                            </Grid.RenderTransform>
+                                            <Canvas x:Name="HoverBackground" Margin="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF555555" Visibility="Hidden"/>
+                                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding Background}" BorderThickness="1" Margin="4">
+                                                <Grid x:Name="ContentRoot">
+                                                    <Grid.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <LinearGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0" Color="#40000000"/>
+                                                                <GradientStop Offset="1" Color="#20000000"/>
+                                                            </LinearGradientBrush.GradientStops>
+                                                        </LinearGradientBrush>
+                                                    </Grid.Background>
+                                                    <ContentPresenter x:Name="TitleControl" Content="{TemplateBinding Content}" Margin="16,8" Focusable="False" Opacity="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                    <ContentPresenter x:Name="IconControl" Content="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="56" Height="56" Focusable="False" />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Grid>
+                                </apictrl:Planerator>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Rotator" Storyboard.TargetProperty="RotationX" To="3.0625" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Rotator" Storyboard.TargetProperty="RotationX" To="0" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsPressed" Value="True"/>
+                                        <Condition Property="Width" Value="64"/>
+                                    </MultiTrigger.Conditions>
+                                    <MultiTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.EnterActions>
+                                    <MultiTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.ExitActions>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsPressed" Value="True"/>
+                                        <Condition Property="Width" Value="128"/>
+                                    </MultiTrigger.Conditions>
+                                    <MultiTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.EnterActions>
+                                    <MultiTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.ExitActions>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsPressed" Value="True"/>
+                                        <Condition Property="Width" Value="256"/>
+                                        <!--Condition Property="Width" Value="128"/-->
+                                    </MultiTrigger.Conditions>
+                                    <MultiTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.9875" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.9875" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.EnterActions>
+                                    <MultiTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                                <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </MultiTrigger.ExitActions>
+                                </MultiTrigger>
+                                <Trigger Property="Height" Value="256">
+                                    <!--Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="0.975" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                        <DoubleAnimation Storyboard.TargetName="Scaler" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.125" EasingFunction="{StaticResource TileScalingEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions-->
+                                    <Setter TargetName="ScaleGrid" Property="RenderTransformOrigin" Value="0.5,0.75"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentRoot" Property="Opacity" Value="0.75"/>
+                                </Trigger>
+                                <Trigger Property="VerticalContentAlignment" Value="Top">
+                                    <Setter TargetName="IconControl" Property="Width" Value="32"/>
+                                    <Setter TargetName="IconControl" Property="Height" Value="32"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="SmallTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+                <Setter Property="Width" Value="64"/>
+                <Setter Property="Height" Value="64"/>
+                <Setter Property="Foreground" Value="Transparent" />
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+            </Style>
+
+            <Style x:Key="MediumTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+                <Setter Property="Width" Value="128"/>
+                <Setter Property="Height" Value="128"/>
+            </Style>
+
+            <Style x:Key="WideTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="128"/>
+            </Style>
+
+            <Style x:Key="LargeTileStyle" TargetType="{x:Type apictrl:IconButton}" BasedOn="{StaticResource TileStyle}">
+                <Setter Property="Width" Value="256"/>
+                <Setter Property="Height" Value="256"/>
+            </Style>
+
         </ResourceDictionary>
     </plex:PlexWindow.Resources>
     <plex:PlexWindow.Style>
@@ -689,8 +867,8 @@
             <Setter Property="BorderBrush" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="BodyBrush" Value="White"/>
-            <Setter Property="ShowToolBar" Value="False"/>
-            <Setter Property="ShowFooter" Value="False"/>
+            <Setter Property="ShowToolBar" Value="True"/>
+            <Setter Property="ShowFooter" Value="True"/>
             <Setter Property="FooterBrush" Value="{DynamicResource DefaultWindowFooterBrush}"/>
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="FontSize" Value="12"/>
@@ -1253,12 +1431,100 @@
     </plex:PlexWindow.TitleBarContent>
     <plex:PlexWindow.ToolBarContent>
         <Grid>
-            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Background="{x:Static api:UserInfo.UserAvatar}"/>
+            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Background="{x:Static api:SystemState.UserAvatar}"/>
         </Grid>
     </plex:PlexWindow.ToolBarContent>
     <plex:PlexWindow.Content>
         <Grid>
-            <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Grid.Column="0"/>
+            <Grid Grid.Column="1">
+                <ListView ItemsSource="{Binding DiskItems}">
+                    <ListView.Template>
+                        <ControlTemplate>
+                            <WrapPanel IsItemsHost="True"/>
+                        </ControlTemplate>
+                    </ListView.Template>
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type disk:DiskItem}">
+                            <Grid>
+                                <apictrl:IconButton Style="{DynamicResource LargeTileStyle}" Content="{Binding ItemName}">
+                                    <apictrl:IconButton.Background>
+                                        <SolidColorBrush Color="{Binding ItemAppInfo.Color}"/>
+                                    </apictrl:IconButton.Background>
+                                    <apictrl:IconButton.Icon>
+                                        <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <Canvas Width="48" Height="48">
+                                                <Canvas.Background>
+                                                    <Binding ConverterParameter="48">
+                                                        <Binding.Converter>
+                                                            <disk:DiskItemToIconImageBrushConverter/>
+                                                        </Binding.Converter>
+                                                    </Binding>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                        </Border>
+                                    </apictrl:IconButton.Icon>
+                                </apictrl:IconButton>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <ListView ItemsSource="{Binding ItemAppInfo.LiveText}" Grid.Column="0" Foreground="White">
+                                        <ListView.Template>
+                                            <ControlTemplate TargetType="ListView">
+                                                <StackPanel IsItemsHost="True" Orientation="Vertical"/>
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate DataType="string">
+                                                <TextBlock>
+                                                    <TextBlock.Text>
+                                                        <Binding/>
+                                                    </TextBlock.Text>
+                                                </TextBlock>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                    <ListView ItemsSource="{Binding ItemAppInfo.LiveImages}" Grid.Column="1">
+                                        <ListView.Template>
+                                            <ControlTemplate TargetType="ListView">
+                                                <WrapPanel IsItemsHost="True"/>
+                                            </ControlTemplate>
+                                        </ListView.Template>
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate DataType="ImageBrush">
+                                                <Canvas Width="{Binding ImageSource.Width}" Height="{Binding ImageSource.Height}">
+                                                    <Canvas.Background>
+                                                        <ImageBrush ImageSource="{Binding ImageSource}"/>
+                                                    </Canvas.Background>
+                                                </Canvas>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </Grid>
+                            </Grid>
+                            <!--apictrl:IconButton.Content>
+                                    <Grid>
+                                        <ContentControl Content="{Binding ItemName}"/>
+                                        <ListView x:Name="ImagesListView"/>
+                                        <ListView x:Name="StringsListView"/>
+                                    </Grid>
+                                </apictrl:IconButton.Content>
+                            </apictrl:IconButton-->
+                            <!--DataTemplate.Triggers-->
+                                <!--EventTrigger RoutedEvent="NotificationReceived">
+                                    <Setter TargetName="ImagesListView"  Property="ItemsSource" Value="NewNotification.Images"/>
+                                </EventTrigger-->
+                            <!--/DataTemplate.Triggers-->
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
             <!--TreeView.ItemTemplate>
                 </TreeView.ItemTemplate-->
         </Grid>
