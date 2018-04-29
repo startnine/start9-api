@@ -1431,7 +1431,7 @@
     </plex:PlexWindow.TitleBarContent>
     <plex:PlexWindow.ToolBarContent>
         <Grid>
-            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Background="{x:Static api:SystemState.UserAvatar}"/>
+            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Background="{x:Static api:SystemContext.UserAvatar}"/>
         </Grid>
     </plex:PlexWindow.ToolBarContent>
     <plex:PlexWindow.Content>
@@ -1517,7 +1517,7 @@
                                 </apictrl:IconButton.Content>
                             </apictrl:IconButton-->
                             <!--DataTemplate.Triggers-->
-                                <!--EventTrigger RoutedEvent="NotificationReceived">
+                            <!--EventTrigger RoutedEvent="NotificationReceived">
                                     <Setter TargetName="ImagesListView"  Property="ItemsSource" Value="NewNotification.Images"/>
                                 </EventTrigger-->
                             <!--/DataTemplate.Triggers-->
@@ -1527,6 +1527,27 @@
             </Grid>
             <!--TreeView.ItemTemplate>
                 </TreeView.ItemTemplate-->
+            <Grid HorizontalAlignment="Right" Width="256" Height="256" VerticalAlignment="Bottom" Margin="64" Background="Black" Grid.ColumnSpan="5">
+                <Canvas x:Name="RevealDemoSizingAid"/>
+                <apictrl:Reveal HoverWidth="1024" HoverHeight="1024">
+                    <apictrl:Reveal.Hover>
+                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                            <RadialGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                <GradientStop Offset="1" Color="Transparent"/>
+                            </RadialGradientBrush.GradientStops>
+                        </RadialGradientBrush>
+                    </apictrl:Reveal.Hover>
+                    <apictrl:Reveal.OpacityMask>
+                        <VisualBrush>
+                            <VisualBrush.Visual>
+                                <Border Width="{Binding ActualWidth, Source={x:Reference RevealDemoSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference RevealDemoSizingAid}}" BorderThickness="5" BorderBrush="Black" Background="Transparent"/>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </apictrl:Reveal.OpacityMask>
+                </apictrl:Reveal>
+                <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White">Here, have a Fluent Reveal demo.</TextBlock>
+            </Grid>
         </Grid>
     </plex:PlexWindow.Content>
     <!--plex:PlexWindow.Content-->

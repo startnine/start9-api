@@ -108,6 +108,15 @@ namespace Start9.Api
 
         public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmIsCompositionEnabled(out bool enabled);
+
+        [DllImport("dwmapi.dll", EntryPoint = "#127")]
+        internal static extern void DwmGetColorizationParameters(ref DwmColorizationParams param);
+
+        [DllImport("dwmapi.dll", PreserveSig = false)]
+        public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
+
         [DllImport("dwmapi.dll", SetLastError = true)]
         public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
 
@@ -140,6 +149,8 @@ namespace Start9.Api
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
+        [DllImport("uxtheme.dll", CharSet = CharSet.Auto)]
+        public static extern int GetCurrentThemeName(StringBuilder pszThemeFileName, int dwMaxNameChars, StringBuilder pszColorBuff, int dwMaxColorChars, StringBuilder pszSizeBuff, int cchMaxSizeChars);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -224,6 +235,16 @@ namespace Start9.Api
             public string szTypeName;
         }
 
+        public struct DwmColorizationParams
+        {
+            public uint ColorizationColor,
+                ColorizationAfterglow,
+                ColorizationColorBalance,
+                ColorizationAfterglowBalance,
+                ColorizationBlurBalance,
+                ColorizationGlassReflectionIntensity,
+                ColorizationOpaqueBlend;
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct DwmThumbnailProperties

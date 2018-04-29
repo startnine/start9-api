@@ -92,6 +92,18 @@ namespace FrontEndTest
 
         public MainWindow()
         {
+            InitializeComponent();
+            new Window()
+            {
+                Width = 512,
+                Height = 512,
+                Left = 100,
+                Top = 100,
+                Topmost = true,
+                WindowStyle = WindowStyle.None,
+                AllowsTransparency = true,
+                Background = SystemContext.WindowGlassColor
+            }.Show();
             ResizeMode = PlexResizeMode.NoResize;
             AllowsTransparency = false;
             Loaded += MainWindow_Loaded;
