@@ -344,9 +344,17 @@ namespace Start9.Api.DiskItems
         }*/
     }
 
-    public class DiskItemToIconImageBrushConverter : IValueConverter
+    static class DiskItemToIconShared
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        static Icon GetIconFromFilePath(string path, int size, uint flags)
+        {
+            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
+            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
+            System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
+            return entryIcon;
+        }
+
+        public static ImageBrush GetImageBrush(object value, Type targetType, object parameter, CultureInfo culture)
         {
             DiskItem info = value as DiskItem;
             int size = int.Parse(parameter.ToString());
@@ -365,27 +373,7 @@ namespace Start9.Api.DiskItems
                 }
             }
 
-            bool isThumbnailable = false;
-            List<string> extensions = new List<string> { "png", "jpg", "bmp" };
-            foreach (string e in extensions)
-            {
-                if (Path.GetExtension(info.ItemPath).EndsWith(e))
-                    isThumbnailable = true;
-            }
-
-            if ((targetType == typeof(System.Windows.Controls.Image)) && isThumbnailable)
-            {
-                try
-                {
-                    return new ImageBrush(new BitmapImage(new Uri(info.ItemPath, UriKind.RelativeOrAbsolute)));
-                }
-                catch (Exception ex)
-                {
-                    Debug.WriteLine(ex);
-                    return new ImageBrush();
-                }
-            }
-            else if (over != null)
+            if (over != null)
             {
                 return over.ReplacementBrush;
             }
@@ -409,18 +397,58 @@ namespace Start9.Api.DiskItems
                 return info.ItemAppInfo.Icon;
             }
         }
+    }
+
+    public class DiskItemToIconImageBrushOrThumbnailConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            DiskItem info = value as DiskItem;
+            ImageBrush returnValue = DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
+
+            bool isThumbnailable = false;
+            List<string> extensions = new List<string> { "png", "jpg", "bmp" };
+            foreach (string e in extensions)
+            {
+                if (Path.GetExtension(info.ItemPath).EndsWith(e))
+                {
+                    isThumbnailable = true;
+                    break;
+                }
+            }
+
+            if (isThumbnailable)
+            {
+                try
+                {
+                    returnValue = new ImageBrush(new BitmapImage(new Uri(info.ItemPath, UriKind.RelativeOrAbsolute)));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                }
+            }
+
+            return returnValue;
+        }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+    }
 
-        Icon GetIconFromFilePath(string path, int size, uint flags)
+    public class DiskItemToIconImageBrushConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
-            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
-            System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
-            return entryIcon;
+            DiskItem info = value as DiskItem;
+            return DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }
