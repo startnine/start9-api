@@ -54,7 +54,6 @@ namespace Start9.Api.Controls
             if (IsVisible)
                 RevealGlowTimer.Start();
             else
-
                 RevealGlowTimer.Stop();
         }
 
@@ -136,26 +135,28 @@ namespace Start9.Api.Controls
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    var c = SystemScaling.CursorPosition;
-                    var p = PointToScreen(new Point(0, 0));
-                    var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
-                    /*bg.Viewbox = new Rect(
-                        ((c.X - p.X) - (ActualWidth / 2)) * -1,
-                        ((c.Y - p.Y) - (ActualHeight / 2)) * -1,
-                        ActualWidth,
-                        ActualHeight);*/
-                    bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
-                    //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
+                    if (IsVisible)
+                    {
+                        var c = SystemScaling.CursorPosition;
+                        var p = PointToScreen(new Point(0, 0));
+                        var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
+                        /*bg.Viewbox = new Rect(
+                            ((c.X - p.X) - (ActualWidth / 2)) * -1,
+                            ((c.Y - p.Y) - (ActualHeight / 2)) * -1,
+                            ActualWidth,
+                            ActualHeight);*/
+                        bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
+                        //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
+                    }
+                    else
+                    {
+                        RevealGlowTimer.Stop();
+                    }
                 }));
             };
 
             if (IsVisible)
                 RevealGlowTimer.Start();
-        }
-
-        protected override void OnRender(DrawingContext dc)
-        {
-            base.OnRender(dc);
         }
     }
 }
