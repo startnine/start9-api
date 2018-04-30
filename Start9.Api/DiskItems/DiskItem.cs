@@ -110,11 +110,7 @@ namespace Start9.Api.DiskItems
         {
             get
             {
-                if (ItemType == DiskItemType.Directory)
-                {
-                    return Path.GetFileName(ItemPath);
-                }
-                else if (ItemType == DiskItemType.File)
+                if ((ItemType == DiskItemType.Directory) | (ItemType == DiskItemType.File))
                 {
                     return Path.GetFileName(ItemPath);
                 }
@@ -369,10 +365,29 @@ namespace Start9.Api.DiskItems
                 }
             }
 
-            if (over != null)
+            bool isThumbnailable = false;
+            List<string> extensions = new List<string> { "png", "jpg", "bmp" };
+            foreach (string e in extensions)
+            {
+                if (Path.GetExtension(info.ItemPath).EndsWith(e))
+                    isThumbnailable = true;
+            }
+
+            if ((targetType == typeof(System.Windows.Controls.Image)) && isThumbnailable)
+            {
+                try
+                {
+                    return new ImageBrush(new BitmapImage(new Uri(info.ItemPath, UriKind.RelativeOrAbsolute)));
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex);
+                    return new ImageBrush();
+                }
+            }
+            else if (over != null)
             {
                 return over.ReplacementBrush;
-                //BitmapSource source = BitmapSource.Create()
             }
             else if (info.ItemType != DiskItem.DiskItemType.App)
             {
