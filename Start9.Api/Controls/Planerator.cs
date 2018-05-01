@@ -235,8 +235,7 @@ namespace Start9.Api.Controls
         {
             protected override Size MeasureOverride(Size constraint)
             {
-                Planerator pl = this.Parent as Planerator;
-                if (pl != null)
+                if (this.Parent is Planerator pl)
                 {
                     pl.InvalidateMeasure();
                 }
@@ -245,8 +244,7 @@ namespace Start9.Api.Controls
 
             protected override Size ArrangeOverride(Size arrangeSize)
             {
-                Planerator pl = this.Parent as Planerator;
-                if (pl != null)
+                if (this.Parent is Planerator pl)
                 {
                     pl.InvalidateArrange();
                 }

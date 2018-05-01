@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using SysWinRect = System.Windows.Rect;
 
 namespace Start9.Api
 {
@@ -81,6 +82,83 @@ namespace Start9.Api
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        public enum ABM
+        {
+            New = 0,
+            Remove,
+            QueryPos,
+            SetPos,
+            GetState,
+            GetTaskbarPos,
+            Activate,
+            GetAutoHideBar,
+            SetAutoHideBar,
+            WindowPosChanged,
+            SetState
+        }
+
+        public enum ABN
+        {
+            StateChange = 0,
+            PosChanged,
+            FullScreenApp,
+            WindowArrange
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WindowPos
+        {
+            public IntPtr hwnd;
+            public IntPtr hwndInsertAfter;
+            public int x;
+            public int y;
+            public int cx;
+            public int cy;
+            public int flags;
+
+            public SysWinRect Bounds
+            {
+                get { return new SysWinRect(x, y, cx, cy); }
+                set
+                {
+                    x = (int)value.X;
+                    y = (int)value.Y;
+                    cx = (int)value.Width;
+                    cy = (int)value.Height;
+                }
+            }
+        }
+
+        public const int
+            SwpNoMove = 0x0002,
+            SwpNoSize = 0x0001;
+
+        public const int
+            WmActivate = 0x0006,
+            WmWindowPosChanged = 0x0047,
+            WmSysCommand = 0x0112,
+            WmWindowPosChanging = 0x0046;
+
+        public const int
+            ScMove = 0xF010;
+
+        [DllImport("shell32.dll", ExactSpelling = true)]
+        public static extern uint SHAppBarMessage(ABM dwMessage, ref AppBarData pData);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct AppBarData
+        {
+            public int cbSize;
+            public IntPtr hWnd;
+            public int uCallbackMessage;
+            public int uEdge;
+            public Rect rc;
+            public IntPtr lParam;
+        }
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
+        public static extern int RegisterWindowMessage(string msg);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -235,6 +313,33 @@ namespace Start9.Api
             public string szTypeName;
         }
 
+        public delegate bool MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref Rect lprcMonitor, IntPtr dwData);
+
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfoEx lpmi);
+
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, IntPtr dwData);
+
+        private const int CchDeviceName = 32;
+
+        [Flags]
+        public enum MonitorInfoF
+        {
+            Primary = 0x1
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct MonitorInfoEx
+        {
+            public int cbSize;
+            public Rect rcMonitor;
+            public Rect rcWork;
+            public MonitorInfoF dwFlags;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchDeviceName)]
+            public string szDevice;
+        }
+
         public struct DwmColorizationParams
         {
             public uint ColorizationColor,
@@ -292,7 +397,7 @@ namespace Start9.Api
            int nReserved, IntPtr hWnd, IntPtr prcRect);
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
-        struct RECT { public int left, top, right, bottom; }
+        //struct RECT { public int left, top, right, bottom; }
 
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
         public static extern uint MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);

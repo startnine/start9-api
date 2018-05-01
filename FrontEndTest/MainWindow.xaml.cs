@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.IO;
 using Start9.Api;
+using Start9.Api.AppBar;
 using Start9.Api.Plex;
 using Start9.Api.Tools;
 using Start9.Api.DiskItems;
@@ -159,6 +160,77 @@ namespace FrontEndTest
                 }));
             };
             DiskItems.Add(item);
+            AppBarWindow appBar = new AppBarWindow()
+            {
+                DockedWidthOrHeight = 100
+            };
+
+            Button sideButton = new Button()
+            {
+                Content = "CHANGE SIDE"
+            };
+
+            Button monitorButton = new Button()
+            {
+                Content = "CHANGE MONITOR"
+            };
+            monitorButton.Click += (sneder, args) =>
+            {
+                if (appBar.Monitor == MonitorInfo.AllMonitors[0] && (MonitorInfo.AllMonitors.Count > 1))
+                {
+                    appBar.Monitor = MonitorInfo.AllMonitors[1];
+                }
+                else if (MonitorInfo.AllMonitors.Count > 1)
+                {
+                    appBar.Monitor = MonitorInfo.AllMonitors[0];
+                }
+            };
+
+            Button closeButton = new Button()
+            {
+                Content = "CLOSE"
+            };
+            closeButton.Click += (sneder, args) =>
+            {
+                appBar.Close();
+            };
+
+            appBar.Content = new StackPanel()
+            {
+                Orientation = Orientation.Vertical,
+                Children = { sideButton, closeButton }
+            };
+            sideButton.Click += (sneder, args) =>
+            {
+                var stack = (appBar.Content as StackPanel);
+
+                if (appBar.DockMode == AppBarDockMode.Bottom)
+                {
+                    appBar.DockMode = AppBarDockMode.Left;
+                    stack.Orientation = Orientation.Vertical;
+                }
+                else if (appBar.DockMode == AppBarDockMode.Left)
+                {
+                    appBar.DockMode = AppBarDockMode.Top;
+                    stack.Orientation = Orientation.Horizontal;
+                }
+                else if (appBar.DockMode == AppBarDockMode.Top)
+                {
+                    appBar.DockMode = AppBarDockMode.Right;
+                    stack.Orientation = Orientation.Vertical;
+                }
+                else
+                {
+                    appBar.DockMode = AppBarDockMode.Bottom;
+                    stack.Orientation = Orientation.Horizontal;
+                }
+            };
+            if (MonitorInfo.AllMonitors.Count > 1)
+            {
+                (appBar.Content as StackPanel).Children.Add(monitorButton);
+            }
+
+            appBar.Show();
         }
 
 

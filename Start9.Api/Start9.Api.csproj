@@ -47,6 +47,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppBar\AppBarWindow.cs" />
+    <Compile Include="AppBar\MonitorInfo.cs" />
     <Compile Include="Controls\CommandLinkButton.cs" />
     <Compile Include="Controls\CutCornerBorder.cs" />
     <Compile Include="Controls\NineGridCanvas.cs" />

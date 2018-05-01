@@ -18,7 +18,7 @@ namespace Start9.Api
 
             public Shortcut(string s)
             {
-
+                _rawPath = s;
             }
 
             public string TargetPath
