@@ -25,7 +25,7 @@ namespace Start9.Api.Controls
             bool isTopRightClickable = GetIsPointClickable<T>(container, element, new Point(pos.TopRight.X - 1, pos.TopRight.Y + 1));
             bool isBottomRightClickable = GetIsPointClickable<T>(container, element, new Point(pos.BottomRight.X - 1, pos.BottomRight.Y - 1));
 
-            if (isTopLeftClickable || isBottomLeftClickable || isTopRightClickable || isBottomRightClickable)
+            if (isTopLeftClickable | isBottomLeftClickable | isTopRightClickable | isBottomRightClickable)
             {
                 isPartiallyClickable = true;
             }
@@ -242,11 +242,12 @@ namespace Start9.Api.Controls
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    bool isPartiallyClickable = true;
-                    bool isFullyClickable = isElementClickable<Button>(Window.GetWindow(this), this, out isPartiallyClickable);
+                    bool isPartiallyClickable;
+                    bool isFullyClickable = isElementClickable<Button>((Parent as UIElement), this, out isPartiallyClickable);
                     if (isPartiallyClickable)
                     {
-                    var c = SystemScaling.CursorPosition;
+                        Debug.WriteLine("Reveal is Visible");
+                        var c = SystemScaling.CursorPosition;
                         var p = PointToScreen(new Point(0, 0));
                         var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
                         /*bg.Viewbox = new Rect(
@@ -259,8 +260,8 @@ namespace Start9.Api.Controls
                     }
                     else
                     {
-                        Debug.WriteLine("Reveal timer stopped");
-                        RevealGlowTimer.Stop();
+                        Debug.WriteLine("Reveal is not visible");
+                        //RevealGlowTimer.Stop();
                     }
                 }));
             };
