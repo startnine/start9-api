@@ -252,10 +252,10 @@ namespace Start9.Api.Controls
                 {
                     if (IsVisible)
                     {
-                        bool isPartiallyClickable;
+                        /*bool isPartiallyClickable = true;
                         bool isFullyClickable = isElementClickable<Reveal>((Parent as UIElement), this, out isPartiallyClickable);
                         if (isPartiallyClickable)
-                        {
+                        {*/
                             //Debug.WriteLine("Reveal is Visible");
                             var c = SystemScaling.CursorPosition;
                             var p = PointToScreen(new Point(0, 0));
@@ -267,7 +267,7 @@ namespace Start9.Api.Controls
                                 ActualHeight);*/
                             bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
                             //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
-                        }
+                        //}
                     }
                     /*else
                     {
