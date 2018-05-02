@@ -124,14 +124,14 @@ namespace Start9.Api.DiskItems
         public static readonly DependencyProperty ItemNameProperty =
             DependencyProperty.Register("ItemName", typeof(string), typeof(DiskItem), new PropertyMetadata());*/
 
-        public bool IsSelected
+        public bool Selected
         {
-            get => (bool)GetValue(IsSelectedProperty);
-            set => SetValue(IsSelectedProperty, value);
+            get => (bool)GetValue(SelectedProperty);
+            set => SetValue(SelectedProperty, value);
         }
 
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DiskItem), new PropertyMetadata(false));
+        public static readonly DependencyProperty SelectedProperty =
+            DependencyProperty.Register("Selected", typeof(bool), typeof(DiskItem), new PropertyMetadata(false));
 
         public string ItemPath
         {
