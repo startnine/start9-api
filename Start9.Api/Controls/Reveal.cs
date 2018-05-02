@@ -111,6 +111,8 @@ namespace Start9.Api.Controls
 
         private Rect GetAbsolutePlacement(FrameworkElement container, FrameworkElement element, bool relativeToScreen = false)
         {
+            //Visual
+            //element.present
             var absolutePos = element.PointToScreen(new System.Windows.Point(0, 0));
             if (relativeToScreen)
             {
@@ -130,7 +132,7 @@ namespace Start9.Api.Controls
         }
 
         internal static readonly DependencyProperty HoverProperty =
-            DependencyProperty.Register("Hover", typeof(Brush), typeof(Reveal), new PropertyMetadata(new SolidColorBrush(Colors.Red)));
+            DependencyProperty.Register("Hover", typeof(Brush), typeof(Reveal), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
 
         public double HoverWidth
         {
@@ -152,9 +154,10 @@ namespace Start9.Api.Controls
 
         public Reveal()
         {
-            IsVisibleChanged += Reveal_IsVisibleChanged;
+            //IsVisibleChanged += Reveal_IsVisibleChanged;
             Loaded += Reveal_Loaded;
-        }
+            Unloaded += Reveal_Unloaded;
+        }/*
 
         private void Reveal_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -162,16 +165,21 @@ namespace Start9.Api.Controls
                 RevealGlowTimer.Start();
             else
                 RevealGlowTimer.Stop();
-        }
+        }*/
 
         private void Reveal_Loaded(object sender, RoutedEventArgs e)
         {
             SetReveal();
         }
+        
+        private void Reveal_Unloaded(object sender, RoutedEventArgs e)
+        {
+            RevealGlowTimer.Stop();
+        }
 
         public void SetReveal()
         {
-            //RevealGlowTimer.Stop();
+            RevealGlowTimer.Stop();
             if (!(Background is VisualBrush))
             {
                 Background = new VisualBrush();
@@ -242,21 +250,24 @@ namespace Start9.Api.Controls
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    bool isPartiallyClickable;
-                    bool isFullyClickable = isElementClickable<Button>((Parent as UIElement), this, out isPartiallyClickable);
-                    if (IsVisible && isPartiallyClickable)
+                    if (IsVisible)
                     {
-                        //Debug.WriteLine("Reveal is Visible");
-                        var c = SystemScaling.CursorPosition;
-                        var p = PointToScreen(new Point(0, 0));
-                        var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
-                        /*bg.Viewbox = new Rect(
-                            ((c.X - p.X) - (ActualWidth / 2)) * -1,
-                            ((c.Y - p.Y) - (ActualHeight / 2)) * -1,
-                            ActualWidth,
-                            ActualHeight);*/
-                        bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
-                        //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
+                        bool isPartiallyClickable;
+                        bool isFullyClickable = isElementClickable<Reveal>((Parent as UIElement), this, out isPartiallyClickable);
+                        if (isPartiallyClickable)
+                        {
+                            //Debug.WriteLine("Reveal is Visible");
+                            var c = SystemScaling.CursorPosition;
+                            var p = PointToScreen(new Point(0, 0));
+                            var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
+                            /*bg.Viewbox = new Rect(
+                                ((c.X - p.X) - (ActualWidth / 2)) * -1,
+                                ((c.Y - p.Y) - (ActualHeight / 2)) * -1,
+                                ActualWidth,
+                                ActualHeight);*/
+                            bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
+                            //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
+                        }
                     }
                     /*else
                     {
@@ -266,8 +277,7 @@ namespace Start9.Api.Controls
                 }));
             };
 
-            if (IsVisible)
-                RevealGlowTimer.Start();
+            RevealGlowTimer.Start();
         }
     }
 }
