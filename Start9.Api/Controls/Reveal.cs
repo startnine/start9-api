@@ -244,7 +244,7 @@ namespace Start9.Api.Controls
                 {
                     bool isPartiallyClickable;
                     bool isFullyClickable = isElementClickable<Button>((Parent as UIElement), this, out isPartiallyClickable);
-                    if (IsVisible && IsEnabled && isPartiallyClickable)
+                    if (IsVisible && isPartiallyClickable)
                     {
                         //Debug.WriteLine("Reveal is Visible");
                         var c = SystemScaling.CursorPosition;
@@ -258,11 +258,11 @@ namespace Start9.Api.Controls
                         bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
                         //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
                     }
-                    else
+                    /*else
                     {
-                        //Debug.WriteLine("Reveal is not visible");
-                        //RevealGlowTimer.Stop();
-                    }
+                        Debug.WriteLine("Reveal is not visible");
+                        RevealGlowTimer.Stop();
+                    }*/
                 }));
             };
 
