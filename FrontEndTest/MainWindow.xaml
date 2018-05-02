@@ -26,6 +26,7 @@
             <obj:CutCornerGeometryConverter x:Key="CutCornerGeometryConverter"/-->
             <!--local:ReplacementIconNameToReplacedCanvasConverter x:Key="ReplacementIconNameToReplacedCanvasConverter"/-->
             <local:ReplacementIconNameToOriginalCanvasConverter x:Key="ReplacementIconNameToOriginalCanvasConverter"/>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <obj:WidthToHalfWidthConverter x:Key="WidthToHalfWidthConverter"/>
 
             <DataTemplate x:Key="DiskItemTemplate" DataType="{x:Type disk:DiskItem}">
@@ -304,7 +305,8 @@
     </plex:PlexWindow.TitleBarContent>
     <plex:PlexWindow.ToolBarContent>
         <Grid>
-            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Background="{x:Static api:SystemContext.UserAvatar}"/>
+            <Canvas HorizontalAlignment="Left" Width="32" Height="32" Margin="5,0" Background="{x:Static api:SystemContext.UserAvatar}"/>
+            <ToggleButton x:Name="ShowHideRevealToggleButton">Show/Hide Reveal Demo</ToggleButton>
         </Grid>
     </plex:PlexWindow.ToolBarContent>
     <plex:PlexWindow.Content>
@@ -400,7 +402,7 @@
             </Grid>
             <!--TreeView.ItemTemplate>
                 </TreeView.ItemTemplate-->
-            <Grid HorizontalAlignment="Right" Width="256" Height="256" VerticalAlignment="Bottom" Margin="64" Background="Black" Grid.ColumnSpan="5">
+            <Grid HorizontalAlignment="Right" Width="256" Height="256" VerticalAlignment="Bottom" Margin="64" Background="Black" Grid.ColumnSpan="5" Visibility="{Binding Path=IsChecked, Source={x:Reference ShowHideRevealToggleButton}, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <Canvas x:Name="RevealDemoSizingAid"/>
                 <apictrl:Reveal HoverWidth="1024" HoverHeight="1024">
                     <apictrl:Reveal.Hover>
