@@ -244,7 +244,7 @@ namespace Start9.Api.Controls
                 {
                     bool isPartiallyClickable;
                     bool isFullyClickable = isElementClickable<Button>((Parent as UIElement), this, out isPartiallyClickable);
-                    if (isPartiallyClickable)
+                    if (isPartiallyClickable && IsEnabled)
                     {
                         //Debug.WriteLine("Reveal is Visible");
                         var c = SystemScaling.CursorPosition;
