@@ -246,7 +246,7 @@ namespace Start9.Api.Controls
                     bool isFullyClickable = isElementClickable<Button>((Parent as UIElement), this, out isPartiallyClickable);
                     if (isPartiallyClickable)
                     {
-                        Debug.WriteLine("Reveal is Visible");
+                        //Debug.WriteLine("Reveal is Visible");
                         var c = SystemScaling.CursorPosition;
                         var p = PointToScreen(new Point(0, 0));
                         var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
@@ -260,7 +260,7 @@ namespace Start9.Api.Controls
                     }
                     else
                     {
-                        Debug.WriteLine("Reveal is not visible");
+                        //Debug.WriteLine("Reveal is not visible");
                         //RevealGlowTimer.Stop();
                     }
                 }));
