@@ -1013,7 +1013,8 @@ namespace Start9.Api.Plex
             DoubleAnimation windowTopAnimation = new DoubleAnimation()
             {
                 To = RestoreTo.Y,
-                From = Top,
+                //From = Top,
+                From = SystemScaling.RealPixelsToWpfUnits(Screen.FromHandle(new WindowInteropHelper(this).Handle).WorkingArea.Bottom),
                 Duration = AnimateMidDuration,
                 EasingFunction = circleEase
             };
