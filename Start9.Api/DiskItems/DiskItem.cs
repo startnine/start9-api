@@ -337,7 +337,10 @@ namespace Start9.Api.DiskItems
                 {
                     ItemType = DiskItemType.Shortcut;
                 }
-                ItemType = DiskItemType.File;
+                else
+                {
+                    ItemType = DiskItemType.File;
+                }
             }
             else if (!(Directory.Exists(ItemPath)))
             {
@@ -369,13 +372,13 @@ namespace Start9.Api.DiskItems
                     FriendlyItemType = _fileInfo.szTypeName;
                 }
             }
-            else if (ItemType == DiskItemType.Directory)// Directory.Exists(ItemPath))
-            {
-                FriendlyItemType = "File Folder";
-            }
             else if (ItemType == DiskItemType.Shortcut)
             {
                 FriendlyItemType = "Shortcut";
+            }
+            else if (ItemType == DiskItemType.Directory)// Directory.Exists(ItemPath))
+            {
+                FriendlyItemType = "File Folder";
             }
             else if (ItemType == DiskItemType.App)
             {
