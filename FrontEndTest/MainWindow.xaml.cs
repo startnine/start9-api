@@ -105,8 +105,8 @@ namespace FrontEndTest
                 AllowsTransparency = true,
                 Background = SystemContext.WindowGlassColor
             }.Show();
-            ResizeMode = PlexResizeMode.NoResize;
-            AllowsTransparency = false;
+            ResizeMode = PlexResizeMode.CanResize;
+            //AllowsTransparency = false;
             Loaded += MainWindow_Loaded;
         }
 
@@ -174,7 +174,9 @@ namespace FrontEndTest
             DiskItems.Add(item);
             AppBarWindow appBar = new AppBarWindow()
             {
-                DockedWidthOrHeight = 100
+                DockedWidthOrHeight = 100,
+                AllowsTransparency = true,
+                Opacity = 0.75,
             };
 
             Button sideButton = new Button()
@@ -243,6 +245,24 @@ namespace FrontEndTest
             }
 
             appBar.Show();
+
+            new AppBarWindow()
+            {
+                Background = new SolidColorBrush(Colors.Blue),
+                DockedWidthOrHeight = 125,
+                AllowsTransparency = true,
+                Opacity = 0.75,
+                DockMode = AppBarDockMode.Top
+            }.Show();
+
+            new AppBarWindow()
+            {
+                Background = new SolidColorBrush(Colors.Green),
+                DockedWidthOrHeight = 75,
+                AllowsTransparency = true,
+                Opacity = 0.75,
+                DockMode = AppBarDockMode.Right
+            }.Show();
         }
 
 

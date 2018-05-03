@@ -33,146 +33,148 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type plex:PlexWindow}">
-                    <Grid x:Name="WindowRoot" Margin="{TemplateBinding Margin}">
-                        <DockPanel Margin="{TemplateBinding Padding}" LastChildFill="True" Background="Transparent">
-                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0"
+                    <Grid Margin="{TemplateBinding Margin}">
+                        <Grid x:Name="WindowRoot" Margin="0">
+                            <DockPanel Margin="{TemplateBinding Padding}" LastChildFill="True" Background="Transparent">
+                                <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0"
                                   Height="{TemplateBinding TitleBarHeight}" Visibility="Visible" Opacity="1"
                                   DockPanel.Dock="Top">
-                                <Grid x:Name="ActiveTitlebarBackground" Visibility="Visible">
-                                    <Border x:Name="ActiveTitlebarBorder" CornerRadius="12,12,0,0"
+                                    <Grid x:Name="ActiveTitlebarBackground" Visibility="Visible">
+                                        <Border x:Name="ActiveTitlebarBorder" CornerRadius="12,12,0,0"
                                             BorderThickness="0,1,0,0"
                                             Background="{DynamicResource ActiveTitlebarBackgroundBrush}"
                                             BorderBrush="{DynamicResource ActiveTitlebarBorderBrush}"
                                             Margin="0,0,0,-12" Padding="0" />
-                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
+                                        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
                                             Margin="12,2,12,0" Background="{DynamicResource ActiveTitlebarBorderBrush}" />
-                                </Grid>
-                                <Grid x:Name="InactiveTitlebarBackground" Visibility="Hidden">
-                                    <Border x:Name="InactiveTitlebarBorder" CornerRadius="12,12,0,0"
+                                    </Grid>
+                                    <Grid x:Name="InactiveTitlebarBackground" Visibility="Hidden">
+                                        <Border x:Name="InactiveTitlebarBorder" CornerRadius="12,12,0,0"
                                             BorderThickness="0,1,0,0"
                                             Background="{DynamicResource InactiveTitlebarBackgroundBrush}"
                                             BorderBrush="{DynamicResource InactiveTitlebarBorderBrush}"
                                             Margin="0,0,0,-12" Padding="0" />
-                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
+                                        <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
                                             Margin="12,2,12,0"
                                             Background="{DynamicResource InactiveTitlebarBorderBrush}" />
-                                </Grid>
-                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16"
+                                    </Grid>
+                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16"
                                         Margin="3">
-                                    <Canvas.Background>
-                                        <ImageBrush ImageSource="{TemplateBinding Icon}" />
-                                    </Canvas.Background>
-                                </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
+                                        <Canvas.Background>
+                                            <ImageBrush ImageSource="{TemplateBinding Icon}" />
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top" HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center" Height="26" Margin="0,-2"
                                        FontFamily="Franklin Gothic Book" FontSize="12" Foreground="White">
-                                    <Label.Effect>
-                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
+                                        <Label.Effect>
+                                            <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
                                                           ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
-                                    </Label.Effect>
-                                </Label>
-                                <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                        </Label.Effect>
+                                    </Label>
+                                    <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top"
                                             Orientation="Horizontal" Height="22" Margin="5,0">
-                                    <Button x:Name="PART_MinimizeButton" Width="18" VerticalAlignment="Stretch"
+                                        <Button x:Name="PART_MinimizeButton" Width="18" VerticalAlignment="Stretch"
                                             Style="{DynamicResource CaptionButtonStyle}">
-                                        <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/-->
-                                        0
-                                    </Button>
-                                    <Grid x:Name="MaxRestButtonGrid"  Width="18" VerticalAlignment="Stretch" Margin="1,1,-1,-1">
-                                        <Button x:Name="PART_MaximizeButton" HorizontalAlignment="Stretch"
+                                            <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/-->
+                                            0
+                                        </Button>
+                                        <Grid x:Name="MaxRestButtonGrid"  Width="18" VerticalAlignment="Stretch" Margin="1,1,-1,-1">
+                                            <Button x:Name="PART_MaximizeButton" HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Style="{DynamicResource CaptionButtonStyle}">
-                                            <!--Border Width="10" Height="9" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/-->
-                                            1
-                                        </Button>
-                                        <Button x:Name="PART_RestoreButton" HorizontalAlignment="Stretch"
+                                                <!--Border Width="10" Height="9" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/-->
+                                                1
+                                            </Button>
+                                            <Button x:Name="PART_RestoreButton" HorizontalAlignment="Stretch"
                                                 VerticalAlignment="Stretch"
                                                 Style="{DynamicResource CaptionButtonStyle}" Visibility="Hidden">
-                                            <!--Grid Width="9" Height="9">
+                                                <!--Grid Width="9" Height="9">
                                                 <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                                 <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid-->
-                                            2
-                                        </Button>
-                                    </Grid>
-                                    <Button x:Name="PART_CloseButton" Width="18" VerticalAlignment="Stretch"
+                                                2
+                                            </Button>
+                                        </Grid>
+                                        <Button x:Name="PART_CloseButton" Width="18" VerticalAlignment="Stretch"
                                             Style="{DynamicResource CaptionButtonStyle}">
-                                        r
-                                    </Button>
-                                </StackPanel>
-                                <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
-                                <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
-                            </Grid>
-                            <Grid x:Name="ToolBar" HorizontalAlignment="Stretch" Margin="0"
+                                            r
+                                        </Button>
+                                    </StackPanel>
+                                    <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
+                                    <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                                </Grid>
+                                <Grid x:Name="ToolBar" HorizontalAlignment="Stretch" Margin="0"
                                   Height="{TemplateBinding ToolBarHeight}" Visibility="Visible" DockPanel.Dock="Top">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                    <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                        <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
-                                            <Border x:Name="ToolBarSecondaryBorder" CornerRadius="8,8,0,0"
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+                                        <Grid Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
+                                                <Border x:Name="ToolBarSecondaryBorder" CornerRadius="8,8,0,0"
                                                     BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}"
                                                     BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
-                                        </Border>
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
-                                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                                            </Border>
+                                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
+                                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
+                                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                                        </Grid>
+                                        <ContentPresenter Content="{TemplateBinding ToolBarContent}" />
                                     </Grid>
-                                    <ContentPresenter Content="{TemplateBinding ToolBarContent}" />
                                 </Grid>
-                            </Grid>
-                            <Grid x:Name="Footer" HorizontalAlignment="Stretch" Margin="0"
+                                <Grid x:Name="Footer" HorizontalAlignment="Stretch" Margin="0"
                                   Height="{TemplateBinding FooterHeight}" Visibility="Visible" DockPanel.Dock="Bottom">
-                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-12,0,0">
-                                    <Border x:Name="FooterBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding FooterBrush}" CornerRadius="0,0,12,12" />
-                                    <ContentPresenter Content="{TemplateBinding FooterContent}" />
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,-12,0,0">
+                                        <Border x:Name="FooterBorder" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{TemplateBinding FooterBrush}" CornerRadius="0,0,12,12" />
+                                        <ContentPresenter Content="{TemplateBinding FooterContent}" />
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                            <Border x:Name="BodyBase" CornerRadius="12" BorderBrush="{DynamicResource WindowToolbarBackgroundBrush}" BorderThickness="0,1,0,0" HorizontalAlignment="Stretch" Margin="0" Padding="0">
-                                <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding BodyBrush}">
-                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                <Border x:Name="BodyBase" CornerRadius="12" BorderBrush="{DynamicResource WindowToolbarBackgroundBrush}" BorderThickness="0,1,0,0" HorizontalAlignment="Stretch" Margin="0" Padding="0">
+                                    <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding BodyBrush}">
+                                        <ContentPresenter Content="{TemplateBinding Content}" />
+                                    </Border>
                                 </Border>
-                            </Border>
-                        </DockPanel>
-                        <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
-                            <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
-                        </Grid>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
+                            </DockPanel>
+                            <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                                <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
+                            </Grid>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
                                    Grid.Column="0" Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
+                                <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
                                    Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Height="4"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
+                                <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
                                    Background="{x:Null}" Margin="0,3" Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
+                                <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
                                    HorizontalContentAlignment="Right" Background="{x:Null}" Margin="0,3"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
+                                <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
                                    Grid.Row="3" Grid.Column="3" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
+                                <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
                                    Grid.Row="0" Grid.Column="2" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
+                                <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
                                    Grid.Row="0" Grid.Column="0" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
-                            <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
+                                <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
                                    Grid.Row="3" Grid.Column="0" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
+                            </Grid>
+                            <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden"/>
                         </Grid>
-                        <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ShowTitle" Value="False">

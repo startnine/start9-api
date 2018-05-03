@@ -11,7 +11,7 @@
         xmlns:api="clr-namespace:Start9.Api;assembly=Start9.Api"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
-        Title="MainWindow" Width="640" Height="350" Style="{DynamicResource AeroMediaWindowStyle}">
+        Title="MainWindow" Width="640" Height="350" Style="{DynamicResource PlexWindowStyle}">
     <plex:PlexWindow.Background>
         <SolidColorBrush Opacity="0" Color="Transparent"/>
     </plex:PlexWindow.Background>

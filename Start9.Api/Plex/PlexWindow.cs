@@ -916,12 +916,16 @@ namespace Start9.Api.Plex
                 };
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, windowSizeAnimation);
                 scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, windowSizeAnimation);
+                Margin = new Thickness(SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Left) + SystemParameters.BorderWidth, SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Top) + SystemParameters.BorderWidth, SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Width - s.WorkingArea.Right) - SystemParameters.BorderWidth, SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Height - s.WorkingArea.Bottom) - SystemParameters.BorderWidth);
+                //(s.WorkingArea.Bottom - s.WorkingArea.Height) - 
+                //(s.WorkingArea.Width - s.WorkingArea.Right) + ((SystemParameters.BorderWidth + 2) * -1), (s.WorkingArea.Height - s.WorkingArea.Bottom) + ((SystemParameters.BorderWidth + 2) * -1)
             }
             else
             {
                 _maxButton.Visibility = Visibility.Visible;
                 _restButton.Visibility = Visibility.Hidden;
-                Padding = new Thickness(0, 0, 0, 0);
+                Margin = new Thickness(0);
+                //Padding = new Thickness(0);
                 MaxWidth = double.PositiveInfinity;
                 MaxHeight = double.PositiveInfinity;
 
