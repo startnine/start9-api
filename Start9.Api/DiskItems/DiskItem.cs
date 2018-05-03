@@ -348,23 +348,35 @@ namespace Start9.Api.DiskItems
                 }
             }
 
-            if ((File.Exists(ItemPath)) | (Directory.Exists(ItemPath)))
+            if (ItemType == DiskItemType.File & File.Exists(ItemPath))
             {
                 SHGetFileInfo(path, (uint)(0x00000080), ref _fileInfo, (uint)Marshal.SizeOf(_fileInfo), (uint)(0x000000400 | 0x000000010));
                 if (string.IsNullOrEmpty(_fileInfo.szTypeName))
                 {
-                    if (Directory.Exists(ItemPath))
-                    {
-                        FriendlyItemType = "File Folder";
-                    }
-                    else
-                    {
-                        FriendlyItemType = Path.GetExtension(ItemPath) + " File";
-                    }
+                    FriendlyItemType = Path.GetExtension(ItemPath) + " File";
                 }
                 else
                 {
                     FriendlyItemType = _fileInfo.szTypeName;
+                }
+            }
+            else if (ItemType == DiskItemType.Directory)// Directory.Exists(ItemPath))
+            {
+                FriendlyItemType = "File Folder";
+            }
+            else if (ItemType == DiskItemType.Shortcut)
+            {
+                FriendlyItemType = "Shortcut";
+            }
+            else if (ItemType == DiskItemType.App)
+            {
+                if (Environment.OSVersion.Version.Major >= 10)
+                {
+                    FriendlyItemType = "Universal App";
+                }
+                else
+                {
+                    FriendlyItemType = "Modern App";
                 }
             }
         }

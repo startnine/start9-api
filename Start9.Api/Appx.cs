@@ -260,7 +260,6 @@ namespace Start9.Api
                 Color = Color.FromArgb(0xFF, 0xFF, 0, 0xFF); //Get App color here
                 foreach (XmlNode node in _appxManifest.GetElementsByTagName("Package")[0].ChildNodes)
                 {
-                    Debug.WriteLine("node.Name " + node.Name);
                     if (node.Name == "Applications")
                     {
                         foreach (XmlNode secondNode in node.ChildNodes)
@@ -269,15 +268,12 @@ namespace Start9.Api
                             {
                                 foreach (XmlNode subNode in secondNode.ChildNodes)
                                 {
-                                    Debug.WriteLine("subNode.Name " + subNode.Name);
                                     if ((subNode.Name.ToLower().EndsWith("visualelements")) && (subNode.Attributes["BackgroundColor"] != null))
                                     {
-                                        Debug.WriteLine("Releasing the  C O L O U R E S ...");
                                         string coloures = subNode.Attributes["BackgroundColor"].Value.Replace("#", "").ToUpper();
                                         byte red = 0;
                                         byte green = 0;
                                         byte blue = 0;
-                                        Debug.WriteLine("coloures.Length " + coloures.Length.ToString());
                                         if (coloures.Length == 6)
                                         {
                                             red = byte.Parse(coloures.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
@@ -317,13 +313,11 @@ namespace Start9.Api
                             LiveText.Clear();
                             foreach (string s in NewNotification.Text)
                             {
-                                Debug.WriteLine(s);
                                 LiveText.Add(s);
                             }
                             LiveImages.Clear();
                             foreach (ImageBrush b in NewNotification.Images)
                             {
-                                Debug.WriteLine("IMAGEBRUSH ADDED " + b.ImageSource.Width.ToString() + " " + b.ImageSource.Height.ToString());
                                 LiveImages.Add(b);
                             }
                         }
@@ -342,28 +336,22 @@ namespace Start9.Api
                     //appxManifest.Load(InternalPath);
                     foreach (XmlNode node in _appxManifest.GetElementsByTagName("Package")[0].ChildNodes)
                     {
-                        Debug.WriteLine("node.Name " + node.Name);
                         if (node.Name.ToLower() == "applications")
                         {
                             foreach (XmlNode secondNode in node.ChildNodes)
                             {
-                                Debug.WriteLine("secondNode.Name " + secondNode.Name);
                                 if (secondNode.Name.ToLower() == "application")
                                 {
                                     foreach (XmlNode subNode in secondNode.ChildNodes)
                                     {
-                                        Debug.WriteLine("subNode.Name " + subNode.Name);
                                         if (subNode.Name.ToLower().EndsWith("visualelements"))
                                         {
                                             foreach (XmlNode defaultTileNode in subNode.ChildNodes)
                                             {
-                                                Debug.WriteLine("defaultTileNode.Name " + defaultTileNode.Name);
                                                 if (defaultTileNode.Name.ToLower().EndsWith("defaulttile"))
                                                 {
                                                     foreach (XmlNode tileUpdNode in defaultTileNode.ChildNodes)
                                                     {
-                                                        Debug.WriteLine("tileUpdNode.Name " + tileUpdNode.Name);
-                                                        //XmlNodeList tileUpdate = _appxManifest.GetElementsByTagName("wb:TileUpdate");
                                                         if ((tileUpdNode.Name.ToLower().EndsWith("tileupdate")) && (tileUpdNode.Attributes["UriTemplate"] != null))
                                                         {
                                                             address = tileUpdNode.Attributes["UriTemplate"].Value;
@@ -377,9 +365,6 @@ namespace Start9.Api
                             }
                         }
                     }
-                    //XmlNode root = appxManifest.DocumentElement;
-                    //wb: TileUpdate
-                    Debug.WriteLine("ADDRESS: " + address);
                     return address;
                 }
             }
@@ -391,15 +376,12 @@ namespace Start9.Api
                     NotificationInfo notifyInfo = new NotificationInfo();
                     XmlDocument tileDocument = new XmlDocument();
 
-                    //@"http://{language}.appex-rf.msn.com/cgtile/v1/{language}/News/Today.xml"
-                    Debug.WriteLine(InternalPath);
                     tileDocument.LoadXml(GetLiveTileFromWebAddress(TileNotificationAddress));
 
                     foreach (XmlNode visual in tileDocument.SelectNodes("/tile/visual"))
                     {
                         foreach (XmlNode binding in visual.ChildNodes)
                         {
-                            Debug.WriteLine(binding.ChildNodes.Count.ToString());
                             foreach (XmlNode node in binding.ChildNodes)
                             {
                                 if (node.Name.ToLower() == "image")
@@ -407,18 +389,15 @@ namespace Start9.Api
                                     if (Uri.IsWellFormedUriString(node.Attributes["src"].Value, UriKind.RelativeOrAbsolute))
                                     {
                                         notifyInfo.Images.Add(new ImageBrush(new BitmapImage(new Uri(node.Attributes["src"].Value, UriKind.RelativeOrAbsolute))));
-                                        Debug.WriteLine("Image added from src");
                                     }
                                     else if (Uri.IsWellFormedUriString(node.Attributes["alt"].Value, UriKind.RelativeOrAbsolute))
                                     {
                                         notifyInfo.Images.Add(new ImageBrush(new BitmapImage(new Uri(node.Attributes["alt"].Value, UriKind.RelativeOrAbsolute))));
-                                        Debug.WriteLine("Image added from alt");
                                     }
                                 }
                                 else if (node.Name.ToLower() == "text")
                                 {
                                     notifyInfo.Text.Add(Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.Default.GetBytes(node.InnerText))));
-                                    Debug.WriteLine("Text added: " + Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.Default.GetBytes(node.InnerText))));
                                 }
                             }
                             try
