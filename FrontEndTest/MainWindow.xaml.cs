@@ -139,6 +139,9 @@ namespace FrontEndTest
                     break;
                 }
             }
+
+            DiskItem desktopItem = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Desktop"));
+            Debug.WriteLine("DESKTOP: " + desktopItem.FriendlyItemType);
             //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
             DiskItem item = new DiskItem("Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe");
             item.ItemAppInfo.NotificationReceived += (sneder, args) =>

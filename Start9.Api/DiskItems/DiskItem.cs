@@ -348,7 +348,7 @@ namespace Start9.Api.DiskItems
                 }
             }
 
-            if (ItemType == DiskItemType.File & File.Exists(ItemPath))
+            if (ItemType == DiskItemType.File & File.Exists(path))
             {
                 SHGetFileInfo(path, (uint)(0x00000080), ref _fileInfo, (uint)Marshal.SizeOf(_fileInfo), (uint)(0x000000400 | 0x000000010));
                 if (string.IsNullOrEmpty(_fileInfo.szTypeName))
