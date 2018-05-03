@@ -350,14 +350,15 @@ namespace Start9.Api.DiskItems
 
             if (ItemType == DiskItemType.File & File.Exists(path))
             {
-                try
+                ///Fix this
+                /*try
                 {
                     SHGetFileInfo(path, (uint)(0x00000080), ref _fileInfo, (uint)Marshal.SizeOf(_fileInfo), (uint)(0x000000400 | 0x000000010));
                 }
                 catch (Exception ex)
                 {
                     Debug.WriteLine(ex);
-                }
+                }*/
 
                 if (string.IsNullOrEmpty(_fileInfo.szTypeName))
                 {
