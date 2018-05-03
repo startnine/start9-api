@@ -16,7 +16,7 @@ namespace Start9.Api.Controls
     public class Reveal : Canvas
     {
         //from https://stackoverflow.com/questions/1517743/in-wpf-how-can-i-determine-whether-a-control-is-visible-to-the-user#1517794
-        private bool isElementClickable<T>(UIElement container, UIElement element, out bool isPartiallyClickable)
+        /*private bool isElementClickable<T>(UIElement container, UIElement element, out bool isPartiallyClickable)
         {
             isPartiallyClickable = false;
             Rect pos = GetAbsolutePlacement((FrameworkElement)container, (FrameworkElement)element);
@@ -123,7 +123,7 @@ namespace Start9.Api.Controls
             return new Rect(absolutePos.X, absolutePos.Y, element.ActualWidth, element.ActualHeight);
         }
 
-        Timer RevealGlowTimer = new Timer(1);
+        Timer RevealGlowTimer = new Timer(1);*/
 
         public Brush Hover
         {
@@ -152,9 +152,12 @@ namespace Start9.Api.Controls
         internal static readonly DependencyProperty HoverHeightProperty =
             DependencyProperty.Register("HoverHeight", typeof(double), typeof(Reveal), new PropertyMetadata((double)1));
 
+        Canvas _vis = null;
+
         public Reveal()
         {
             //IsVisibleChanged += Reveal_IsVisibleChanged;
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
             Loaded += Reveal_Loaded;
             Unloaded += Reveal_Unloaded;
         }/*
@@ -166,20 +169,29 @@ namespace Start9.Api.Controls
             else
                 RevealGlowTimer.Stop();
         }*/
+        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            if (IsVisible && (_vis != null))
+            {
+                var c = SystemScaling.CursorPosition;
+                var p = PointToScreen(new Point(0, 0));
+                var t = new Point((c.X - p.X) - (_vis.Width / 2), (c.Y - p.Y) - (_vis.Height / 2));
+                (Background as VisualBrush).Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
+            }
+        }
 
         private void Reveal_Loaded(object sender, RoutedEventArgs e)
         {
             SetReveal();
         }
-        
+
         private void Reveal_Unloaded(object sender, RoutedEventArgs e)
         {
-            RevealGlowTimer.Stop();
+            _vis = null;
         }
 
         public void SetReveal()
         {
-            RevealGlowTimer.Stop();
             if (!(Background is VisualBrush))
             {
                 Background = new VisualBrush();
@@ -236,7 +248,7 @@ namespace Start9.Api.Controls
                 });
             }
 
-            var vis = (bg.Visual as Grid).Children[0] as Canvas;
+            _vis = (bg.Visual as Grid).Children[0] as Canvas;
             /*if (Hover is ImageBrush)
             {
                 var br = Hover as ImageBrush;
@@ -246,38 +258,38 @@ namespace Start9.Api.Controls
 
             bg.ViewboxUnits = BrushMappingMode.Absolute;
 
-            RevealGlowTimer.Elapsed += delegate
+            /*RevealGlowTimer.Elapsed += delegate
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
                     if (IsVisible)
                     {
-                        /*bool isPartiallyClickable = true;
+                        bool isPartiallyClickable = true;
                         bool isFullyClickable = isElementClickable<Reveal>((Parent as UIElement), this, out isPartiallyClickable);
                         if (isPartiallyClickable)
-                        {*/
+                        {
                             //Debug.WriteLine("Reveal is Visible");
                             var c = SystemScaling.CursorPosition;
                             var p = PointToScreen(new Point(0, 0));
-                            var t = new Point((c.X - p.X) - (vis.Width / 2), (c.Y - p.Y) - (vis.Height / 2));
-                            /*bg.Viewbox = new Rect(
+                            var t = new Point((c.X - p.X) - (_vis.Width / 2), (c.Y - p.Y) - (_vis.Height / 2));
+                            bg.Viewbox = new Rect(
                                 ((c.X - p.X) - (ActualWidth / 2)) * -1,
                                 ((c.Y - p.Y) - (ActualHeight / 2)) * -1,
                                 ActualWidth,
-                                ActualHeight);*/
+                                ActualHeight);
                             bg.Viewbox = new Rect(t.X * -1, t.Y * -1, ActualWidth, ActualHeight);
                             //vis.Margin = new Thickness(t.X, t.Y, t.X * -1, t.Y * -1);
                         //}
                     }
-                    /*else
-                    {
-                        Debug.WriteLine("Reveal is not visible");
-                        RevealGlowTimer.Stop();
-                    }*/
-                }));
-            };
+            else
+            {
+                Debug.WriteLine("Reveal is not visible");
+                RevealGlowTimer.Stop();
+            }
+        }));
+    };*/
 
-            RevealGlowTimer.Start();
+            //RevealGlowTimer.Start();
         }
     }
 }
