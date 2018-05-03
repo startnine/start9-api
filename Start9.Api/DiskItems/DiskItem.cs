@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using Icon = System.Drawing.Icon;
 using static Start9.Api.SystemScaling;
 using AppInfo = Start9.Api.Appx.AppInfo;
+using static Start9.Api.WinApi;
 
 namespace Start9.Api.DiskItems
 {
@@ -284,6 +285,15 @@ namespace Start9.Api.DiskItems
         public static readonly DependencyProperty ItemTypeProperty =
             DependencyProperty.Register("ItemType", typeof(DiskItemType), typeof(DiskItem), new PropertyMetadata(DiskItemType.Directory));
 
+        public string FriendlyItemType
+        {
+            get => (string)GetValue(FriendlyItemTypeProperty);
+            set => SetValue(FriendlyItemTypeProperty, value);
+        }
+
+        public static readonly DependencyProperty FriendlyItemTypeProperty =
+            DependencyProperty.Register("FriendlyItemType", typeof(string), typeof(DiskItem), new PropertyMetadata(""));
+
         /*public ImageSource RealIcon
         {
             get => MiscTools.GetIconFromFilePath(Path);
@@ -316,6 +326,8 @@ namespace Start9.Api.DiskItems
         /*public static readonly DependencyProperty SubItemsProperty =
             DependencyProperty.Register("SubItems", typeof(ObservableCollection<DiskItem>), typeof(DiskItem), new PropertyMetadata());*/
 
+        ShFileInfo _fileInfo = new ShFileInfo();
+
         public DiskItem(string path)
         {
             ItemPath = path;
@@ -333,6 +345,26 @@ namespace Start9.Api.DiskItems
                 {
                     ItemType = DiskItemType.App;
                     ItemAppInfo = new AppInfo(path);
+                }
+            }
+
+            if ((File.Exists(ItemPath)) | (Directory.Exists(ItemPath)))
+            {
+                SHGetFileInfo(path, (uint)(0x00000080), ref _fileInfo, (uint)Marshal.SizeOf(_fileInfo), (uint)(0x000000400 | 0x000000010));
+                if (string.IsNullOrEmpty(_fileInfo.szTypeName))
+                {
+                    if (Directory.Exists(ItemPath))
+                    {
+                        FriendlyItemType = "File Folder";
+                    }
+                    else
+                    {
+                        FriendlyItemType = Path.GetExtension(ItemPath) + " File";
+                    }
+                }
+                else
+                {
+                    FriendlyItemType = _fileInfo.szTypeName;
                 }
             }
         }
@@ -357,8 +389,8 @@ namespace Start9.Api.DiskItems
     {
         static Icon GetIconFromFilePath(string path, int size, uint flags)
         {
-            WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
-            WinApi.SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
+            ShFileInfo shInfo = new ShFileInfo();
+            SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
             System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
             return entryIcon;
         }

@@ -397,7 +397,7 @@ namespace Start9.Api
            int nReserved, IntPtr hWnd, IntPtr prcRect);
         [DllImport("user32.dll")]
         public static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
-        //struct RECT { public int left, top, right, bottom; }
+        //struct RECT { public int left, top, right, bottom; }  
 
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
         public static extern uint MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);

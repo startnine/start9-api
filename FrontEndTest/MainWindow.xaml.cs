@@ -129,7 +129,16 @@ namespace FrontEndTest
                 hRgnBlur = IntPtr.Zero
             };
             DwmEnableBlurBehindWindow(helper, ref blur);
-            TestTreeView.ItemsSource = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures")).SubItems;
+            DiskItem picturesItem = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures"));
+            TestTreeView.ItemsSource = picturesItem.SubItems;
+            foreach (DiskItem d in picturesItem.SubItems)
+            {
+                if (d.ItemType == DiskItem.DiskItemType.File)
+                {
+                    Debug.WriteLine("FILE TYPE: " + picturesItem.FriendlyItemType);
+                    break;
+                }
+            }
             //FileIconOverrides.ItemsSource = IconPref.FileIconOverrides;
             DiskItem item = new DiskItem("Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe");
             item.ItemAppInfo.NotificationReceived += (sneder, args) =>
