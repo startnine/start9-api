@@ -362,7 +362,7 @@ namespace Start9.Api.DiskItems
 
                 if (string.IsNullOrEmpty(_fileInfo.szTypeName))
                 {
-                    FriendlyItemType = Path.GetExtension(ItemPath) + " File";
+                    FriendlyItemType = Path.GetExtension(ItemPath).Replace(".", "").ToUpper() + " File";
                 }
                 else
                 {
