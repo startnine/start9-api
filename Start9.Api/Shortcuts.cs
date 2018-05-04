@@ -15,6 +15,18 @@ namespace Start9.Api
     {
         public class Shortcut
         {
+            /*public static void CreateShortcut(string lnkFileName, string openTargetPath, string lnkOutputLocation)
+            {
+                string dir = openTargetPath.Replace(Path.GetFileName(openTargetPath), "");
+
+                if (dir.Contains(@"\"))
+                {
+                    dir = dir.Substring(0, dir.LastIndexOf(@"\"));
+                }
+
+                CreateShortcut(lnkFileName, "Location: " + Path.GetDirectoryName(openTargetPath) + " (" + dir + ")", openTargetPath, lnkOutputLocation);
+            }
+
             public static void CreateShortcut(string lnkFileName, string openTargetPath)
             {
                 string dir = openTargetPath.Replace(Path.GetFileName(openTargetPath), "");
@@ -25,7 +37,7 @@ namespace Start9.Api
                 }
 
                 CreateShortcut(lnkFileName, "Location: " + Path.GetDirectoryName(openTargetPath) + " (" + dir + ")", openTargetPath);
-            }
+            }*/
 
             public static void CreateShortcut(string lnkFileName, string lnkDescription, string openTargetPath)
             {
@@ -37,9 +49,21 @@ namespace Start9.Api
 
             public static void CreateShortcut(string lnkFileName, string lnkDescription, string openTargetPath, string lnkOutputLocation)
             {
+                string desc = lnkDescription;
+                if (string.IsNullOrEmpty(lnkDescription))
+                {
+                    string dir = openTargetPath.Replace(Path.GetFileName(openTargetPath), "");
+
+                    if (dir.Contains(@"\"))
+                    {
+                        dir = dir.Substring(0, dir.LastIndexOf(@"\"));
+                    }
+
+                    desc = "Location: " + Path.GetDirectoryName(openTargetPath) + " (" + dir + ")";
+                }
                 WshShell shell = new WshShell();
                 IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(lnkOutputLocation);
-                shortcut.Description = lnkDescription;
+                shortcut.Description = desc;
                 shortcut.TargetPath = openTargetPath;
                 shortcut.Save();
             }
