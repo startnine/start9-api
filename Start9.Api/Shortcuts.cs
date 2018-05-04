@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows.Controls;
 using Start9.Api.Tools;
 using System.Windows;
+using IWshRuntimeLibrary;
 
 namespace Start9.Api
 {
@@ -14,6 +15,35 @@ namespace Start9.Api
     {
         public class Shortcut
         {
+            public static void CreateShortcut(string lnkFileName, string openTargetPath)
+            {
+                string dir = openTargetPath.Replace(Path.GetFileName(openTargetPath), "");
+
+                if (dir.Contains(@"\"))
+                {
+                    dir = dir.Substring(0, dir.LastIndexOf(@"\"));
+                }
+
+                CreateShortcut(lnkFileName, "Location: " + Path.GetDirectoryName(openTargetPath) + " (" + dir + ")", openTargetPath);
+            }
+
+            public static void CreateShortcut(string lnkFileName, string lnkDescription, string openTargetPath)
+            {
+                object shDesktop = (object)"Desktop";
+                WshShell shell = new WshShell();
+                string shortcutAddress = (string)shell.SpecialFolders.Item(ref shDesktop) + @"\" + lnkFileName;
+                CreateShortcut(lnkFileName, lnkDescription, openTargetPath, shortcutAddress);
+            }
+
+            public static void CreateShortcut(string lnkFileName, string lnkDescription, string openTargetPath, string lnkOutputLocation)
+            {
+                WshShell shell = new WshShell();
+                IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(lnkOutputLocation);
+                shortcut.Description = lnkDescription;
+                shortcut.TargetPath = openTargetPath;
+                shortcut.Save();
+            }
+
             string _rawPath;
 
             public Shortcut(string s)
