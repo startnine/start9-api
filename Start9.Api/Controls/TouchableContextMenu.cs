@@ -34,12 +34,18 @@ namespace Start9.Api.Controls
             if (source != null)
             {
                 (source as UIElement).TouchDown += Source_TouchDown;
+                (source as UIElement).MouseDown += Source_MouseDown;
             }
-            else
-            if (placeTarget != null)
+            else if (placeTarget != null)
             {
                 placeTarget.TouchDown += Source_TouchDown;
+                placeTarget.MouseDown += Source_MouseDown;
             }
+        }
+
+        private void Source_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            OpenedWithTouch = false;
         }
 
         private void Source_TouchDown(object sender, TouchEventArgs e)
@@ -53,12 +59,10 @@ namespace Start9.Api.Controls
                     if (IsOpen)
                     {
                         OpenedWithTouch = true;
-                        Debug.WriteLine("T O C C H");
                     }
                     else if (!((e.OriginalSource as UIElement).AreAnyTouchesOver))
                     {
                         touchTimer.Stop();
-                        Debug.WriteLine("S T O N P");
                     }
                 }));
             };

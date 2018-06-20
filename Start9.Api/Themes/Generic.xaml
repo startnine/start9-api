@@ -28,7 +28,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BodyBrush" Value="{DynamicResource DefaultWindowBodyBrush}"/>
         <Setter Property="FooterBrush" Value="{DynamicResource DefaultWindowFooterBrush}"/>
-        <Setter Property="FontFamily" Value="Franklin Gothic Book"/>
+        <Setter Property="FontFamily" Value="Liberation Sans"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -66,8 +66,7 @@
                                     </Canvas>
                                     <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
                                        VerticalAlignment="Top" HorizontalContentAlignment="Center"
-                                       VerticalContentAlignment="Center" Height="26" Margin="0,-2"
-                                       FontFamily="Franklin Gothic Book" FontSize="12" Foreground="White">
+                                       VerticalContentAlignment="Center" Height="26" Margin="0,-2" FontSize="12" Foreground="White">
                                         <Label.Effect>
                                             <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
                                                           ShadowDepth="3" BlurRadius="10" Opacity="0.5" />

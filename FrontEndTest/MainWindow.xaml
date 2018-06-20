@@ -314,6 +314,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Grid.Column="0"/>
             <Grid Grid.Column="1">
@@ -423,6 +424,22 @@
                 </apictrl:Reveal>
                 <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White">Here, have a Fluent Reveal demo.</TextBlock>
             </Grid>
+            <Button Grid.Column="2" VerticalAlignment="Top" Content="Right-click me :3">
+                <Button.ContextMenu>
+                    <apictrl:TouchableContextMenu>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <Separator/>
+                        <MenuItem Header="Sub-item Test">
+                            <MenuItem Header="Test"/>
+                            <MenuItem Header="Test"/>
+                            <MenuItem Header="Test"/>
+                        </MenuItem>
+                    </apictrl:TouchableContextMenu>
+                </Button.ContextMenu>
+            </Button>
         </Grid>
     </plex:PlexWindow.Content>
     <!--plex:PlexWindow.Content-->

@@ -1784,12 +1784,15 @@
     <Style x:Key="PlexMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}"/>
 
     <Style x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
+        <Style.Resources>
+            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}"/>
+        </Style.Resources>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         <Setter Property="Margin" Value="5,0,0,5"/>
         <Setter Property="Padding" Value="3,3,3,0"/>
         <Setter Property="HasDropShadow" Value="False" />
-        <Setter Property="ItemContainerStyle" Value="{DynamicResource PlexMenuItemStyle}"/>
+        <!--Setter Property="ItemContainerStyle" Value="{DynamicResource PlexMenuItemStyle}"/-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
@@ -1809,24 +1812,26 @@
     </Style>
 
     <Style x:Key="{x:Type controls:TouchableContextMenu}" TargetType="{x:Type controls:TouchableContextMenu}">
+        <Style.Resources>
+            <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}">
+                <!--Setter Property="ItemContainerStyle" Value="{Binding Path=Style, RelativeSource={RelativeSource Mode=Self}}"/-->
+                <!--Setter Property="IsManipulationEnabled" Value="{Binding OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TouchableContextMenu}}}"/-->
+                <Style.Triggers>
+                    <!--Trigger Property="IsManipulationEnabled" Value="True">
+                        <Setter Property="Height" Value="46.590925" />
+                    </Trigger-->
+                    <DataTrigger Binding="{Binding Path=OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TouchableContextMenu}}}" Value="True">
+                        <Setter Property="Height" Value="46.590925" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style> 
+            <!--Style TargetType="Separator" BasedOn="{x:Type Separator}"/-->
+        </Style.Resources>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
         <Setter Property="Margin" Value="5,0,0,5"/>
         <Setter Property="Padding" Value="3,3,3,0"/>
         <Setter Property="HasDropShadow" Value="False" />
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}">
-                    <Setter Property="ItemContainerStyle" Value="{Binding Path=Style, RelativeSource={RelativeSource Mode=Self}}"/>
-                    <Setter Property="IsManipulationEnabled" Value="{Binding OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TouchableContextMenu}}}"/>
-                    <Style.Triggers>
-                        <Trigger Property="IsManipulationEnabled" Value="True">
-                            <Setter Property="Height" Value="46.590925" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
