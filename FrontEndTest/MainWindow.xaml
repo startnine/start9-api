@@ -430,13 +430,58 @@
                         <MenuItem Header="Test"/>
                         <MenuItem Header="Test"/>
                         <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
                         <Separator/>
                         <MenuItem Header="Sub-item Test">
                             <MenuItem Header="Test"/>
                             <MenuItem Header="Test"/>
                             <MenuItem Header="Test"/>
                         </MenuItem>
+                        <Separator/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
                     </apictrl:TouchableContextMenu>
                 </Button.ContextMenu>
             </Button>
