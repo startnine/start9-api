@@ -1,37 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.AddIn.Contract;
 using System.AddIn.Pipeline;
 using System.Collections;
 
-namespace Start9.Api.Contracts
+namespace Start9.Api
 {
     [AddInContract]
     public interface IModuleContract : IContract
     {
-        Message SendMessage<T>(Message message);
-        IConfiguration Configuration { get; }
+        IMessageContract SendMessage(IMessageContract message);
     }
 
-    public class Message
+    public interface IMessageContract : IContract
     {
-        public String Text;
+        String Text { get; }
+        Object Object { get; }
     }
 
-    public class Message<T>
+    public interface IConfigurationContract : IContract
     {
-        public T Object { get; }
-    }
-
-    public interface IConfiguration
-    {
-        Dictionary<String, Object> GetConfigurationStrings();
-    }
-
-    public interface ISkin : IConfiguration
-    {
-        IDictionary Resources { get; }
+        IDictionary Entries { get; }
     }
 }
