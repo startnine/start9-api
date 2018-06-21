@@ -3,7 +3,7 @@ using System.AddIn.Contract;
 using System.AddIn.Pipeline;
 using System.Collections;
 
-namespace Start9.Api
+namespace Start9.Api.Contracts
 {
     [AddInContract]
     public interface IModuleContract : IContract
@@ -22,3 +22,4 @@ namespace Start9.Api
         IDictionary Entries { get; }
     }
 }
+    
