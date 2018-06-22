@@ -172,7 +172,7 @@ namespace FrontEndTest
                 }));
             };
             DiskItems.Add(item);
-            AppBarWindow appBar = new AppBarWindow()
+            /*AppBarWindow appBar = new AppBarWindow()
             {
                 DockedWidthOrHeight = 100,
                 AllowsTransparency = true,
@@ -262,7 +262,7 @@ namespace FrontEndTest
                 AllowsTransparency = true,
                 Opacity = 0.75,
                 DockMode = AppBarDockMode.Right
-            }.Show();
+            }.Show();*/
         }
 
 
