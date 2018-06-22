@@ -9,6 +9,7 @@ namespace Start9.Api.Contracts
     public interface IModuleContract : IContract
     {
         IMessageContract SendMessage(IMessageContract message);
+        IConfigurationContract Configuration { get; }
     }
 
     public interface IMessageContract : IContract
@@ -20,6 +21,13 @@ namespace Start9.Api.Contracts
     public interface IConfigurationContract : IContract
     {
         IDictionary Entries { get; }
+    }
+
+    public interface IHostContract : IContract
+    {
+        void SendGlobalMessage(IMessageContract message);
+        IListContract<IModuleContract> GetModules();
+        IConfigurationContract GetConfiguration(IModuleContract module);
     }
 }
     
