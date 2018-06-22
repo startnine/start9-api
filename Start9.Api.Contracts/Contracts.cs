@@ -10,6 +10,7 @@ namespace Start9.Api.Contracts
     {
         IMessageContract SendMessage(IMessageContract message);
         IConfigurationContract Configuration { get; }
+        void HostReceived(IHostContract host);
     }
 
     public interface IMessageContract : IContract
