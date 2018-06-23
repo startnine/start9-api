@@ -185,7 +185,7 @@
                                             <ScaleTransform ScaleX="2" ScaleY="2"/>
                                         </StackPanel.RenderTransform-->
                                         <!--Width="18" VerticalAlignment="Stretch" -->
-                                        <Button x:Name="PART_MinimizeButton">
+                                        <Button x:Name="PART_MinimizeButton" Margin="-0.5,0,0.5,0">
                                             <Button.Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
                                                     <Setter Property="Template">
@@ -275,7 +275,7 @@
                                         </Button>
                                         <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl}}"/-->
                                             <!--0-->
-                                        <Grid x:Name="MaxRestButtonGrid"><!--Margin="-1,0,1,0"-->
+                                        <Grid x:Name="MaxRestButtonGrid" Margin="-1,0,1,0"><!--Margin="-1,0,1,0"-->
                                             <Button x:Name="PART_MaximizeButton">
                                                 <Button.Style>
                                                     <Style TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
