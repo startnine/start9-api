@@ -5,18 +5,20 @@ using System.Collections;
 
 namespace Start9.Api.Contracts
 {
+    #region Modules
+
     [AddInContract]
     public interface IModuleContract : IContract
     {
         IConfigurationContract Configuration { get; }
         IMessageContractContract MessageContract { get; }
         IReceiverContractContract ReceiverContract { get; }
-
         void Initialize(IHostContract host);
-
-        void MessageReceivedEventAdd(IMessageEventHandlerContract handler);
-        void MessageReceivedEventRemove(IMessageEventHandlerContract handler);
     }
+
+    #endregion
+
+    #region Messages
 
     public interface IMessageContractContract : IContract
     {
@@ -27,11 +29,9 @@ namespace Start9.Api.Contracts
     {
         Type MessageObjectType { get; }
         String FriendlyName { get; }
-
         void MessageSentEventAdd(IMessageEventHandlerContract handler);
         void MessageSentEventRemove(IMessageEventHandlerContract handler);
     }
-
 
     public interface IMessageContract : IContract
     {
@@ -39,11 +39,15 @@ namespace Start9.Api.Contracts
         IMessageEntryContract MessageEntry { get; }
     }
 
+    #endregion
+
+
+    #region Receivers
+
     public interface IReceiverContractContract : IContract
     {
-        IListContract<IMessageEntryContract> Entries { get; }
+        IListContract<IReceiverEntryContract> Entries { get; }
     }
-
 
     public interface IReceiverEntryContract : IContract
     {
@@ -62,6 +66,11 @@ namespace Start9.Api.Contracts
         IMessageContract Message { get; }
     }
 
+    #endregion
+
+
+    #region Configuration
+
     public interface IConfigurationContract : IContract
     {
         IListContract<IConfigurationEntryContract> Entries { get; }
@@ -72,6 +81,8 @@ namespace Start9.Api.Contracts
         Object Object { get; }
         String FriendlyName { get; }
     }
+
+    #endregion
 
     public interface IHostContract : IContract
     {
