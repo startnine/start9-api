@@ -7,40 +7,43 @@ using SysWinRect = System.Windows.Rect;
 
 namespace Start9.Api
 {
+    /// <summary>
+    /// Random functions from the Windows API.
+    /// </summary>
     public static class WinApi
     {
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
+        public static extern Boolean MoveWindow(IntPtr hWnd, Int32 x, Int32 y, Int32 nWidth, Int32 nHeight, Boolean bRepaint);
 
-        public static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong) => IntPtr.Size == 8
+        public static IntPtr SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong) => IntPtr.Size == 8
             ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong)
             : SetWindowLong32(hWnd, nIndex, dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-        static extern IntPtr SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+        static extern IntPtr SetWindowLong32(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, int dwNewLong);
+        static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
-        public static IntPtr GetWindowLong(IntPtr hWnd, int nIndex) => IntPtr.Size == 8
+        public static IntPtr GetWindowLong(IntPtr hWnd, Int32 nIndex) => IntPtr.Size == 8
             ? GetWindowLong64(hWnd, nIndex)
             : GetWindowLong32(hWnd, nIndex);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr GetWindowLong32(IntPtr hWnd, int nIndex);
+        static extern IntPtr GetWindowLong32(IntPtr hWnd, Int32 nIndex);
 
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-        static extern IntPtr GetWindowLong64(IntPtr hWnd, int nIndex);
+        static extern IntPtr GetWindowLong64(IntPtr hWnd, Int32 nIndex);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+        public static extern Boolean GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
 
         public struct WINDOWPLACEMENT
         {
-            public int length;
-            public int flags;
-            public int showCmd;
+            public Int32 length;
+            public Int32 flags;
+            public Int32 showCmd;
             public System.Drawing.Point ptMinPosition;
             public System.Drawing.Point ptMaxPosition;
             public System.Drawing.Rectangle rcNormalPosition;
@@ -60,28 +63,28 @@ namespace Start9.Api
         public const UInt32 SW_RESTORE = 9;
 
         [DllImport("user32.dll")]
-        public static extern bool EnumWindowStations(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
+        public static extern Boolean EnumWindowStations(EnumWindowStationsDelegate lpEnumFunc, IntPtr lParam);
 
-        public delegate bool EnumWindowStationsDelegate(string windowsStation, IntPtr lParam);
+        public delegate Boolean EnumWindowStationsDelegate(String windowsStation, IntPtr lParam);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+        public static extern UInt32 GetWindowThreadProcessId(IntPtr hWnd, out UInt32 lpdwProcessId);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsWindowVisible(IntPtr hWnd);
+        public static extern Boolean IsWindowVisible(IntPtr hWnd);
 
         [DllImport("user32.dll")]
-        public static extern void GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        public static extern void GetWindowText(IntPtr hWnd, StringBuilder lpString, Int32 nMaxCount);
 
         [DllImport("User32")]
-        public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
+        public static extern Int32 ShowWindow(IntPtr hwnd, Int32 nCmdShow);
 
         [DllImport("user32.dll")]
-        public static extern bool SetForegroundWindow(IntPtr hWnd);
+        public static extern Boolean SetForegroundWindow(IntPtr hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        public static extern Boolean SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 X, Int32 Y, Int32 cx, Int32 cy, UInt32 uFlags);
 
         public enum ABM
         {
@@ -111,130 +114,130 @@ namespace Start9.Api
         {
             public IntPtr hwnd;
             public IntPtr hwndInsertAfter;
-            public int x;
-            public int y;
-            public int cx;
-            public int cy;
-            public int flags;
+            public Int32 x;
+            public Int32 y;
+            public Int32 cx;
+            public Int32 cy;
+            public Int32 flags;
 
             public SysWinRect Bounds
             {
                 get { return new SysWinRect(x, y, cx, cy); }
                 set
                 {
-                    x = (int)value.X;
-                    y = (int)value.Y;
-                    cx = (int)value.Width;
-                    cy = (int)value.Height;
+                    x = (Int32)value.X;
+                    y = (Int32)value.Y;
+                    cx = (Int32)value.Width;
+                    cy = (Int32)value.Height;
                 }
             }
         }
 
-        public const int
+        public const Int32
             SwpNoMove = 0x0002,
             SwpNoSize = 0x0001;
 
-        public const int
+        public const Int32
             WmActivate = 0x0006,
             WmWindowPosChanged = 0x0047,
             WmSysCommand = 0x0112,
             WmWindowPosChanging = 0x0046;
 
-        public const int
+        public const Int32
             ScMove = 0xF010;
 
         [DllImport("shell32.dll", ExactSpelling = true)]
-        public static extern uint SHAppBarMessage(ABM dwMessage, ref AppBarData pData);
+        public static extern UInt32 SHAppBarMessage(ABM dwMessage, ref AppBarData pData);
 
         [StructLayout(LayoutKind.Sequential)]
         public struct AppBarData
         {
-            public int cbSize;
+            public Int32 cbSize;
             public IntPtr hWnd;
-            public int uCallbackMessage;
-            public int uEdge;
+            public Int32 uCallbackMessage;
+            public Int32 uEdge;
             public Rect rc;
             public IntPtr lParam;
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        public static extern int RegisterWindowMessage(string msg);
+        public static extern Int32 RegisterWindowMessage(String msg);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        public static extern IntPtr SendMessage(IntPtr hWnd, Int32 Msg, Int32 wParam, Int32 lParam);
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern int GetWindowTextLength(IntPtr hWnd);
+        public static extern Int32 GetWindowTextLength(IntPtr hWnd);
 
-        public static IntPtr GetClassLongPtr(IntPtr hWnd, int nIndex) => IntPtr.Size > 4
+        public static IntPtr GetClassLongPtr(IntPtr hWnd, Int32 nIndex) => IntPtr.Size > 4
             ? GetClassLongPtr64(hWnd, nIndex)
             : new IntPtr(GetClassLongPtr32(hWnd, nIndex));
 
         [DllImport("user32.dll", EntryPoint = "GetClassLong")]
-        static extern uint GetClassLongPtr32(IntPtr hWnd, int nIndex);
+        static extern UInt32 GetClassLongPtr32(IntPtr hWnd, Int32 nIndex);
 
         [DllImport("user32.dll", EntryPoint = "GetClassLongPtr")]
-        static extern IntPtr GetClassLongPtr64(IntPtr hWnd, int nIndex);
+        static extern IntPtr GetClassLongPtr64(IntPtr hWnd, Int32 nIndex);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool DestroyIcon(IntPtr hIcon);
+        public static extern Boolean DestroyIcon(IntPtr hIcon);
 
         [DllImport("user32.dll")]
-        public static extern bool EnumDesktopWindows(IntPtr hDesktop,
+        public static extern Boolean EnumDesktopWindows(IntPtr hDesktop,
                                                      EnumDelegate lpfn,
                                                      IntPtr lParam);
 
-        public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+        public delegate Boolean EnumDelegate(IntPtr hWnd, Int32 lParam);
 
         [DllImport("dwmapi.dll")]
-        public static extern int DwmIsCompositionEnabled(out bool enabled);
+        public static extern Int32 DwmIsCompositionEnabled(out Boolean enabled);
 
         [DllImport("dwmapi.dll", EntryPoint = "#127")]
         internal static extern void DwmGetColorizationParameters(ref DwmColorizationParams param);
 
         [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmGetColorizationColor(out uint ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out bool ColorizationOpaqueBlend);
+        public static extern void DwmGetColorizationColor(out UInt32 ColorizationColor, [MarshalAs(UnmanagedType.Bool)]out Boolean ColorizationOpaqueBlend);
 
         [DllImport("dwmapi.dll", SetLastError = true)]
-        public static extern int DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
+        public static extern Int32 DwmRegisterThumbnail(IntPtr dest, IntPtr src, out IntPtr thumb);
 
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern void DwmQueryThumbnailSourceSize(IntPtr hThumbnail, out Psize size);
 
         [DllImport("dwmapi.dll", PreserveSig = true)]
-        public static extern int DwmUpdateThumbnailProperties(IntPtr hThumbnail, ref DwmThumbnailProperties props);
+        public static extern Int32 DwmUpdateThumbnailProperties(IntPtr hThumbnail, ref DwmThumbnailProperties props);
 
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DeleteObject([In] IntPtr hObject);
+        public static extern Boolean DeleteObject([In] IntPtr hObject);
 
         [DllImport("shell32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, ref ShFileInfo psfi, uint cbFileInfo, uint uFlags);
+        public static extern IntPtr SHGetFileInfo(String pszPath, UInt32 dwFileAttributes, ref ShFileInfo psfi, UInt32 cbFileInfo, UInt32 uFlags);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern bool LockWorkStation();
+        public static extern Boolean LockWorkStation();
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ExitWindowsEx(ExitWindowsAction uFlags, ShutdownReason dwReason);
+        public static extern Boolean ExitWindowsEx(ExitWindowsAction uFlags, ShutdownReason dwReason);
 
         [DllImport("Powrprof.dll", SetLastError = true)]
-        public static extern bool SetSuspendState(bool hibernate, bool forceCritical, bool disableWakeEvent);
+        public static extern Boolean SetSuspendState(Boolean hibernate, Boolean forceCritical, Boolean disableWakeEvent);
 
         [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
+        public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, String lpszClass, String lpszWindow);
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetForegroundWindow();
 
         [DllImport("uxtheme.dll", CharSet = CharSet.Auto)]
-        public static extern int GetCurrentThemeName(StringBuilder pszThemeFileName, int dwMaxNameChars, StringBuilder pszColorBuff, int dwMaxColorChars, StringBuilder pszSizeBuff, int cchMaxSizeChars);
+        public static extern Int32 GetCurrentThemeName(StringBuilder pszThemeFileName, Int32 dwMaxNameChars, StringBuilder pszColorBuff, Int32 dwMaxColorChars, StringBuilder pszSizeBuff, Int32 cchMaxSizeChars);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool IsWindow(IntPtr hWnd);
+        public static extern Boolean IsWindow(IntPtr hWnd);
 
-        public enum ExitWindowsAction : uint
+        public enum ExitWindowsAction : UInt32
         {
             Logoff = 0,
             Shutdown = 1,
@@ -244,7 +247,7 @@ namespace Start9.Api
         }
 
         [Flags]
-        public enum ShutdownReason : uint
+        public enum ShutdownReason : UInt32
         {
             MajorApplication = 0x00040000,
             MajorHardware = 0x00010000,
@@ -286,42 +289,42 @@ namespace Start9.Api
             FlagPlanned = 0x80000000
         }
 
-        public const int SwShownormal = 1;
-        public const int SwShowminimized = 2;
-        public const int SwShowmaximized = 3;
+        public const Int32 SwShownormal = 1;
+        public const Int32 SwShowminimized = 2;
+        public const Int32 SwShowmaximized = 3;
 
-        public const int GwlStyle = -16;
-        public const int WsMaximize = 0x01000000;
-        public const int WsMinimize = 0x20000000;
+        public const Int32 GwlStyle = -16;
+        public const Int32 WsMaximize = 0x01000000;
+        public const Int32 WsMinimize = 0x20000000;
 
-        public const int GwlExstyle = -20;
-        public const int Taskstyle = 0x10000000 | 0x00800000;
-        public const int WsExTransparent = 0x00000020;
-        public const int WsExToolwindow = 0x00000080;
-        public const int WsExLayered = 0x00080000;
-        public const int WsExAppWindow = 0x00040000;
+        public const Int32 GwlExstyle = -20;
+        public const Int32 Taskstyle = 0x10000000 | 0x00800000;
+        public const Int32 WsExTransparent = 0x00000020;
+        public const Int32 WsExToolwindow = 0x00000080;
+        public const Int32 WsExLayered = 0x00080000;
+        public const Int32 WsExAppWindow = 0x00040000;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct ShFileInfo
         {
             public IntPtr hIcon;
-            public int iIcon;
-            public uint dwAttributes;
+            public Int32 iIcon;
+            public UInt32 dwAttributes;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-            public string szDisplayName;
+            public String szDisplayName;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-            public string szTypeName;
+            public String szTypeName;
         }
 
-        public delegate bool MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref Rect lprcMonitor, IntPtr dwData);
+        public delegate Boolean MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref Rect lprcMonitor, IntPtr dwData);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern bool GetMonitorInfo(IntPtr hMonitor, ref MonitorInfoEx lpmi);
+        public static extern Boolean GetMonitorInfo(IntPtr hMonitor, ref MonitorInfoEx lpmi);
 
         [DllImport("user32.dll")]
-        public static extern bool EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, IntPtr dwData);
+        public static extern Boolean EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, IntPtr dwData);
 
-        private const int CchDeviceName = 32;
+        private const Int32 CchDeviceName = 32;
 
         [Flags]
         public enum MonitorInfoF
@@ -332,17 +335,17 @@ namespace Start9.Api
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct MonitorInfoEx
         {
-            public int cbSize;
+            public Int32 cbSize;
             public Rect rcMonitor;
             public Rect rcWork;
             public MonitorInfoF dwFlags;
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchDeviceName)]
-            public string szDevice;
+            public String szDevice;
         }
 
         public struct DwmColorizationParams
         {
-            public uint ColorizationColor,
+            public UInt32 ColorizationColor,
                 ColorizationAfterglow,
                 ColorizationColorBalance,
                 ColorizationAfterglowBalance,
@@ -354,29 +357,29 @@ namespace Start9.Api
         [StructLayout(LayoutKind.Sequential)]
         public struct DwmThumbnailProperties
         {
-            public int dwFlags;
+            public Int32 dwFlags;
             public Rect rcDestination;
             public Rect rcSource;
-            public byte opacity;
-            public bool fVisible;
-            public bool fSourceClientAreaOnly;
+            public Byte opacity;
+            public Boolean fVisible;
+            public Boolean fSourceClientAreaOnly;
         }
 
-        public const int DwmTnpVisible = 0x8,
+        public const Int32 DwmTnpVisible = 0x8,
                          DwmTnpOpacity = 0x4,
                          DwmTnpRectdestination = 0x1;
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Psize
         {
-            public int x;
-            public int y;
+            public Int32 x;
+            public Int32 y;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct Rect
         {
-            public Rect(int left, int top, int right, int bottom)
+            public Rect(Int32 left, Int32 top, Int32 right, Int32 bottom)
             {
                 Left = left;
                 Top = top;
@@ -384,27 +387,27 @@ namespace Start9.Api
                 Bottom = bottom;
             }
 
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
+            public Int32 Left;
+            public Int32 Top;
+            public Int32 Right;
+            public Int32 Bottom;
         }
 
         [DllImport("user32.dll")]
-        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, Boolean bRevert);
         [DllImport("user32.dll")]
-        public static extern int TrackPopupMenu(IntPtr hMenu, uint uFlags, int x, int y,
-           int nReserved, IntPtr hWnd, IntPtr prcRect);
+        public static extern Int32 TrackPopupMenu(IntPtr hMenu, UInt32 uFlags, Int32 x, Int32 y,
+           Int32 nReserved, IntPtr hWnd, IntPtr prcRect);
         [DllImport("user32.dll")]
-        public static extern bool GetWindowRect(IntPtr hWnd, out Rect rect);
+        public static extern Boolean GetWindowRect(IntPtr hWnd, out Rect rect);
         //struct RECT { public int left, top, right, bottom; }  
 
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        public static extern uint MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
+        public static extern UInt32 MsiGetShortcutTarget(String targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
 
-        public const int MaxFeatureLength = 38;
-        public const int MaxGuidLength = 38;
-        public const int MaxPathLength = 1024;
+        public const Int32 MaxFeatureLength = 38;
+        public const Int32 MaxGuidLength = 38;
+        public const Int32 MaxPathLength = 1024;
 
         public enum InstallState
         {
@@ -425,6 +428,6 @@ namespace Start9.Api
         }
 
         [DllImport("msi.dll", CharSet = CharSet.Auto)]
-        public static extern InstallState MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+        public static extern InstallState MsiGetComponentPath(String productCode, String componentCode, StringBuilder componentPath, ref Int32 componentPathBufferSize);
     }
 }

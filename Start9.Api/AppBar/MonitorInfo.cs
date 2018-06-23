@@ -13,13 +13,25 @@ namespace Start9.Api.AppBar
     /// </summary>
     public class MonitorInfo : IEquatable<MonitorInfo>
     {
+        /// <summary>
+        /// Gets the bounds of the viewport.
+        /// </summary>
         public Rect ViewportBounds { get; }
 
+        /// <summary>
+        /// Gets the bounds of the work area.
+        /// </summary>
         public Rect WorkAreaBounds { get; }
 
-        public bool IsPrimary { get; }
+        /// <summary>
+        /// Gets a value that determines if the monitor is the primary monitor or not.
+        /// </summary>
+        public Boolean IsPrimary { get; }
 
-        public string DeviceId { get; }
+        /// <summary>
+        /// Gets the device ID of the monitor.
+        /// </summary>
+        public String DeviceId { get; }
 
         internal MonitorInfo(MonitorInfoEx mex)
         {
@@ -29,6 +41,9 @@ namespace Start9.Api.AppBar
             this.DeviceId = mex.szDevice;
         }
 
+        /// <summary>
+        /// Gets a collection of all monitors.
+        /// </summary>
         public static ObservableCollection<MonitorInfo> AllMonitors
         {
             get
@@ -55,15 +70,15 @@ namespace Start9.Api.AppBar
             }
         }
 
-        public override string ToString() => DeviceId;
+        public override String ToString() => DeviceId;
 
-        public override bool Equals(object obj) => Equals(obj as MonitorInfo);
+        public override Boolean Equals(Object obj) => Equals(obj as MonitorInfo);
 
-        public override int GetHashCode() => DeviceId.GetHashCode();
+        public override Int32 GetHashCode() => DeviceId.GetHashCode();
 
-        public bool Equals(MonitorInfo other) => this.DeviceId == other?.DeviceId;
+        public Boolean Equals(MonitorInfo other) => this.DeviceId == other?.DeviceId;
 
-        public static bool operator ==(MonitorInfo a, MonitorInfo b)
+        public static Boolean operator ==(MonitorInfo a, MonitorInfo b)
         {
             if (ReferenceEquals(a, b))
             {
@@ -78,6 +93,6 @@ namespace Start9.Api.AppBar
             return a.Equals(b);
         }
 
-        public static bool operator !=(MonitorInfo a, MonitorInfo b) => !(a == b);
+        public static Boolean operator !=(MonitorInfo a, MonitorInfo b) => !(a == b);
     }
 }

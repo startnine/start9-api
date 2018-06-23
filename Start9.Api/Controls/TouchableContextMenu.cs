@@ -12,14 +12,14 @@ namespace Start9.Api.Controls
 {
     public class TouchableContextMenu : ContextMenu
     {
-        public bool OpenedWithTouch
+        public Boolean OpenedWithTouch
         {
-            get => (bool)GetValue(OpenedWithTouchProperty);
+            get => (Boolean)GetValue(OpenedWithTouchProperty);
             set => SetValue(OpenedWithTouchProperty, value);
         }
 
         public static readonly DependencyProperty OpenedWithTouchProperty = DependencyProperty.Register("OpenedWithTouch",
-            typeof(bool), typeof(TouchableContextMenu),
+            typeof(Boolean), typeof(TouchableContextMenu),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public TouchableContextMenu()
@@ -27,7 +27,7 @@ namespace Start9.Api.Controls
             Loaded += TouchableContextMenu_Loaded;
         }
 
-        private void TouchableContextMenu_Loaded(object sender, RoutedEventArgs e)
+        private void TouchableContextMenu_Loaded(Object sender, RoutedEventArgs e)
         {
             var source = ContextMenuService.GetPlacementTarget(this);
             var placeTarget = PlacementTarget as UIElement;
@@ -43,12 +43,12 @@ namespace Start9.Api.Controls
             }
         }
 
-        private void Source_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Source_MouseDown(Object sender, MouseButtonEventArgs e)
         {
             OpenedWithTouch = false;
         }
 
-        private void Source_TouchDown(object sender, TouchEventArgs e)
+        private void Source_TouchDown(Object sender, TouchEventArgs e)
         {
             //TouchStarted = DateTime.Now;
             Timer touchTimer = new Timer(1);

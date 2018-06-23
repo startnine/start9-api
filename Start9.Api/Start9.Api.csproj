@@ -84,7 +84,6 @@
       <DependentUpon>ShadowWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Programs\WindowEventArgs.cs" />
-    <Compile Include="Tools\MiscTools.cs" />
     <Compile Include="Shortcuts.cs" />
     <Compile Include="WinApi.cs" />
   </ItemGroup>

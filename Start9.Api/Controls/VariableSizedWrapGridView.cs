@@ -5,7 +5,7 @@ namespace Start9.Api.Objects.Controls
 {
     public class VariableSizedWrapGridView : ItemsControl
     {
-        protected override void PrepareContainerForItemOverride(DependencyObject element, object item)
+        protected override void PrepareContainerForItemOverride(DependencyObject element, System.Object item)
         {
             dynamic model = item;
             try

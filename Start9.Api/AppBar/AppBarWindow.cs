@@ -15,8 +15,8 @@ namespace Start9.Api.AppBar
 
     public class AppBarWindow : Window
     {
-        private bool IsAppBarRegistered;
-        private bool IsInAppBarResize;
+        private Boolean IsAppBarRegistered;
+        private Boolean IsInAppBarResize;
 
         static AppBarWindow()
         {
@@ -54,20 +54,20 @@ namespace Start9.Api.AppBar
             DependencyProperty.Register("Monitor", typeof(MonitorInfo), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(null, DockLocation_Changed));
 
-        public int DockedWidthOrHeight
+        public Int32 DockedWidthOrHeight
         {
-            get { return (int)GetValue(DockedWidthOrHeightProperty); }
+            get { return (Int32)GetValue(DockedWidthOrHeightProperty); }
             set { SetValue(DockedWidthOrHeightProperty, value); }
         }
 
         public static readonly DependencyProperty DockedWidthOrHeightProperty =
-            DependencyProperty.Register("DockedWidthOrHeight", typeof(int), typeof(AppBarWindow),
+            DependencyProperty.Register("DockedWidthOrHeight", typeof(Int32), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(200, DockLocation_Changed, DockedWidthOrHeight_Coerce));
 
-        private static object DockedWidthOrHeight_Coerce(DependencyObject d, object baseValue)
+        private static Object DockedWidthOrHeight_Coerce(DependencyObject d, Object baseValue)
         {
             var @this = (AppBarWindow)d;
-            var newValue = (int)baseValue;
+            var newValue = (Int32)baseValue;
 
             switch (@this.DockMode)
             {
@@ -83,15 +83,15 @@ namespace Start9.Api.AppBar
             }
         }
 
-        private static int BoundIntToDouble(int value, double min, double max)
+        private static Int32 BoundIntToDouble(Int32 value, Double min, Double max)
         {
             if (min > value)
             {
-                return (int)Math.Ceiling(min);
+                return (Int32)Math.Ceiling(min);
             }
             if (max < value)
             {
-                return (int)Math.Floor(max);
+                return (Int32)Math.Floor(max);
             }
 
             return value;
@@ -147,14 +147,14 @@ namespace Start9.Api.AppBar
             }
         }
 
-        private int WpfDimensionToDesktop(double dim)
+        private Int32 WpfDimensionToDesktop(Double dim)
         {
-            return (int)Math.Ceiling(Start9.Api.SystemScaling.WpfUnitsToRealPixels(dim));
+            return (Int32)Math.Ceiling(Start9.Api.SystemScaling.WpfUnitsToRealPixels(dim));
         }
 
-        private double DesktopDimensionToWpf(double dim)
+        private Double DesktopDimensionToWpf(Double dim)
         {
-            return (int)Math.Ceiling(Start9.Api.SystemScaling.RealPixelsToWpfUnits(dim));
+            return (Int32)Math.Ceiling(Start9.Api.SystemScaling.RealPixelsToWpfUnits(dim));
         }
 
         private void OnDockLocationChanged()
@@ -222,12 +222,12 @@ namespace Start9.Api.AppBar
                 cbSize = Marshal.SizeOf(typeof(AppBarData)),
                 hWnd = new WindowInteropHelper(this).Handle,
                 uCallbackMessage = AppBarMessageId,
-                uEdge = (int)DockMode
+                uEdge = (Int32)DockMode
             };
         }
 
-        private static int _AppBarMessageId;
-        public static int AppBarMessageId
+        private static Int32 _AppBarMessageId;
+        public static Int32 AppBarMessageId
         {
             get
             {
@@ -240,7 +240,7 @@ namespace Start9.Api.AppBar
             }
         }
 
-        public IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        public IntPtr WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == WmWindowPosChanging && !IsInAppBarResize)
             {
@@ -260,7 +260,7 @@ namespace Start9.Api.AppBar
             }
             else if (msg == AppBarMessageId)
             {
-                switch ((ABN)(int)wParam)
+                switch ((ABN)(Int32)wParam)
                 {
                     case ABN.PosChanged:
                         OnDockLocationChanged();

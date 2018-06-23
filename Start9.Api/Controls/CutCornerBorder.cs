@@ -38,7 +38,7 @@ namespace Start9.Api.Controls
         new public static DependencyProperty BackgroundProperty =
             DependencyProperty.RegisterAttached("Background", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBackgroundPropertyChangedCallback));
 
-        static void OnBackgroundPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        static void OnBackgroundPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
             (sender as CutCornerBorder).path.Fill = (Brush)(e.NewValue);
         }
@@ -52,23 +52,23 @@ namespace Start9.Api.Controls
         new public static DependencyProperty BorderBrushProperty =
             DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderBrushPropertyChangedCallback));
 
-        static void OnBorderBrushPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        static void OnBorderBrushPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
             (sender as CutCornerBorder).path.Stroke = (Brush)(e.NewValue);
         }
 
-        new public double BorderThickness
+        new public Double BorderThickness
         {
-            get => (double)GetValue(BorderThicknessProperty);
+            get => (Double)GetValue(BorderThicknessProperty);
             set => SetValue(BorderThicknessProperty, value);
         }
 
         new public static DependencyProperty BorderThicknessProperty =
-            DependencyProperty.RegisterAttached("BorderThickness", typeof(double), typeof(CutCornerBorder), new FrameworkPropertyMetadata((double)0, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderThicknessPropertyChangedCallback));
+            DependencyProperty.RegisterAttached("BorderThickness", typeof(Double), typeof(CutCornerBorder), new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderThicknessPropertyChangedCallback));
 
-        static void OnBorderThicknessPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        static void OnBorderThicknessPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
-            (sender as CutCornerBorder).path.StrokeThickness = (double)(e.NewValue);
+            (sender as CutCornerBorder).path.StrokeThickness = (Double)(e.NewValue);
         }
 
         Path path = new Path()
@@ -88,7 +88,7 @@ namespace Start9.Api.Controls
             SizeChanged += CutCornerBorder_SizeChanged;
         }
 
-        private void CutCornerBorder_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void CutCornerBorder_SizeChanged(Object sender, SizeChangedEventArgs e)
         {
             var constraint = e.NewSize;
             path.Width = constraint.Width;

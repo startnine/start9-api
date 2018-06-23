@@ -120,7 +120,7 @@ namespace FrontEndTest
             base.OnSourceInitialized(e);
         }*/
 
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        private void MainWindow_Loaded(Object sender, RoutedEventArgs e)
         {
             DWM_BLURBEHIND blur = new DWM_BLURBEHIND()
             {
@@ -160,7 +160,7 @@ namespace FrontEndTest
                         TestTileStackPanel.Children.Add(c);
                     }
                     */
-                    foreach (string s in args.NewNotification.Text)
+                    foreach (var s in args.NewNotification.Text)
                     {
                         /*TextBlock t = new TextBlock()
                         {
@@ -334,7 +334,7 @@ namespace FrontEndTest
 
         private TreeViewItem GetTreeViewItemFromDiskItem(DiskItem d)
         {
-            string p = Path.GetFileNameWithoutExtension(d.ItemPath);
+            var p = Path.GetFileNameWithoutExtension(d.ItemPath);
             return new TreeViewItem()
             {
                 Tag = d,
@@ -343,7 +343,7 @@ namespace FrontEndTest
             };
         }
 
-        private void ToggleButton_Click(object sender, RoutedEventArgs e)
+        private void ToggleButton_Click(Object sender, RoutedEventArgs e)
         {
             Start9.Api.Plex.MessageBox.Show(this, "Yes, I'm working on these for some reason.\n\n...blame Fleccy :P", "This is a Plex MessageBox");
         }
@@ -377,12 +377,12 @@ namespace FrontEndTest
 
     class ReplacementIconNameToOriginalCanvasConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
-            string source = value.ToString();
+            var source = value.ToString();
             WinApi.ShFileInfo shInfo = new WinApi.ShFileInfo();
-            WinApi.SHGetFileInfo(Environment.ExpandEnvironmentVariables(source), 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), 0x000000000 | 0x100);
+            WinApi.SHGetFileInfo(Environment.ExpandEnvironmentVariables(source), 0, ref shInfo, (UInt32)Marshal.SizeOf(shInfo), 0x000000000 | 0x100);
             System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
             ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
             entryIcon.Handle,
@@ -397,8 +397,8 @@ namespace FrontEndTest
             };
         }
 
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

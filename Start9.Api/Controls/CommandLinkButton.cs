@@ -9,32 +9,32 @@ using System.Windows.Shapes;
 
 namespace Start9.Api.Controls
 {
-    [TemplatePart(Name = PartIcon, Type = typeof(object))]
-    [TemplatePart(Name = PartHeader, Type = typeof(string))]
+    [TemplatePart(Name = PartIcon, Type = typeof(Object))]
+    [TemplatePart(Name = PartHeader, Type = typeof(String))]
 
     public class CommandLinkButton : Button
     {
-        const string PartIcon = "PART_Icon";
-        const string PartHeader = "PART_Header";
+        const String PartIcon = "PART_Icon";
+        const String PartHeader = "PART_Header";
 
-        public object Icon
+        public Object Icon
         {
             get => GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(CommandLinkButton),
+            DependencyProperty.RegisterAttached("Icon", typeof(Object), typeof(CommandLinkButton),
                 new PropertyMetadata(null));
 
-        public string Header
+        public String Header
         {
-            get => (string)GetValue(HeaderProperty);
+            get => (String)GetValue(HeaderProperty);
             set => SetValue(HeaderProperty, value);
         }
 
         public static readonly DependencyProperty HeaderProperty =
-            DependencyProperty.RegisterAttached("Header", typeof(string), typeof(CommandLinkButton),
+            DependencyProperty.RegisterAttached("Header", typeof(String), typeof(CommandLinkButton),
                 new PropertyMetadata(null));
 
         public Brush HeaderForeground
@@ -57,8 +57,8 @@ namespace Start9.Api.Controls
             DependencyProperty.RegisterAttached("Content", typeof(object), typeof(CommandLinkButton),
                 new PropertyMetadata(null));*/
 
-        object _icon;
-        string _header;
+        Object _icon;
+        String _header;
 
         static CommandLinkButton()
         {
@@ -83,9 +83,9 @@ namespace Start9.Api.Controls
         {
             base.OnApplyTemplate();
 
-            if ((GetTemplateChild(PartIcon) as object) != null)
+            if ((GetTemplateChild(PartIcon) as Object) != null)
             {
-                _icon = GetTemplateChild(PartIcon) as object;
+                _icon = GetTemplateChild(PartIcon) as Object;
             }
 
             if (Content is TextBlock)
@@ -95,9 +95,9 @@ namespace Start9.Api.Controls
                 //(Content as TextBlock).Foreground = (SolidColorBrush)Resources["CommandLinkButtonBodyForegroundBrush"];
                 _header = (Content as TextBlock).Text;
             }
-            else if (Content is string)
+            else if (Content is String)
             {
-                _header = (Content as string);
+                _header = (Content as String);
                 Content = new TextBlock()
                 {
                     Text = _header,

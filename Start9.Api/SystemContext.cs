@@ -1,35 +1,36 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static System.Environment;
-using Image = System.Drawing.Image;
 using System.Globalization;
 
 namespace Start9.Api
 {
+    /// <summary>
+    /// Provides static properties and method related to retrieving information about the current state of the system.
+    /// </summary>
     public static class SystemContext
     {
-        [DllImport("shell32.dll", EntryPoint = "#261",
-               CharSet = CharSet.Unicode, PreserveSig = false)]
-        public static extern void GetUserTilePath(
-      string username,
-      UInt32 whatever, // 0x80000000
-      StringBuilder picpath, int maxLength);
+        [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
+        static extern void GetUserTilePath(String username, UInt32 whatever, // 0x80000000
+        StringBuilder picpath, Int32 maxLength);
 
-
+        /// <summary>
+        /// Gets the avatar of the currently logged in user.
+        /// </summary>
+        /// <value>
+        /// A brush that paints the avatar image.
+        /// </value>
         public static ImageBrush UserAvatar
         {
             get
             {
                 var sb = new StringBuilder(1000);
                 GetUserTilePath(null, 0x80000000, sb, sb.Capacity);
-                string target = sb.ToString();
+                var target = sb.ToString();
                 ImageBrush brush = new ImageBrush();
                 try
                 {
@@ -45,12 +46,18 @@ namespace Start9.Api
                 return brush;
             }
         }
-
-        public static bool IsDesktopWindowManagerEnabled
+        
+        /// <summary>
+        /// Gets the state of the desktop window manager.
+        /// </summary>
+        /// <value>
+        /// A boolean representing whether the desktop window manager is enabled or not.
+        /// </value>
+        public static Boolean IsDesktopWindowManagerEnabled
         {
             get
             {
-                bool isCompositionEnabled;
+                Boolean isCompositionEnabled;
                 if (Environment.OSVersion.Version.Major >= 6)
                 {
                     WinApi.DwmIsCompositionEnabled(out isCompositionEnabled);
@@ -63,16 +70,28 @@ namespace Start9.Api
             }
         }
 
-        public static string CurrentVisualStyleName
+        /// <summary>
+        /// Gets the name of the currently applied visual style.
+        /// </summary>
+        /// <value>
+        /// A string that is the current visual style's name.
+        /// </value>
+        public static String CurrentVisualStyleName
         {
             get
             {
-                StringBuilder visualStyleName = new StringBuilder(0x200);
+                var visualStyleName = new StringBuilder(0x200);
                 WinApi.GetCurrentThemeName(visualStyleName, visualStyleName.Capacity, null, 0, null, 0);
                 return visualStyleName.ToString();
             }
         }
 
+        /// <summary>
+        /// Gets the currently applied accent color.
+        /// </summary>
+        /// <value>
+        /// A brush that can paint the windows accent color.
+        /// </value>
         public static SolidColorBrush WindowGlassColor
         {
             get
@@ -86,16 +105,16 @@ namespace Start9.Api
                     //WinApi.DwmGetColorizationColor(out coloures, out opaque);
                     WinApi.DwmColorizationParams parameters = new WinApi.DwmColorizationParams();
                     WinApi.DwmGetColorizationParameters(ref parameters);
-                    string coloures = parameters.ColorizationColor.ToString("X");
+                    var coloures = parameters.ColorizationColor.ToString("X");
                     while (coloures.Length < 8)
                     {
                         coloures = "0" + coloures;
                     }
                     //Debug.WriteLine("coloures " + parameters.ColorizationColor.ToString("X"));
-                    int alphaBase = Int32.Parse(coloures.Substring(0, 2), NumberStyles.HexNumber);
-                    double alphaMultiplier = ((double)(parameters.ColorizationColorBalance + parameters.ColorizationBlurBalance)) / 128;
-                    byte alpha = (byte)(alphaBase * alphaMultiplier);
-                    Debug.WriteLine("balance over 255: " + (((double)(parameters.ColorizationColorBalance)) / 255) + "\nalpha: " + alpha);
+                    var alphaBase = Int32.Parse(coloures.Substring(0, 2), NumberStyles.HexNumber);
+                    var alphaMultiplier = ((Double)(parameters.ColorizationColorBalance + parameters.ColorizationBlurBalance)) / 128;
+                    var alpha = (Byte)(alphaBase * alphaMultiplier);
+                    Debug.WriteLine("balance over 255: " + (((Double)(parameters.ColorizationColorBalance)) / 255) + "\nalpha: " + alpha);
                     brush = new SolidColorBrush(Color.FromArgb(alpha, byte.Parse(coloures.Substring(2, 2), NumberStyles.HexNumber), byte.Parse(coloures.Substring(4, 2), NumberStyles.HexNumber), byte.Parse(coloures.Substring(6, 2), NumberStyles.HexNumber)));
                 }
                 else if (Environment.OSVersion.Version.Major <= 5)
@@ -129,26 +148,41 @@ namespace Start9.Api
             }
         }
 
+        /// <summary>
+        /// Locks the computer.
+        /// </summary>
         public static void LockUserAccount()
         {
             WinApi.LockWorkStation();
         }
 
+        /// <summary>
+        /// Signs the user out of the computer.
+        /// </summary>
         public static void SignOut()
         {
             WinApi.ExitWindowsEx(WinApi.ExitWindowsAction.Force, 0);
         }
 
+        /// <summary>
+        /// Puts the computer to sleep.
+        /// </summary>
         public static void SleepSystem()
         {
             WinApi.SetSuspendState(false, true, true);
         }
 
+        /// <summary>
+        /// Shuts down the computer.
+        /// </summary>
         public static void ShutDownSystem()
         {
             WinApi.ExitWindowsEx(WinApi.ExitWindowsAction.Shutdown, 0);
         }
 
+        /// <summary>
+        /// Restarts the computer.
+        /// </summary>
         public static void RestartSystem()
         {
             WinApi.ExitWindowsEx(WinApi.ExitWindowsAction.Reboot, 0);

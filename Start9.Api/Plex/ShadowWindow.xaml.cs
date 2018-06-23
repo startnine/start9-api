@@ -86,7 +86,7 @@ namespace Start9.Api.Plex
 			base.OnSourceInitialized(e);
 			//Set the window style to noactivate.
 			var helper = new WindowInteropHelper(this);
-			WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (int)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
+			WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
             PlexWindow.ShiftShadowBehindWindow();
         }
 	}
@@ -108,12 +108,12 @@ namespace Start9.Api.Plex
 
     public class RawOpacityToMultipliedOpacityConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object[] values, Type targetType, Object parameter, CultureInfo culture)
         {
-            return (double)values[0] * (double)values[1];
+            return (Double)values[0] * (Double)values[1];
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public Object[] ConvertBack(Object value, Type[] targetTypes, Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

@@ -14,25 +14,24 @@ using System.Text;
 
 namespace Start9.Api.Tools
 {
+    /// <summary>
+    ///  Main tools.
+    /// </summary>
 	public static class MainTools
 	{
         public static PlexWindow SettingsWindow;
 
+        /// <summary>
+        /// Shows the settings window.
+        /// </summary>
 		public static void ShowSettings()
 		{
 			SettingsWindow.Show();
 			if (!SettingsWindow.IsActive)
 				SettingsWindow.Focus();
 		}
-		
-		static float GetScalingFactor()
-		{
-			var g = Graphics.FromHwnd(IntPtr.Zero);
-			return g.DpiY / 96;
-		}
 
-
-		public enum DeviceCap
+        public enum DeviceCap
 		{
 			Vertres = 10,
 			Desktopvertres = 117,

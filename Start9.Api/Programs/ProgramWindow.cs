@@ -11,7 +11,11 @@ using Start9.Api.Objects;
 using Start9.Api.Tools;
 
 namespace Start9.Api.Programs
-{
+{ 
+    /// <summary>
+    /// Represents an open program's window.
+    /// </summary>
+    // TODO: Redo the entire ProgramItem thing to not be stupid
 	public class ProgramWindow : IProgramItem
 	{
 		static ProgramWindow()
@@ -33,26 +37,42 @@ namespace Start9.Api.Programs
 														new ProgramWindow(new IntPtr(((AutomationElement) sender).Cached.NativeWindowHandle)))));
 		}
 
+        /// <summary>
+        /// Creates a new program from an Hwnd.
+        /// </summary>
+        /// <param name="hwnd">The handle to the window.</param>
 		public ProgramWindow(IntPtr hwnd) { Hwnd = hwnd; }
 
+        /// <summary>
+        /// Gets the Hwnd of the window.
+        /// </summary>
+        /// <value>
+        /// A platform-specific handle to the window.
+        /// </value>
 		public IntPtr Hwnd { get; }
 
+        /// <summary>
+        /// Gets the process that the window is from.
+        /// </summary>
 		public Process Process
 		{
 			get
 			{
 				WinApi.GetWindowThreadProcessId(Hwnd, out var pid);
-				return Process.GetProcessById((int) pid);
+				return Process.GetProcessById((Int32) pid);
 			}
 		}
 
+        /// <summary>
+        /// Gets a list of all open program windows.
+        /// </summary>
 		public static IEnumerable<ProgramWindow> RealProgramWindows
 		{
 			get
 			{
 				var collection = new List<IntPtr>();
 
-				bool Filter(IntPtr hWnd, int lParam)
+                Boolean Filter(IntPtr hWnd, Int32 lParam)
 				{
 					var strbTitle = new StringBuilder(WinApi.GetWindowTextLength(hWnd));
 					WinApi.GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
@@ -76,13 +96,16 @@ namespace Start9.Api.Programs
 			hwnd => TASKSTYLE == (TASKSTYLE & WinApi.GetWindowLong(hwnd.Hwnd, GWL_STYLE).ToInt32()) &
 					(WinApi.GetWindowLong(hwnd.Hwnd, GWL_EXSTYLE).ToInt32() & WS_EX_TOOLWINDOW) != WS_EX_TOOLWINDOW);*/
 
+            /// <summary>
+            /// Gets a list of open windows that are shown to the user.
+            /// </summary>
         public static IEnumerable<ProgramWindow> ProgramWindows
         {
             get
             {
                 var collection = new List<IntPtr>();
 
-                bool Filter(IntPtr hWnd, int lParam)
+                Boolean Filter(IntPtr hWnd, Int32 lParam)
                 {
                     var strbTitle = new StringBuilder(WinApi.GetWindowTextLength(hWnd));
                     WinApi.GetWindowText(hWnd, strbTitle, strbTitle.Capacity + 1);
@@ -136,13 +159,18 @@ namespace Start9.Api.Programs
 					WindowClosed?.Invoke(null, new WindowEventArgs(new ProgramWindow(handle)));
 				});
 		}
-
+        /// <summary>
+        /// Occurs when a window is opened.
+        /// </summary>
 		public static event EventHandler<WindowEventArgs> WindowOpened;
 
+        /// <summary>
+        /// Occurs when a window is closed.
+        /// </summary>
 		public static event EventHandler<WindowEventArgs> WindowClosed;
 
 		/// <summary>
-		///     Makes this window the active window, moving it to the front of the Z-Order (bar topmost windows) and enabling full user interaction.
+		///     Moves the window to the front.
 		/// </summary>
 		public void Show()
 		{
@@ -173,7 +201,7 @@ namespace Start9.Api.Programs
 		}
 
         /// <summary>
-        ///     Minimizes the window, hiding it from view, but leaving its indicator visible in the taskbar or other comparable module.
+        ///     Minimizes the window.
         /// </summary>
         public void Minimize()
 		{
@@ -196,25 +224,25 @@ namespace Start9.Api.Programs
 		}
 
 		/// <summary>
-		///     Maximizes the Window, causing it to forcibly fill the Working Area
+		///     Maximizes the Window.
 		/// </summary>
 		public void Maximize() { WinApi.ShowWindow(Hwnd, 3); }
 
         /// <summary>
-        ///     Restores the Window, reducing its size, un-minimizing it, and displaying its resize borders (if any).
+        ///     Restores (un-minimizes) the window.
         /// </summary>
         public void Restore() { WinApi.ShowWindow(Hwnd, 1); }
 
 
         /// <summary>
-        ///     Doesn't actually work yet, but will display the window's System Menu, containing various window management options
+        ///     Displays the windows's system menu.
         /// </summary>
         public void ShowSystemMenu()
         {
             //https://stackoverflow.com/questions/21825352/how-to-open-window-system-menu-on-right-click
             WinApi.GetWindowRect(Hwnd, out WinApi.Rect pos);
             IntPtr hMenu = WinApi.GetSystemMenu(Hwnd, false);
-            int cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 & 0x0020, (int)SystemScaling.CursorPosition.X, (int)SystemScaling.CursorPosition.Y, 0, Hwnd, IntPtr.Zero);
+            var cmd = WinApi.TrackPopupMenu(hMenu, 0x0004 & 0x0020, (Int32)SystemScaling.CursorPosition.X, (Int32)SystemScaling.CursorPosition.Y, 0, Hwnd, IntPtr.Zero);
             WinApi.SendMessage(Hwnd, 0x112, cmd, 0);
         }
 
@@ -223,7 +251,10 @@ namespace Start9.Api.Programs
         /// </summary>
         public void Close() { WinApi.SendMessage(Hwnd, 0x0010, 0, 0); }
 
-		public string Name
+        /// <summary>
+        /// Gets the name of the window.
+        /// </summary>
+		public String Name
 		{
 			get
 			{
@@ -233,6 +264,9 @@ namespace Start9.Api.Programs
 			}
 		}
 
+        /// <summary>
+        /// Gets the icon of thr window.
+        /// </summary>
 		public Icon Icon
 		{
 			get
@@ -263,7 +297,7 @@ namespace Start9.Api.Programs
 		}
 
 		/// <summary>
-		///     Opens a new instance of the application that owns this window.
+		/// Opens a new instance of the application that owns this window.
 		/// </summary>
 		public void Open()
 		{
@@ -280,16 +314,16 @@ namespace Start9.Api.Programs
 
 		#region p/invoke stuff don't touch lpz
 
-		const int GclHiconsm       = -34;
-		const int GclHicon         = -14;
-		const int IconSmall        = 0;
-		const int IconBig          = 1;
-		const int IconSmall2       = 2;
-		const int WmGeticon        = 0x7F;
-		const int GWL_STYLE        = -16;
-		const int GWL_EXSTYLE      = -20;
-		const int TASKSTYLE        = 0x10000000 | 0x00800000;
-		const int WS_EX_TOOLWINDOW = 0x00000080;
+		const Int32 GclHiconsm       = -34;
+		const Int32 GclHicon         = -14;
+		const Int32 IconSmall        = 0;
+		const Int32 IconBig          = 1;
+		const Int32 IconSmall2       = 2;
+		const Int32 WmGeticon        = 0x7F;
+		const Int32 GWL_STYLE        = -16;
+		const Int32 GWL_EXSTYLE      = -20;
+		const Int32 TASKSTYLE        = 0x10000000 | 0x00800000;
+		const Int32 WS_EX_TOOLWINDOW = 0x00000080;
 
 		#endregion
 	}
