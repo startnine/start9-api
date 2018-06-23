@@ -197,12 +197,12 @@ namespace Start9.Api.Controls
                 }
                 catch
                 {
-                    SetValue(SizingImageProperty, Start9.Api.Tools.MiscTools.GetBitmapImageFromSysDrawingBitmap(Start9.Api.Properties.Resources.FallbackImage));
+                    SetValue(SizingImageProperty, Properties.Resources.FallbackImage);
                 }
             }
         }
         public static readonly DependencyProperty SizingImageProperty = DependencyProperty.RegisterAttached(
-        "SizingImage", typeof(BitmapImage), typeof(NineGridCanvas), new FrameworkPropertyMetadata(Start9.Api.Tools.MiscTools.GetBitmapImageFromSysDrawingBitmap(Start9.Api.Properties.Resources.FallbackImage), FrameworkPropertyMetadataOptions.AffectsRender, OnSizingImageChanged));
+        "SizingImage", typeof(BitmapImage), typeof(NineGridCanvas), new FrameworkPropertyMetadata(Properties.Resources.FallbackImage, FrameworkPropertyMetadataOptions.AffectsRender, OnSizingImageChanged));
 
 
         private static void OnSizingImageChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
