@@ -196,21 +196,21 @@
                                Content="{x:Null}" Foreground="Transparent"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True"/-->
-                                                                    <Border x:Name="Glyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{TemplateBinding Foreground}"/>
+                                                                    <Border x:Name="Glyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                     <!--Border x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="" Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" /-->
-                                                                    <Border x:Name="InactiveGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0"/>
+                                                                    <Border x:Name="InactiveGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                     <!--ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" /-->
-                                                                    <Border x:Name="HoverGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0"/>
+                                                                    <Border x:Name="HoverGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                     <!--ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" /-->
-                                                                    <Border x:Name="PressedGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0"/>
+                                                                    <Border x:Name="PressedGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                     <!--ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
@@ -287,21 +287,21 @@
                                Content="{x:Null}" Foreground="Transparent"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True"/-->
-                                                                        <Border x:Name="Glyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{TemplateBinding Foreground}"/>
+                                                                        <Border x:Name="Glyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                         <!--Border x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="" Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" /-->
-                                                                        <Border x:Name="InactiveGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0"/>
+                                                                        <Border x:Name="InactiveGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                         <!--ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" /-->
-                                                                        <Border x:Name="HoverGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0"/>
+                                                                        <Border x:Name="HoverGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                         <!--ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
                                Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" /-->
-                                                                        <Border x:Name="PressedGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0"/>
+                                                                        <Border x:Name="PressedGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                                                         <!--ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
                                Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
@@ -373,19 +373,19 @@
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="Button">
                                                                     <Grid Background="#01000000" IsHitTestVisible="True" Margin="1,1,-1,-1">
-                                                                        <Grid x:Name="Glyph" Width="9" Height="9">
+                                                                        <Grid x:Name="Glyph" Width="9" Height="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                             <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{TemplateBinding Foreground}"/>
                                                                             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{TemplateBinding Foreground}"/>
                                                                         </Grid>
-                                                                        <Grid x:Name="InactiveGlyph" Width="9" Height="9" Opacity="0">
+                                                                        <Grid x:Name="InactiveGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                             <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
                                                                             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
                                                                         </Grid>
-                                                                        <Grid x:Name="HoverGlyph" Width="9" Height="9" Opacity="0">
+                                                                        <Grid x:Name="HoverGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                             <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
                                                                             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
                                                                         </Grid>
-                                                                        <Grid x:Name="PressedGlyph" Width="9" Height="9" Opacity="0">
+                                                                        <Grid x:Name="PressedGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                             <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
                                                                             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
                                                                         </Grid>
@@ -463,12 +463,14 @@
                                                                     <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 2 0 L 4 2 L 6 0 L 8 0 L 8 2 L 6 4 L 8 6 L 8 8 L 6 8 L 4 6 L 2 8 L 0 8 L 0 6 L 2 4 L 0 2 Z"/-->
                                                                     <PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1.5 0 L 4 2.5 L 6.5 0 L 8 0 L 8 1.5 L 5.5 4 L 8 6.5 L 8 8 L 6.5 8 L 4 5.5 L 1.5 8 L 0 8 L 0 6.5 L 2.5 4 L 0 1.5 Z"/>
                                                                 </ControlTemplate.Resources>
-                                                                <Grid Background="#01000000" IsHitTestVisible="True" Margin="{TemplateBinding Padding}">
-                                                                    <Path x:Name="Glyph" Fill="{TemplateBinding Foreground}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                    <Path x:Name="InactiveGlyph" Fill="{DynamicResource CaptionButtonInactiveIdleBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                                    <Path x:Name="HoverGlyph" Fill="{DynamicResource CaptionButtonActiveHoverBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                                    <Path x:Name="PressedGlyph" Fill="{DynamicResource CaptionButtonActivePressedBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                                </Grid>
+                                                                <Border Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Margin="{TemplateBinding Padding}">
+                                                                    <Grid Background="#01000000" IsHitTestVisible="True">
+                                                                        <Path x:Name="Glyph" Fill="{TemplateBinding Foreground}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        <Path x:Name="InactiveGlyph" Fill="{DynamicResource CaptionButtonInactiveIdleBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                                        <Path x:Name="HoverGlyph" Fill="{DynamicResource CaptionButtonActiveHoverBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                                        <Path x:Name="PressedGlyph" Fill="{DynamicResource CaptionButtonActivePressedBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                                    </Grid>
+                                                                </Border>
                                                                 <ControlTemplate.Triggers>
                                                                     <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type plex:PlexWindow}}}" Value="False">
                                                                         <DataTrigger.EnterActions>
