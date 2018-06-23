@@ -299,7 +299,7 @@
                         </RadialGradientBrush>
                     </Ellipse.OpacityMask>
                 </Ellipse-->
-                <Button Style="{DynamicResource AeroNavButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Button Style="{DynamicResource AeroNavButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="FavButton_Click"/>
             </Grid>
         </Grid>
     </plex:PlexWindow.TitleBarContent>

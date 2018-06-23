@@ -107,10 +107,10 @@ namespace FrontEndTest
             }.Show();
             ResizeMode = PlexResizeMode.CanResize;
             //AllowsTransparency = false;
-            Loaded += MainWindow_Loaded;
+            //Loaded += MainWindow_Loaded;
         }
 
-        protected override void OnSourceInitialized(EventArgs e)
+        /*protected override void OnSourceInitialized(EventArgs e)
         {
             helper = new WindowInteropHelper(this).EnsureHandle();
             base.Background = new SolidColorBrush(Colors.Transparent);
@@ -118,7 +118,7 @@ namespace FrontEndTest
             var hs = HwndSource.FromHwnd(helper);
             hs.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
             base.OnSourceInitialized(e);
-        }
+        }*/
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -346,6 +346,11 @@ namespace FrontEndTest
         private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
             Start9.Api.Plex.MessageBox.Show(this, "Yes, I'm working on these for some reason.\n\n...blame Fleccy :P", "This is a Plex MessageBox");
+        }
+
+        private void FavButton_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("http://start9.menu");
         }
     }/*
 
