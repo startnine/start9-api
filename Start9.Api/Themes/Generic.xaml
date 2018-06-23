@@ -275,14 +275,14 @@
                                         </Button>
                                         <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl}}"/-->
                                             <!--0-->
-                                        <Grid x:Name="MaxRestButtonGrid" Margin="-1,0,1,0">
+                                        <Grid x:Name="MaxRestButtonGrid"><!--Margin="-1,0,1,0"-->
                                             <Button x:Name="PART_MaximizeButton">
                                                 <Button.Style>
                                                     <Style TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
                                                         <Setter Property="Template">
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="Button">
-                                                                    <Grid Background="#01000000" IsHitTestVisible="True" Margin="1,1,-1,-1">
+                                                                    <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
                                                                         <!--ContentControl HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000"
                                Content="{x:Null}" Foreground="Transparent"
                                FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
@@ -372,7 +372,7 @@
                                                         <Setter Property="Template">
                                                             <Setter.Value>
                                                                 <ControlTemplate TargetType="Button">
-                                                                    <Grid Background="#01000000" IsHitTestVisible="True" Margin="1,1,-1,-1">
+                                                                    <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
                                                                         <Grid x:Name="Glyph" Width="9" Height="9" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                                             <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{TemplateBinding Foreground}"/>
                                                                             <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{TemplateBinding Foreground}"/>
@@ -452,7 +452,7 @@
                                                 <!--2-->
                                             </Button>
                                         </Grid>
-                                        <Button x:Name="PART_CloseButton" Padding="-3,0.625,3,-0.625">
+                                        <Button x:Name="PART_CloseButton" Padding="-3.25,0.625,3.25,-0.625">
                                             <Button.Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
                                                     <Setter Property="Template">
