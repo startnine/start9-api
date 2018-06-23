@@ -9,21 +9,60 @@ using Start9.Api;
 
 namespace Start9.Api
 {
+    /// <summary>
+    /// Provides methods and constants for system scaling and converting between DIPs and physical pixels.
+    /// </summary>
     public static class SystemScaling
     {
-        public static double WpfUnitsToRealPixels(double wpfUnits) => (wpfUnits * SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts DIPs to physical pixels.
+        /// </summary>
+        /// <param name="wpfUnits">The amount of DIPs to convert to physical pixels.</param>
+        /// <returns>A floating point number representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Double WpfUnitsToRealPixels(Double wpfUnits) => (wpfUnits * ScalingFactor);
 
-        public static double RealPixelsToWpfUnits(double realPixels) => (realPixels / SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts physical pixels to DIPs.
+        /// </summary>
+        /// <param name="realPixels">The amount of real pixels to convert to DIPs.</param>
+        /// <returns>A floating point number representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Double RealPixelsToWpfUnits(Double realPixels) => (realPixels / ScalingFactor);
 
-        public static float WpfUnitsToRealPixels(float wpfUnits) => (float)(wpfUnits * SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts DIPs to physical pixels.
+        /// </summary>
+        /// <param name="wpfUnits">The amount of DIPs to convert to physical pixels.</param>
+        /// <returns>A floating point number representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Single WpfUnitsToRealPixels(Single wpfUnits) => (Single)(wpfUnits * ScalingFactor);
 
-        public static float RealPixelsToWpfUnits(float realPixels) => (float)(realPixels / SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts physical pixels to DIPs.
+        /// </summary>
+        /// <param name="realPixels">The amount of real pixels to convert to DIPs.</param>
+        /// <returns>A floating point number representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Single RealPixelsToWpfUnits(Single realPixels) => (Single)(realPixels / ScalingFactor);
 
-        public static int WpfUnitsToRealPixels(int wpfUnits) => (int)(wpfUnits * SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts DIPs to physical pixels.
+        /// </summary>
+        /// <param name="wpfUnits">The amount of DIPs to convert to physical pixels.</param>
+        /// <returns>An integer representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Int32 WpfUnitsToRealPixels(Int32 wpfUnits) => (Int32)(wpfUnits * ScalingFactor);
 
-        public static int RealPixelsToWpfUnits(int realPixels) => (int)(realPixels / SystemScaling.ScalingFactor);
+        /// <summary>
+        /// Converts physical pixels to DIPs.
+        /// </summary>
+        /// <param name="realPixels">The amount of real pixels to convert to DIPs.</param>
+        /// <returns>An integer representing the amount of DIPs represented by <paramref name="realPixels"/> pixels.</returns>
+        public static Int32 RealPixelsToWpfUnits(Int32 realPixels) => (Int32)(realPixels / ScalingFactor);
 
-        public static double ScalingFactor
+        /// <summary>
+        /// Gets the current scaling factor applied to the computer.
+        /// </summary>
+        /// <value>
+        /// A floating-point number representing the applies scaling factor.
+        /// </value>
+        public static Double ScalingFactor
         {
             get
             {
@@ -32,6 +71,12 @@ namespace Start9.Api
             }
         }
 
+        /// <summary>
+        /// Gets the cursor position in DIPs.
+        /// </summary>
+        /// <value>
+        /// A point representing the cursor's position.
+        /// </value>
         public static Point CursorPosition
         {
             get

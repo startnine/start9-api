@@ -9,14 +9,14 @@ namespace Start9.Api.Controls
 {
     public partial class IconButton : Button
     {
-        public object Icon
+        public Object Icon
         {
             get => GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconButton),
+            DependencyProperty.RegisterAttached("Icon", typeof(Object), typeof(IconButton),
                 new PropertyMetadata(null));
 
         public IconButton()
@@ -28,14 +28,14 @@ namespace Start9.Api.Controls
 
     public partial class IconTreeViewItem : TreeViewItem
     {
-        public object Icon
+        public Object Icon
         {
             get => GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconTreeViewItem),
+            DependencyProperty.RegisterAttached("Icon", typeof(Object), typeof(IconTreeViewItem),
                 new PropertyMetadata(null));
 
         public IconTreeViewItem()
@@ -47,14 +47,14 @@ namespace Start9.Api.Controls
 
     public partial class IconListViewItem : ListViewItem
     {
-        public object Icon
+        public Object Icon
         {
             get => GetValue(IconProperty);
             set => SetValue(IconProperty, value);
         }
 
         public static readonly DependencyProperty IconProperty =
-            DependencyProperty.RegisterAttached("Icon", typeof(object), typeof(IconListViewItem),
+            DependencyProperty.RegisterAttached("Icon", typeof(Object), typeof(IconListViewItem),
                 new PropertyMetadata(null));
 
         public IconListViewItem()

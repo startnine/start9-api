@@ -210,12 +210,12 @@ namespace Start9.Api.Controls
             (sender as NineGridCanvas).SetCanvasInfo((sender as NineGridCanvas).SizingImage, (sender as NineGridCanvas).SizingMargin, new System.Windows.Size(0, 0));
         }
 
-        public double TargetWidth
+        public Double TargetWidth
         {
-            get => (double)GetValue(TargetWidthProperty);
+            get => (Double)GetValue(TargetWidthProperty);
             set
             {
-                if ((int)value > 0)
+                if ((Int32)value > 0)
                 {
                     SetValue(TargetWidthProperty, value);
                 }
@@ -223,20 +223,20 @@ namespace Start9.Api.Controls
         }
 
         public static readonly DependencyProperty TargetWidthProperty = DependencyProperty.RegisterAttached(
-        "TargetWidth", typeof(double), typeof(NineGridCanvas), new FrameworkPropertyMetadata((double)1, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetWidthChanged));
+        "TargetWidth", typeof(Double), typeof(NineGridCanvas), new FrameworkPropertyMetadata((Double)1, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetWidthChanged));
 
 
         private static void OnTargetWidthChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            (sender as NineGridCanvas).SetCanvasInfo((sender as NineGridCanvas).SizingImage, (sender as NineGridCanvas).SizingMargin, new System.Windows.Size((double)e.NewValue, (sender as NineGridCanvas).TargetHeight));
+            (sender as NineGridCanvas).SetCanvasInfo((sender as NineGridCanvas).SizingImage, (sender as NineGridCanvas).SizingMargin, new System.Windows.Size((Double)e.NewValue, (sender as NineGridCanvas).TargetHeight));
         }
 
-        public double TargetHeight
+        public Double TargetHeight
         {
-            get => (double)GetValue(TargetHeightProperty);
+            get => (Double)GetValue(TargetHeightProperty);
             set
             {
-                if ((int)value > 0)
+                if ((Int32)value > 0)
                 {
                     SetValue(TargetHeightProperty, value);
                 }
@@ -244,12 +244,12 @@ namespace Start9.Api.Controls
         }
 
         public static readonly DependencyProperty TargetHeightProperty = DependencyProperty.RegisterAttached(
-        "TargetHeight", typeof(double), typeof(NineGridCanvas), new FrameworkPropertyMetadata((double)1, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetHeightChanged));
+        "TargetHeight", typeof(Double), typeof(NineGridCanvas), new FrameworkPropertyMetadata((Double)1, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetHeightChanged));
 
 
         private static void OnTargetHeightChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            (sender as NineGridCanvas).SetCanvasInfo((sender as NineGridCanvas).SizingImage, (sender as NineGridCanvas).SizingMargin, new System.Windows.Size((sender as NineGridCanvas).TargetWidth, (double)e.NewValue));
+            (sender as NineGridCanvas).SetCanvasInfo((sender as NineGridCanvas).SizingImage, (sender as NineGridCanvas).SizingMargin, new System.Windows.Size((sender as NineGridCanvas).TargetWidth, (Double)e.NewValue));
         }
 
         private void SetCanvasInfo(BitmapImage Image, Thickness ThicknessSizing, System.Windows.Size ControlSize)
@@ -262,7 +262,7 @@ namespace Start9.Api.Controls
         {
             if ((Image != null) & (ThicknessSizing != null) & (ControlSize != null))
             {
-                Bitmap PostNineGridBitmap = InsetResize(Image, new System.Drawing.Size((int)TargetWidth, (int)TargetHeight), ThicknessSizing);
+                Bitmap PostNineGridBitmap = InsetResize(Image, new System.Drawing.Size((Int32)TargetWidth, (Int32)TargetHeight), ThicknessSizing);
                 Background = new ImageBrush(GetBitmapImageFromSysDrawingBitmap(PostNineGridBitmap));
             }
         }
@@ -291,7 +291,7 @@ namespace Start9.Api.Controls
             BitmapSizeOptions.FromWidthAndHeight(SourceSysDrawingBitmap.Width, SourceSysDrawingBitmap.Height));
         }
 
-        private void NineGridCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void NineGridCanvas_SizeChanged(Object sender, SizeChangedEventArgs e)
         {
             SetCanvasInfo(ConvertBitmapImageToBitmap(SizingImage), (sender as NineGridCanvas).SizingMargin, new System.Windows.Size(ActualWidth, ActualHeight));
         }
@@ -321,10 +321,10 @@ namespace Start9.Api.Controls
         //Needed for dejco's thing to work
         private struct Inset
         {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
+            public Int32 Left;
+            public Int32 Top;
+            public Int32 Right;
+            public Int32 Bottom;
         };
 
         //Huge thanccs to dejco for this part
@@ -335,10 +335,10 @@ namespace Start9.Api.Controls
             {
                 Inset inset = new Inset()
                 {
-                    Left = (int)insetThickness.Left,
-                    Top = (int)insetThickness.Top,
-                    Right = (int)insetThickness.Right,
-                    Bottom = (int)insetThickness.Bottom
+                    Left = (Int32)insetThickness.Left,
+                    Top = (Int32)insetThickness.Top,
+                    Right = (Int32)insetThickness.Right,
+                    Bottom = (Int32)insetThickness.Bottom
                 };
 
                 using (Graphics g = Graphics.FromImage(outputBitmap))

@@ -34,29 +34,29 @@ namespace Start9.Api.Plex
     [TemplatePart(Name = PartThumbLeft, Type = typeof(Thumb))]
     public class PlexWindow : Window
     {
-        const string PartTitlebar = "PART_Titlebar";
-        const string PartMinimizeButton = "PART_MinimizeButton";
-        const string PartMaximizeButton = "PART_MaximizeButton";
-        const string PartRestoreButton = "PART_RestoreButton";
-        const string PartCloseButton = "PART_CloseButton";
-        const string PartThumbBottom = "PART_ThumbBottom";
-        const string PartThumbTop = "PART_ThumbTop";
-        const string PartThumbBottomRightCorner = "PART_ThumbBottomRightCorner";
-        const string PartResizeGrip = "PART_ResizeGrip";
-        const string PartThumbTopRightCorner = "PART_ThumbTopRightCorner";
-        const string PartThumbTopLeftCorner = "PART_ThumbTopLeftCorner";
-        const string PartThumbBottomLeftCorner = "PART_ThumbBottomLeftCorner";
-        const string PartThumbRight = "PART_ThumbRight";
-        const string PartThumbLeft = "PART_ThumbLeft";
+        const String PartTitlebar = "PART_Titlebar";
+        const String PartMinimizeButton = "PART_MinimizeButton";
+        const String PartMaximizeButton = "PART_MaximizeButton";
+        const String PartRestoreButton = "PART_RestoreButton";
+        const String PartCloseButton = "PART_CloseButton";
+        const String PartThumbBottom = "PART_ThumbBottom";
+        const String PartThumbTop = "PART_ThumbTop";
+        const String PartThumbBottomRightCorner = "PART_ThumbBottomRightCorner";
+        const String PartResizeGrip = "PART_ResizeGrip";
+        const String PartThumbTopRightCorner = "PART_ThumbTopRightCorner";
+        const String PartThumbTopLeftCorner = "PART_ThumbTopLeftCorner";
+        const String PartThumbBottomLeftCorner = "PART_ThumbBottomLeftCorner";
+        const String PartThumbRight = "PART_ThumbRight";
+        const String PartThumbLeft = "PART_ThumbLeft";
 
-        public bool AnimateOnShowHide
+        public Boolean AnimateOnShowHide
         {
-            get => (bool)GetValue(AnimateOnShowHideProperty);
+            get => (Boolean)GetValue(AnimateOnShowHideProperty);
             set => SetValue(AnimateOnShowHideProperty, (value));
         }
 
         public static readonly DependencyProperty AnimateOnShowHideProperty =
-            DependencyProperty.Register("AnimateOnShowHide", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("AnimateOnShowHide", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
         public Thickness ShadowOffsetThickness
         {
@@ -68,21 +68,21 @@ namespace Start9.Api.Plex
             DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(PlexWindow), new PropertyMetadata(new Thickness(49, 14, 14, 60)));
 
 
-        public object ShadowWindowContent
+        public Object ShadowWindowContent
         {
             get => GetValue(ShadowWindowContentProperty);
             set => SetValue(ShadowWindowContentProperty, (value));
         }
 
         public static readonly DependencyProperty ShadowWindowContentProperty =
-            DependencyProperty.Register("ShadowWindowContent", typeof(object), typeof(PlexWindow), new PropertyMetadata(null, OnShadowWindowContentPropertyChangedCallback));
+            DependencyProperty.Register("ShadowWindowContent", typeof(Object), typeof(PlexWindow), new PropertyMetadata(null, OnShadowWindowContentPropertyChangedCallback));
 
         static void OnShadowWindowContentPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as PlexWindow).SetShadowWindowContent(e.NewValue as FrameworkElement);
         }
 
-        private void SetShadowWindowContent(object obj)
+        private void SetShadowWindowContent(Object obj)
         {
             if (obj != null)
             {
@@ -90,34 +90,34 @@ namespace Start9.Api.Plex
             }
         }
 
-        internal bool DisplayDialogFilm
+        internal Boolean DisplayDialogFilm
         {
-            get => (bool)GetValue(DisplayDialogFilmProperty);
+            get => (Boolean)GetValue(DisplayDialogFilmProperty);
             set => SetValue(DisplayDialogFilmProperty, (value));
         }
 
         internal static readonly DependencyProperty DisplayDialogFilmProperty =
-            DependencyProperty.Register("DisplayDialogFilm", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("DisplayDialogFilm", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(false));
 
-        public double ShadowOpacity
+        public Double ShadowOpacity
         {
             get
             {
                 if (WindowState == WindowState.Normal)
                 {
                     ShiftShadowBehindWindow();
-                    return (double)GetValue(ShadowOpacityProperty);
+                    return (Double)GetValue(ShadowOpacityProperty);
                 }
                 else
                 {
-                    return (double)0;
+                    return (Double)0;
                 }
             }
             set => SetValue(ShadowOpacityProperty, (value * Opacity));
         }
 
         public static readonly DependencyProperty ShadowOpacityProperty =
-            DependencyProperty.RegisterAttached("ShadowOpacity", typeof(double), typeof(PlexWindow), new PropertyMetadata((double)1));
+            DependencyProperty.RegisterAttached("ShadowOpacity", typeof(Double), typeof(PlexWindow), new PropertyMetadata((Double)1));
 
         new public PlexResizeMode ResizeMode
         {
@@ -130,7 +130,7 @@ namespace Start9.Api.Plex
 
         static void OnResizeModePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            int GWL_STYLE = (-16);
+            var GWL_STYLE = (-16);
             var window = (PlexWindow)d;
             var hwnd = new WindowInteropHelper(window).Handle;
 
@@ -175,58 +175,58 @@ namespace Start9.Api.Plex
         }
 
         public static readonly DependencyProperty MaximizedProperty =
-            DependencyProperty.Register("Maximized", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("Maximized", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty MinimizedProperty =
-            DependencyProperty.Register("Minimized", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("Minimized", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty WindowRectProperty = DependencyProperty.Register("WindowRect", typeof(Rect),
             typeof(PlexWindow), new PropertyMetadata(new Rect(), OnWindowRectPropertyChangedCallback));
 
         static void OnWindowRectPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            WinApi.MoveWindow(new WindowInteropHelper((PlexWindow)d).Handle, (int)((Rect)e.NewValue).Left, (int)((Rect)e.NewValue).Top, (int)((Rect)e.NewValue).Width, (int)((Rect)e.NewValue).Height, true);
+            WinApi.MoveWindow(new WindowInteropHelper((PlexWindow)d).Handle, (Int32)((Rect)e.NewValue).Left, (Int32)((Rect)e.NewValue).Top, (Int32)((Rect)e.NewValue).Width, (Int32)((Rect)e.NewValue).Height, true);
         }
 
         public static readonly DependencyProperty FullWindowContentProperty =
-            DependencyProperty.RegisterAttached("FullWindowContent", typeof(object), typeof(PlexWindow),
+            DependencyProperty.RegisterAttached("FullWindowContent", typeof(Object), typeof(PlexWindow),
                 new PropertyMetadata(null));
 
         public static readonly DependencyProperty TitleBarContentProperty =
-            DependencyProperty.RegisterAttached("TitleBarContent", typeof(object), typeof(PlexWindow),
+            DependencyProperty.RegisterAttached("TitleBarContent", typeof(Object), typeof(PlexWindow),
                 new PropertyMetadata(null));
 
         public static readonly DependencyProperty ToolBarContentProperty =
-            DependencyProperty.RegisterAttached("ToolBarContent", typeof(object), typeof(PlexWindow),
+            DependencyProperty.RegisterAttached("ToolBarContent", typeof(Object), typeof(PlexWindow),
                 new PropertyMetadata(null));
 
         public static readonly DependencyProperty FooterContentProperty = DependencyProperty.RegisterAttached("FooterContent",
-            typeof(object), typeof(PlexWindow),
+            typeof(Object), typeof(PlexWindow),
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty TitleBarHeightProperty = DependencyProperty.Register("TitleBarHeight",
-            typeof(double), typeof(PlexWindow),
-            new FrameworkPropertyMetadata((double)24, FrameworkPropertyMetadataOptions.AffectsRender));
+            typeof(Double), typeof(PlexWindow),
+            new FrameworkPropertyMetadata((Double)24, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty ToolBarHeightProperty = DependencyProperty.Register("ToolBarHeight",
-            typeof(double), typeof(PlexWindow),
-            new FrameworkPropertyMetadata((double)42, FrameworkPropertyMetadataOptions.AffectsRender));
+            typeof(Double), typeof(PlexWindow),
+            new FrameworkPropertyMetadata((Double)42, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty FooterHeightProperty = DependencyProperty.Register("FooterHeight",
-            typeof(double), typeof(PlexWindow),
-            new FrameworkPropertyMetadata((double)36, FrameworkPropertyMetadataOptions.AffectsRender));
+            typeof(Double), typeof(PlexWindow),
+            new FrameworkPropertyMetadata((Double)36, FrameworkPropertyMetadataOptions.AffectsRender));
 
         public static readonly DependencyProperty ShowTitleProperty =
-            DependencyProperty.Register("ShowTitle", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowTitle", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShowTitleBarProperty =
-            DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowTitleBar", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
         public static readonly DependencyProperty ShowToolBarProperty =
-            DependencyProperty.Register("ShowToolBar", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("ShowToolBar", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty ShowFooterProperty =
-            DependencyProperty.Register("ShowFooter", typeof(bool), typeof(PlexWindow), new PropertyMetadata(false));
+            DependencyProperty.Register("ShowFooter", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(false));
 
         public static readonly DependencyProperty BodyBrushProperty = DependencyProperty.Register("BodyBrush", typeof(Brush),
             typeof(PlexWindow), new PropertyMetadata(
@@ -254,50 +254,50 @@ namespace Start9.Api.Plex
             typeof(Brush), typeof(PlexWindow),
             new PropertyMetadata(new SolidColorBrush(Color.FromArgb(0xFF, 0x5E, 0x98, 0xD9))));
 
-        public bool ShowCloseButton
+        public Boolean ShowCloseButton
         {
-            get => (bool)GetValue(ShowCloseButtonProperty);
+            get => (Boolean)GetValue(ShowCloseButtonProperty);
             set => SetValue(ShowCloseButtonProperty, value);
         }
 
         public static readonly DependencyProperty ShowCloseButtonProperty =
-            DependencyProperty.Register("ShowCloseButton", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowCloseButton", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
-        public bool ShowMaxRestButton
+        public Boolean ShowMaxRestButton
         {
-            get => (bool)GetValue(ShowMaxRestButtonProperty);
+            get => (Boolean)GetValue(ShowMaxRestButtonProperty);
             set => SetValue(ShowMaxRestButtonProperty, value);
         }
 
         public static readonly DependencyProperty ShowMaxRestButtonProperty =
-            DependencyProperty.Register("ShowMaxRestButton", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowMaxRestButton", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
-        public bool ShowMinButton
+        public Boolean ShowMinButton
         {
-            get => (bool)GetValue(ShowMinButtonProperty);
+            get => (Boolean)GetValue(ShowMinButtonProperty);
             set => SetValue(ShowMinButtonProperty, value);
         }
 
         public static readonly DependencyProperty ShowMinButtonProperty =
-            DependencyProperty.Register("ShowMinButton", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowMinButton", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
-        public bool ShowResizeEdges
+        public Boolean ShowResizeEdges
         {
-            get => (bool)GetValue(ShowResizeEdgesProperty);
+            get => (Boolean)GetValue(ShowResizeEdgesProperty);
             set => SetValue(ShowResizeEdgesProperty, value);
         }
 
         public static readonly DependencyProperty ShowResizeEdgesProperty =
-            DependencyProperty.Register("ShowResizeEdges", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowResizeEdges", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
-        public bool ShowResizeGrip
+        public Boolean ShowResizeGrip
         {
-            get => (bool)GetValue(ShowResizeGripProperty);
+            get => (Boolean)GetValue(ShowResizeGripProperty);
             set => SetValue(ShowResizeGripProperty, value);
         }
 
         public static readonly DependencyProperty ShowResizeGripProperty =
-            DependencyProperty.Register("ShowResizeGrip", typeof(bool), typeof(PlexWindow), new PropertyMetadata(true));
+            DependencyProperty.Register("ShowResizeGrip", typeof(Boolean), typeof(PlexWindow), new PropertyMetadata(true));
 
         TimeSpan AnimateInDuration = TimeSpan.FromMilliseconds(500);
         TimeSpan AnimateMidDuration = TimeSpan.FromMilliseconds(500);
@@ -379,7 +379,7 @@ namespace Start9.Api.Plex
             MouseLeave += PlexWindow_MouseTransfer;
         }
 
-        private void PlexWindow_MouseTransfer(object sender, MouseEventArgs e)
+        private void PlexWindow_MouseTransfer(Object sender, MouseEventArgs e)
         {
             ShiftShadowBehindWindow();
         }
@@ -390,15 +390,15 @@ namespace Start9.Api.Plex
             ShiftShadowBehindWindow();
         }
 
-        public bool Maximized
+        public Boolean Maximized
         {
-            get => (bool)GetValue(MaximizedProperty);
+            get => (Boolean)GetValue(MaximizedProperty);
             set => SetValue(MaximizedProperty, value);
         }
 
-        public bool Minimized
+        public Boolean Minimized
         {
-            get => (bool)GetValue(MinimizedProperty);
+            get => (Boolean)GetValue(MinimizedProperty);
             set => SetValue(MinimizedProperty, value);
         }
 
@@ -408,25 +408,25 @@ namespace Start9.Api.Plex
             set => SetValue(WindowRectProperty, value);
         }
 
-        public object FullWindowContent
+        public Object FullWindowContent
         {
             get => GetValue(FullWindowContentProperty);
             set => SetValue(FullWindowContentProperty, value);
         }
 
-        public object TitleBarContent
+        public Object TitleBarContent
         {
             get => GetValue(TitleBarContentProperty);
             set => SetValue(TitleBarContentProperty, value);
         }
 
-        public object ToolBarContent
+        public Object ToolBarContent
         {
             get => GetValue(ToolBarContentProperty);
             set => SetValue(ToolBarContentProperty, value);
         }
 
-        public object FooterContent
+        public Object FooterContent
         {
             get => GetValue(FooterContentProperty);
             set
@@ -436,44 +436,44 @@ namespace Start9.Api.Plex
             }
         }
 
-        public double TitleBarHeight
+        public Double TitleBarHeight
         {
-            get => (double)GetValue(TitleBarHeightProperty);
+            get => (Double)GetValue(TitleBarHeightProperty);
             set => SetValue(TitleBarHeightProperty, value);
         }
 
-        public double ToolBarHeight
+        public Double ToolBarHeight
         {
-            get => (double)GetValue(ToolBarHeightProperty);
+            get => (Double)GetValue(ToolBarHeightProperty);
             set => SetValue(ToolBarHeightProperty, value);
         }
 
-        public double FooterHeight
+        public Double FooterHeight
         {
-            get => (double)GetValue(FooterHeightProperty);
+            get => (Double)GetValue(FooterHeightProperty);
             set => SetValue(FooterHeightProperty, value);
         }
-        public bool ShowTitle
+        public Boolean ShowTitle
         {
-            get => (bool)GetValue(ShowTitleProperty);
+            get => (Boolean)GetValue(ShowTitleProperty);
             set => SetValue(ShowTitleProperty, value);
         }
 
-        public bool ShowTitleBar
+        public Boolean ShowTitleBar
         {
-            get => (bool)GetValue(ShowTitleBarProperty);
+            get => (Boolean)GetValue(ShowTitleBarProperty);
             set => SetValue(ShowTitleBarProperty, value);
         }
 
-        public bool ShowToolBar
+        public Boolean ShowToolBar
         {
-            get => (bool)GetValue(ShowToolBarProperty);
+            get => (Boolean)GetValue(ShowToolBarProperty);
             set => SetValue(ShowToolBarProperty, value);
         }
 
-        public bool ShowFooter
+        public Boolean ShowFooter
         {
-            get => (bool)GetValue(ShowFooterProperty);
+            get => (Boolean)GetValue(ShowFooterProperty);
             set => SetValue(ShowFooterProperty, value);
         }
 
@@ -527,14 +527,14 @@ namespace Start9.Api.Plex
 
         Grid _titlebar;
 
-        void RestoreMinimizeWindow(object sender, ExecutedRoutedEventArgs e)
+        void RestoreMinimizeWindow(Object sender, ExecutedRoutedEventArgs e)
         {
             if (WindowState == WindowState.Minimized)
             {
             }
         }
 
-        void PlexWindow_Loaded(object sender, RoutedEventArgs e)
+        void PlexWindow_Loaded(Object sender, RoutedEventArgs e)
         {
             SyncShadowToWindow();
             SyncShadowToWindowSize();
@@ -557,13 +557,13 @@ namespace Start9.Api.Plex
             ));*/
         }
 
-        new public bool? ShowDialog()
+        new public Boolean? ShowDialog()
         {
             ShiftShadowBehindWindow();
             ShowWindow();
             /*System.Threading.Thread thread = new System.Threading.Thread(() =>
             {*/
-            bool? value = false;
+            Boolean? value = false;
             Dispatcher.BeginInvoke(
             new Action(() =>
             {
@@ -812,9 +812,9 @@ namespace Start9.Api.Plex
             }
         }
 
-        bool isHiding = false;
+        Boolean isHiding = false;
 
-        private void PlexWindow_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void PlexWindow_IsVisibleChanged(Object sender, DependencyPropertyChangedEventArgs e)
         {
             if (IsVisible)
             {
@@ -835,11 +835,11 @@ namespace Start9.Api.Plex
             ShiftShadowBehindWindow();
         }
 
-        bool IsClosingNow = false;
+        Boolean IsClosingNow = false;
 
-        private void PlexWindow_Closing(object sender, CancelEventArgs e)
+        private void PlexWindow_Closing(Object sender, CancelEventArgs e)
         {
-            bool eCancel = e.Cancel;
+            var eCancel = e.Cancel;
 
             if (!eCancel & !IsClosingNow)
             {
@@ -883,7 +883,7 @@ namespace Start9.Api.Plex
             }
         }
 
-        private void PlexWindow_Closed(object sender, EventArgs e)
+        private void PlexWindow_Closed(Object sender, EventArgs e)
         {
             _shadowWindow.Close();
         }
@@ -1054,7 +1054,7 @@ namespace Start9.Api.Plex
 
             DoubleAnimation windowTopAnimation = new DoubleAnimation()
             {
-                To = System.Windows.Forms.Screen.FromRectangle(System.Drawing.Rectangle.FromLTRB((int)WindowRect.X, (int)WindowRect.Y, (int)WindowRect.Right, (int)WindowRect.Bottom)).WorkingArea.Bottom,
+                To = System.Windows.Forms.Screen.FromRectangle(System.Drawing.Rectangle.FromLTRB((Int32)WindowRect.X, (Int32)WindowRect.Y, (Int32)WindowRect.Right, (Int32)WindowRect.Bottom)).WorkingArea.Bottom,
                 From = Top,
                 Duration = AnimateMidDuration,
                 EasingFunction = circleEase
@@ -1110,7 +1110,7 @@ namespace Start9.Api.Plex
         }
 
 
-        void PlexWindow_WindowFocusChanged(object sender, EventArgs e)
+        void PlexWindow_WindowFocusChanged(Object sender, EventArgs e)
         {
             ShiftShadowBehindWindow();
         }
@@ -1141,17 +1141,17 @@ namespace Start9.Api.Plex
             (_shadowWindow.RenderTransform as ScaleTransform).ScaleY = scaleTransform.ScaleY;
         }
 
-        void PlexWindow_StateChanged(object sender, EventArgs e)
+        void PlexWindow_StateChanged(Object sender, EventArgs e)
         {
             ShiftShadowBehindWindow();
         }
 
-        void Titlebar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        void Titlebar_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }
 
-        void ThumbBottomRightCorner_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbBottomRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
@@ -1161,7 +1161,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbTopRightCorner_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbTopRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
@@ -1174,7 +1174,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbTopLeftCorner_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbTopLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Left + e.HorizontalChange > 10)
             {
@@ -1190,7 +1190,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbBottomLeftCorner_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbBottomLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Left + e.HorizontalChange > 10)
             {
@@ -1203,7 +1203,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbRight_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbRight_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
@@ -1211,7 +1211,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbLeft_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbLeft_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Left + e.HorizontalChange > 10)
             {
@@ -1222,7 +1222,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbBottom_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbBottom_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
@@ -1230,7 +1230,7 @@ namespace Start9.Api.Plex
             SyncShadowToWindowSize();
         }
 
-        void ThumbTop_DragDelta(object sender, DragDeltaEventArgs e)
+        void ThumbTop_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Top + e.VerticalChange > 10)
             {
@@ -1244,12 +1244,12 @@ namespace Start9.Api.Plex
 
     public static class MessageBox
     {
-        public static bool? Show(PlexWindow parent, String text, String caption)
+        public static Boolean? Show(PlexWindow parent, String text, String caption)
         {
             return Show(parent, text, caption, new MessageBoxButtons(), new MessageBoxIcon(), new MessageBoxDefaultButton(), new System.Windows.MessageBoxOptions(), null, new HelpNavigator(), null, new List<ResourceDictionary>());
         }
 
-        public static bool? Show(PlexWindow parent, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, System.Windows.MessageBoxOptions options, String helpFilePath, HelpNavigator navigator, Object param, List<ResourceDictionary> dictionaries)
+        public static Boolean? Show(PlexWindow parent, String text, String caption, MessageBoxButtons buttons, MessageBoxIcon icon, MessageBoxDefaultButton defaultButton, System.Windows.MessageBoxOptions options, String helpFilePath, HelpNavigator navigator, Object param, List<ResourceDictionary> dictionaries)
         {
             PlexWindow MessageBox = new PlexWindow()
             {

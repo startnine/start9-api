@@ -13,9 +13,16 @@ using System.Collections.ObjectModel;
 
 namespace Start9.Api
 {
+    /// <summary>
+    /// Provdes methods, types, and properties related to apps that are using Windows packaging.
+    /// </summary>
     public static class Appx
     {
         //https://docs.microsoft.com/en-us/uwp/api/Windows.UI.Notifications.TileTemplateType
+
+           /// <summary>
+           /// Represents the type of the tile notification.
+           /// </summary>
         public enum TileNotificationType
         {
             TileSquare150x150Block,
@@ -144,6 +151,7 @@ namespace Start9.Api
             TileWideText11
         }
 
+
         public class NotificationInfoEventArgs : RoutedEventArgs
         {
             public NotificationInfo OldNotification;
@@ -152,81 +160,130 @@ namespace Start9.Api
 
         public class AppInfo : DependencyObject
         {
-            public string DisplayName
+            /// <summary>
+            /// Gets or sets the display name of the app.
+            /// </summary>
+            public String DisplayName
             {
-                get => (string)GetValue(DisplayNameProperty);
+                get => (String)GetValue(DisplayNameProperty);
                 set => SetValue(DisplayNameProperty, value);
             }
 
+            /// <summary>
+            /// Identifies the DisplayName property.
+            /// </summary>
             public static readonly DependencyProperty DisplayNameProperty =
-                DependencyProperty.Register("DisplayName", typeof(string), typeof(AppInfo), new PropertyMetadata(""));
+                DependencyProperty.Register("DisplayName", typeof(String), typeof(AppInfo), new PropertyMetadata(""));
 
-            public string InternalPath
+            /// <summary>
+            /// Gets the path of the app.
+            /// </summary>
+            public String InternalPath
             {
                 get => Environment.ExpandEnvironmentVariables(@"%programfiles%\WindowsApps\" + InternalName + @"\AppxManifest.xml");
             }
 
-            public string InternalName
+            /// <summary>
+            /// Gets or sets the package name of the app.
+            /// </summary>
+            public String InternalName
             {
-                get => (string)GetValue(InternalNameProperty);
+                get => (String)GetValue(InternalNameProperty);
                 set => SetValue(InternalNameProperty, value);
             }
-
+            /// <summary>
+            /// Identifies the InternalName property.
+            /// </summary>
             public static readonly DependencyProperty InternalNameProperty =
-                DependencyProperty.Register("InternalName", typeof(string), typeof(AppInfo), new PropertyMetadata(""));
+                DependencyProperty.Register("InternalName", typeof(String), typeof(AppInfo), new PropertyMetadata(""));
 
+            /// <summary>
+            /// Gets or sets the color of the tile.
+            /// </summary>
+            /// <value>
+            /// An <see cref="ImageBrush"/> that can paint the tile's icon.
+            /// </value>
             public ImageBrush Icon
             {
                 get => (ImageBrush)GetValue(IconProperty);
                 set => SetValue(IconProperty, value);
             }
 
+            /// <summary>
+            /// Identifies the icon of the tile.
+            /// </summary>
             public static readonly DependencyProperty IconProperty =
                 DependencyProperty.Register("Icon", typeof(ImageBrush), typeof(AppInfo), new PropertyMetadata(new ImageBrush()));
 
+            /// <summary>
+            /// Gets or sets the color of the tile.
+            /// </summary>
             public Color Color
             {
                 get => (Color)GetValue(ColorProperty);
                 set => SetValue(ColorProperty, value);
             }
 
+            /// <summary>
+            /// Identifies the color property.
+            /// </summary>
             public static readonly DependencyProperty ColorProperty =
                 DependencyProperty.Register("Color", typeof(Color), typeof(AppInfo), new FrameworkPropertyMetadata(Color.FromArgb(0xFF, 0, 0, 0), FrameworkPropertyMetadataOptions.AffectsRender));
 
-            public ObservableCollection<string> LiveText
+            /// <summary>
+            /// Gets or sets the live text.
+            /// </summary>
+            public ObservableCollection<String> LiveText
             {
-                get => (ObservableCollection<string>)GetValue(LiveTextProperty);
+                get => (ObservableCollection<String>)GetValue(LiveTextProperty);
                 set => SetValue(LiveTextProperty, value);
             }
 
+            /// <summary>
+            /// Identifies the live text property.
+            /// </summary>
             public static readonly DependencyProperty LiveTextProperty =
-                DependencyProperty.Register("LiveText", typeof(ObservableCollection<string>), typeof(AppInfo), new FrameworkPropertyMetadata(new ObservableCollection<string>(), FrameworkPropertyMetadataOptions.AffectsRender));
+                DependencyProperty.Register("LiveText", typeof(ObservableCollection<String>), typeof(AppInfo), new FrameworkPropertyMetadata(new ObservableCollection<String>(), FrameworkPropertyMetadataOptions.AffectsRender));
 
+            /// <summary>
+            /// Gets or sets the live images.
+            /// </summary>
             public ObservableCollection<ImageBrush> LiveImages
             {
                 get => (ObservableCollection<ImageBrush>)GetValue(LiveImagesProperty);
                 set => SetValue(LiveImagesProperty, value);
             }
 
+            /// <summary>
+            /// Identifies the live images property.
+            /// </summary>
             public static readonly DependencyProperty LiveImagesProperty =
                 DependencyProperty.Register("LiveImages", typeof(ObservableCollection<ImageBrush>), typeof(AppInfo), new FrameworkPropertyMetadata(new ObservableCollection<ImageBrush>(), FrameworkPropertyMetadataOptions.AffectsRender));
 
-            XmlDocument _appxManifest = new XmlDocument();
+            XmlDocument _appxManifest = new XmlDocument(); // TODO: use XDocument
             //%programfiles%/WindowsApps/Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe/AppxManifest.xml
 
             NotificationInfo _currentNotification;
 
             public Timer _notificationTimer;
 
+            /// <summary>
+            /// Occurs when a tile update notification is received.
+            /// </summary>
             public event EventHandler<NotificationInfoEventArgs> NotificationReceived;
 
-            public AppInfo(string App)
+            /// <summary>
+            /// Creates an <see cref="AppInfo"/> object from the application package name.
+            /// </summary>
+            /// <param name="app">The application package name.</param>
+            public AppInfo(String app)
             {
-                InternalName = App;
+                InternalName = app;
+
 
                 _appxManifest.Load(InternalPath);
 
-                string dummyString = "If you see this text, remind me to look into getting Apps' display names.";
+                var dummyString = "If you see this text, remind me to look into getting Apps' display names.";
                 DisplayName = dummyString;
                 //XmlNodeList nodes = ;
                 foreach (XmlNode node in _appxManifest.GetElementsByTagName("Package")[0].ChildNodes)
@@ -270,10 +327,10 @@ namespace Start9.Api
                                 {
                                     if ((subNode.Name.ToLower().EndsWith("visualelements")) && (subNode.Attributes["BackgroundColor"] != null))
                                     {
-                                        string coloures = subNode.Attributes["BackgroundColor"].Value.Replace("#", "").ToUpper();
-                                        byte red = 0;
-                                        byte green = 0;
-                                        byte blue = 0;
+                                        var coloures = subNode.Attributes["BackgroundColor"].Value.Replace("#", "").ToUpper();
+                                        Byte red = 0;
+                                        Byte green = 0;
+                                        Byte blue = 0;
                                         if (coloures.Length == 6)
                                         {
                                             red = byte.Parse(coloures.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
@@ -311,7 +368,7 @@ namespace Start9.Api
                             });
                             _currentNotification = NewNotification;
                             LiveText.Clear();
-                            foreach (string s in NewNotification.Text)
+                            foreach (var s in NewNotification.Text)
                             {
                                 LiveText.Add(s);
                             }
@@ -326,11 +383,11 @@ namespace Start9.Api
                 _notificationTimer.Start();
             }
 
-            string TileNotificationAddress
+            String TileNotificationAddress
             {
                 get
                 {
-                    string address = "";
+                    var address = "";
                     //XmlDocument appxManifest = new XmlDocument();
                     //%programfiles%/WindowsApps/Microsoft.BingNews_3.0.4.213_x64__8wekyb3d8bbwe/AppxManifest.xml
                     //appxManifest.Load(InternalPath);
@@ -423,19 +480,47 @@ namespace Start9.Api
             }
         }
 
+        /// <summary>
+        /// Represents a live tile update notification.
+        /// </summary>
         public class NotificationInfo
         {
-            public TileNotificationType Type;
-            public List<string> Text = new List<string>();
-            public List<ImageBrush> Images = new List<ImageBrush>();
+            /// <summary>
+            /// Gets or sets the type of the tile notification.
+            /// </summary>
+            /// <value>
+            /// A <see cref="TileNotificationType"/> representing the notification type.
+            /// </value>
+            public TileNotificationType Type { get; set; }
+
+            /// <summary>
+            /// Gets a list of text strings in the tile update.
+            /// </summary>
+            /// <value>
+            /// A list of the text strings found in the notification.
+            /// </value>
+            public List<String> Text { get; } = new List<String>();
+
+            /// <summary>
+            /// Gets a list of images in the tile update.
+            /// </summary>
+            /// <value>
+            /// A list of <see cref="ImageBrush"/>es that can paint the images found in the notification.
+            /// </value>
+            public List<ImageBrush> Images { get; } = new List<ImageBrush>();
         }
 
-        public static string GetLiveTileFromWebAddress(string address)
+        /// <summary>
+        /// Gets a live tile from the address.
+        /// </summary>
+        /// <param name="address">The address to get the tile from.</param>
+        /// <returns>The live tile address.</returns>
+        public static String GetLiveTileFromWebAddress(String address)
         {
-            string tempUri;
+            String tempUri;
             using (var wc = new System.Net.WebClient())
             {
-                string tempUriThingy = address.Replace("{language}", "en-US");
+                var tempUriThingy = address.Replace("{language}", "en-US");
                 tempUri = wc.DownloadString(tempUriThingy).Replace("{language}", "en-US");
             }
             return tempUri;

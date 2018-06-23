@@ -60,6 +60,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.AddIn, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\v3.0\System.AddIn.dll</HintPath>

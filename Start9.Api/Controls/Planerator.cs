@@ -22,34 +22,34 @@ namespace Start9.Api.Controls
         #region Dependency Properties
 
         public static readonly DependencyProperty RotationXProperty =
-            DependencyProperty.Register("RotationX", typeof(double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
+            DependencyProperty.Register("RotationX", typeof(Double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
         public static readonly DependencyProperty RotationYProperty =
-            DependencyProperty.Register("RotationY", typeof(double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
+            DependencyProperty.Register("RotationY", typeof(Double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
         public static readonly DependencyProperty RotationZProperty =
-            DependencyProperty.Register("RotationZ", typeof(double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
+            DependencyProperty.Register("RotationZ", typeof(Double), typeof(Planerator), new UIPropertyMetadata(0.0, (d, args) => ((Planerator)d).UpdateRotation()));
         public static readonly DependencyProperty FieldOfViewProperty =
-            DependencyProperty.Register("FieldOfView", typeof(double), typeof(Planerator), new UIPropertyMetadata(45.0, (d, args) => ((Planerator)d).Update3D(),
-                (d, val) => Math.Min(Math.Max((double)val, 0.5), 179.9))); // clamp to a meaningful range
+            DependencyProperty.Register("FieldOfView", typeof(Double), typeof(Planerator), new UIPropertyMetadata(45.0, (d, args) => ((Planerator)d).Update3D(),
+                (d, val) => Math.Min(Math.Max((Double)val, 0.5), 179.9))); // clamp to a meaningful range
 
 
-        public double RotationX
+        public Double RotationX
         {
-            get { return (double)GetValue(RotationXProperty); }
+            get { return (Double)GetValue(RotationXProperty); }
             set { SetValue(RotationXProperty, value); }
         }
-        public double RotationY
+        public Double RotationY
         {
-            get { return (double)GetValue(RotationYProperty); }
+            get { return (Double)GetValue(RotationYProperty); }
             set { SetValue(RotationYProperty, value); }
         }
-        public double RotationZ
+        public Double RotationZ
         {
-            get { return (double)GetValue(RotationZProperty); }
+            get { return (Double)GetValue(RotationZProperty); }
             set { SetValue(RotationZProperty, value); }
         }
-        public double FieldOfView
+        public Double FieldOfView
         {
-            get { return (double)GetValue(FieldOfViewProperty); }
+            get { return (Double)GetValue(FieldOfViewProperty); }
             set { SetValue(FieldOfViewProperty, value); }
         }
 
@@ -116,13 +116,13 @@ namespace Start9.Api.Controls
             return base.ArrangeOverride(finalSize);
         }
 
-        protected override Visual GetVisualChild(int index)
+        protected override Visual GetVisualChild(Int32 index)
         {
             return _visualChild;
 
         }
 
-        protected override int VisualChildrenCount
+        protected override Int32 VisualChildrenCount
         {
             get
             {
@@ -200,15 +200,15 @@ namespace Start9.Api.Controls
             // Use GetDescendantBounds for sizing and centering since DesiredSize includes layout whitespace, whereas GetDescendantBounds 
             // is tighter
             Rect logicalBounds = VisualTreeHelper.GetDescendantBounds(_logicalChild);
-            double w = logicalBounds.Width;
-            double h = logicalBounds.Height;
+            var w = logicalBounds.Width;
+            var h = logicalBounds.Height;
 
             // Create a camera that looks down -Z, with up as Y, and positioned right halfway in X and Y on the element, 
             // and back along Z the right distance based on the field-of-view is the same projected size as the 2D content
             // that it's looking at.  See http://blogs.msdn.com/greg_schechter/archive/2007/04/03/camera-construction-in-parallaxui.aspx
             // for derivation of this camera.
-            double fovInRadians = FieldOfView * (Math.PI / 180);
-            double zValue = w / Math.Tan(fovInRadians / 2) / 2;
+            var fovInRadians = FieldOfView * (Math.PI / 180);
+            var zValue = w / Math.Tan(fovInRadians / 2) / 2;
             _viewport3d.Camera = new PerspectiveCamera(new Point3D(w / 2, h / 2, zValue),
                                                        -_zAxis,
                                                        _yAxis,
@@ -269,7 +269,7 @@ namespace Start9.Api.Controls
         // Static data
         static private readonly Point3D[] _mesh = new Point3D[] { new Point3D(0, 0, 0), new Point3D(0, 1, 0), new Point3D(1, 1, 0), new Point3D(1, 0, 0) };
         static private readonly Point[] _texCoords = new Point[] { new Point(0, 1), new Point(0, 0), new Point(1, 0), new Point(1, 1) };
-        static private readonly int[] _indices = new int[] { 0, 2, 1, 0, 3, 2 };
+        static private readonly Int32[] _indices = new Int32[] { 0, 2, 1, 0, 3, 2 };
         static private readonly Vector3D _xAxis = new Vector3D(1, 0, 0);
         static private readonly Vector3D _yAxis = new Vector3D(0, 1, 0);
         static private readonly Vector3D _zAxis = new Vector3D(0, 0, 1);

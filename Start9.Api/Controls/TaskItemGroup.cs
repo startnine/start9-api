@@ -20,18 +20,18 @@ namespace Start9.Api.Controls
 
     public partial class TaskItemGroup : Control
     {
-        const string PartButtonsStack = "PART_ButtonsStack";
-        const string PartGroupToggleButton = "PART_GroupToggleButton";
-        const string PartSingleGroupTab = "PART_SingleGroupTab";
-        const string PartDoubleGroupTab = "PART_DoubleGroupTab";
+        const String PartButtonsStack = "PART_ButtonsStack";
+        const String PartGroupToggleButton = "PART_GroupToggleButton";
+        const String PartSingleGroupTab = "PART_SingleGroupTab";
+        const String PartDoubleGroupTab = "PART_DoubleGroupTab";
 
-        public string ProcessName
+        public String ProcessName
         {
-            get => (string)GetValue(ProcessNameProperty);
+            get => (String)GetValue(ProcessNameProperty);
             set => SetValue(ProcessNameProperty, (value));
         }
 
-        public static readonly DependencyProperty ProcessNameProperty = DependencyProperty.Register("ProcessName", typeof(string), typeof(TaskItemGroup), new PropertyMetadata("", OnProcessNamePropertyChangedCallback));
+        public static readonly DependencyProperty ProcessNameProperty = DependencyProperty.Register("ProcessName", typeof(String), typeof(TaskItemGroup), new PropertyMetadata("", OnProcessNamePropertyChangedCallback));
 
         static void OnProcessNamePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -46,37 +46,37 @@ namespace Start9.Api.Controls
 
         public static readonly DependencyProperty ProcessWindowsProperty = DependencyProperty.Register("ProcessWindows", typeof(List<ProgramWindow>), typeof(TaskItemGroup), new PropertyMetadata(new List<ProgramWindow>()));
 
-        public bool CombineButtons
+        public Boolean CombineButtons
         {
-            get => (bool)GetValue(CombineButtonsProperty);
+            get => (Boolean)GetValue(CombineButtonsProperty);
             set => SetValue(CombineButtonsProperty, (value));
         }
 
-        public static readonly DependencyProperty CombineButtonsProperty = DependencyProperty.Register("CombineButtons", typeof(bool), typeof(TaskItemGroup), new PropertyMetadata(true, OnCombineButtonsPropertyChangedCallback));
+        public static readonly DependencyProperty CombineButtonsProperty = DependencyProperty.Register("CombineButtons", typeof(Boolean), typeof(TaskItemGroup), new PropertyMetadata(true, OnCombineButtonsPropertyChangedCallback));
 
         static void OnCombineButtonsPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
 
         }
 
-        public bool UseSmallButtons
+        public Boolean UseSmallButtons
         {
-            get => (bool)GetValue(UseSmallButtonsProperty);
+            get => (Boolean)GetValue(UseSmallButtonsProperty);
             set => SetValue(UseSmallButtonsProperty, (value));
         }
 
-        public static readonly DependencyProperty UseSmallButtonsProperty = DependencyProperty.Register("UseSmallButtons", typeof(bool), typeof(TaskItemGroup), new PropertyMetadata(false));
+        public static readonly DependencyProperty UseSmallButtonsProperty = DependencyProperty.Register("UseSmallButtons", typeof(Boolean), typeof(TaskItemGroup), new PropertyMetadata(false));
 
-        public bool IsVertical
+        public Boolean IsVertical
         {
-            get => (bool)GetValue(IsVerticalProperty);
+            get => (Boolean)GetValue(IsVerticalProperty);
             set => SetValue(IsVerticalProperty, (value));
         }
 
-        public static readonly DependencyProperty IsVerticalProperty = DependencyProperty.Register("IsVertical", typeof(bool), typeof(TaskItemGroup), new PropertyMetadata(false));
+        public static readonly DependencyProperty IsVerticalProperty = DependencyProperty.Register("IsVertical", typeof(Boolean), typeof(TaskItemGroup), new PropertyMetadata(false));
 
 
-        public TaskItemGroup(string programName)
+        public TaskItemGroup(String programName)
         {
             ProcessName = programName;
 
@@ -114,7 +114,7 @@ namespace Start9.Api.Controls
 
     public class ListIntPtrToListTaskItemButtonConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             var hwnds = (List<ProgramWindow>)value;
             var Buttons = new List<ToggleButton>();
@@ -132,7 +132,7 @@ namespace Start9.Api.Controls
             return Buttons;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

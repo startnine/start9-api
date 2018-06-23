@@ -134,23 +134,23 @@ namespace Start9.Api.Controls
         internal static readonly DependencyProperty HoverProperty =
             DependencyProperty.Register("Hover", typeof(Brush), typeof(Reveal), new PropertyMetadata(new SolidColorBrush(Colors.Transparent)));
 
-        public double HoverWidth
+        public Double HoverWidth
         {
-            get => (double)GetValue(HoverWidthProperty);
+            get => (Double)GetValue(HoverWidthProperty);
             set => SetValue(HoverWidthProperty, (value));
         }
 
         internal static readonly DependencyProperty HoverWidthProperty =
-            DependencyProperty.Register("HoverWidth", typeof(double), typeof(Reveal), new PropertyMetadata((double)1));
+            DependencyProperty.Register("HoverWidth", typeof(Double), typeof(Reveal), new PropertyMetadata((Double)1));
 
-        public double HoverHeight
+        public Double HoverHeight
         {
-            get => (double)GetValue(HoverHeightProperty);
+            get => (Double)GetValue(HoverHeightProperty);
             set => SetValue(HoverHeightProperty, (value));
         }
 
         internal static readonly DependencyProperty HoverHeightProperty =
-            DependencyProperty.Register("HoverHeight", typeof(double), typeof(Reveal), new PropertyMetadata((double)1));
+            DependencyProperty.Register("HoverHeight", typeof(Double), typeof(Reveal), new PropertyMetadata((Double)1));
 
         Canvas _vis = null;
 
@@ -169,7 +169,7 @@ namespace Start9.Api.Controls
             else
                 RevealGlowTimer.Stop();
         }*/
-        private void CompositionTarget_Rendering(object sender, EventArgs e)
+        private void CompositionTarget_Rendering(Object sender, EventArgs e)
         {
             if (IsVisible && (_vis != null))
             {
@@ -180,12 +180,12 @@ namespace Start9.Api.Controls
             }
         }
 
-        private void Reveal_Loaded(object sender, RoutedEventArgs e)
+        private void Reveal_Loaded(Object sender, RoutedEventArgs e)
         {
             SetReveal();
         }
 
-        private void Reveal_Unloaded(object sender, RoutedEventArgs e)
+        private void Reveal_Unloaded(Object sender, RoutedEventArgs e)
         {
             _vis = null;
         }

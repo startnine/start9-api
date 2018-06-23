@@ -18,49 +18,49 @@ namespace Start9.Api.Controls
 
     public partial class ToggleSwitch : CheckBox
     {
-        const string PartGrip = "PART_Grip";
-        const string PartOffsetter = "PART_Offsetter";
-        const string PartStateText = "PART_StateText";
+        const String PartGrip = "PART_Grip";
+        const String PartOffsetter = "PART_Offsetter";
+        const String PartStateText = "PART_StateText";
 
-        public string TrueText
+        public String TrueText
         {
-            get => (string)GetValue(TrueTextProperty);
+            get => (String)GetValue(TrueTextProperty);
             set => SetValue(TrueTextProperty, value);
         }
 
         public static readonly DependencyProperty TrueTextProperty =
-            DependencyProperty.RegisterAttached("TrueText", typeof(string), typeof(ToggleSwitch),
+            DependencyProperty.RegisterAttached("TrueText", typeof(String), typeof(ToggleSwitch),
                 new PropertyMetadata("True"));
 
-        public string FalseText
+        public String FalseText
         {
-            get => (string)GetValue(FalseTextProperty);
+            get => (String)GetValue(FalseTextProperty);
             set => SetValue(FalseTextProperty, value);
         }
 
         public static readonly DependencyProperty FalseTextProperty =
-            DependencyProperty.RegisterAttached("FalseText", typeof(string), typeof(ToggleSwitch),
+            DependencyProperty.RegisterAttached("FalseText", typeof(String), typeof(ToggleSwitch),
                 new PropertyMetadata("False"));
 
-        public string NullText
+        public String NullText
         {
-            get => (string)GetValue(NullTextProperty);
+            get => (String)GetValue(NullTextProperty);
             set => SetValue(NullTextProperty, value);
         }
 
         public static readonly DependencyProperty NullTextProperty =
-            DependencyProperty.RegisterAttached("NullText", typeof(string), typeof(ToggleSwitch),
+            DependencyProperty.RegisterAttached("NullText", typeof(String), typeof(ToggleSwitch),
                 new PropertyMetadata("Null"));
 
-        public double OffsetterWidth
+        public Double OffsetterWidth
         {
-            get => (double)GetValue(OffsetterWidthProperty);
+            get => (Double)GetValue(OffsetterWidthProperty);
             set => SetValue(OffsetterWidthProperty, value);
         }
 
         public static readonly DependencyProperty OffsetterWidthProperty =
-            DependencyProperty.RegisterAttached("OffsetterWidth", typeof(double), typeof(ToggleSwitch),
-                new PropertyMetadata((double)0));
+            DependencyProperty.RegisterAttached("OffsetterWidth", typeof(Double), typeof(ToggleSwitch),
+                new PropertyMetadata((Double)0));
 
         static ToggleSwitch()
         {
@@ -109,7 +109,7 @@ namespace Start9.Api.Controls
                 Duration = TimeSpan.FromMilliseconds(125)
             };
 
-            double targetWidth = 0;
+            Double targetWidth = 0;
 
             if ((IsChecked == null) & (IsThreeState))
             {
@@ -158,23 +158,23 @@ namespace Start9.Api.Controls
             OnIsCheckedChanged(this, new DependencyPropertyChangedEventArgs());
         }
 
-        private void ToggleSwitch_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void ToggleSwitch_PreviewMouseLeftButtonDown(Object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            bool? originalValue = (sender as ToggleSwitch).IsChecked;
+            Boolean? originalValue = (sender as ToggleSwitch).IsChecked;
             //var toggleSwitch = (sender as ToggleSwitch);
 
-            bool isDragging = false;
-            double offsetter = OffsetterWidth;
+            var isDragging = false;
+            var offsetter = OffsetterWidth;
             //var grip = toggleSwitch._grip;
 
-            double toggleX = RealPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
-            double gripInitialX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
-            double gripX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
+            var toggleX = RealPixelsToWpfUnits((sender as ToggleSwitch).PointToScreen(new System.Windows.Point(0, 0)).X);
+            var gripInitialX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
+            var gripX = RealPixelsToWpfUnits((sender as ToggleSwitch)._grip.PointToScreen(new System.Windows.Point(0, 0)).X);
 
-            double cursorStartX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
-            double cursorCurrentX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
-            double cursorChange = (cursorCurrentX - cursorStartX);
-            double offset = (gripX - toggleX) + (cursorCurrentX - cursorStartX);
+            Double cursorStartX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            Double cursorCurrentX = RealPixelsToWpfUnits(System.Windows.Forms.Cursor.Position.X);
+            var cursorChange = (cursorCurrentX - cursorStartX);
+            var offset = (gripX - toggleX) + (cursorCurrentX - cursorStartX);
             //System.Windows.Point cursorStartOffsetPoint = new System.Windows.Point(toggleSwitch.Margin.Left, grip.Margin.Top);
 
             var timer = new System.Timers.Timer(1);
@@ -206,7 +206,7 @@ namespace Start9.Api.Controls
                         //offset = (cursorCurrentX - cursorStartX);
                         if (isDragging)
                         {
-                            double isCheckedOffset = 0;
+                            Double isCheckedOffset = 0;
                             if (IsChecked == true)
                             {
                                 isCheckedOffset = 32;
@@ -216,7 +216,7 @@ namespace Start9.Api.Controls
                                 isCheckedOffset = 16;
                             }
 
-                            double toggleChange = cursorChange + isCheckedOffset;
+                            var toggleChange = cursorChange + isCheckedOffset;
                             if (IsThreeState)
                             {
                                 if (toggleChange < 10.666666666666666666666666666667)

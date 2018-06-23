@@ -11,88 +11,88 @@ namespace Start9.Api.Objects
 {
     public class WidthToOffsetMarginConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
-            string param = parameter.ToString();
+            var param = parameter.ToString();
             if (param == "Top")
             {
-                return new Thickness(0, (double)value, 0, (double)value * -1);
+                return new Thickness(0, (Double)value, 0, (Double)value * -1);
             }
             else if (param == "Right")
             {
-                return new Thickness((double)value * -1, 0, (double)value, 0);
+                return new Thickness((Double)value * -1, 0, (Double)value, 0);
             }
             else if (param == "Bottom")
             {
-                return new Thickness(0, (double)value * -1, 0, (double)value);
+                return new Thickness(0, (Double)value * -1, 0, (Double)value);
             }
             else
             {
-                return new Thickness((double)value, 0, (double)value * -1, 0);
+                return new Thickness((Double)value, 0, (Double)value * -1, 0);
             }
         }
 
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
-            string param = parameter.ToString();
+            var param = parameter.ToString();
             if (param == "Top")
             {
-                return (double)(((Thickness)(value)).Top);
+                return (Double)(((Thickness)(value)).Top);
             }
             else if (param == "Right")
             {
-                return (double)(((Thickness)(value)).Right);
+                return (Double)(((Thickness)(value)).Right);
             }
             else if (param == "Bottom")
             {
-                return (double)(((Thickness)(value)).Bottom);
+                return (Double)(((Thickness)(value)).Bottom);
             }
             else
             {
-                return (double)(((Thickness)(value)).Left); //return new Thickness((double)value, 0, (double)value * -1, 0);
+                return (Double)(((Thickness)(value)).Left); //return new Thickness((double)value, 0, (double)value * -1, 0);
             }
         }
     }
 
     public class WidthToHalfWidthConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
             if (parameter == null)
             {
-                return ((double)value) / 2;
+                return ((Double)value) / 2;
             }
             else
             {
-                string paramString = (string)parameter;
-                return ((double)value) / System.Convert.ToDouble(paramString);
+                var paramString = (String)parameter;
+                return ((Double)value) / System.Convert.ToDouble(paramString);
             }
         }
 
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
             if (parameter == null)
             {
-                return ((double)value) * 2;
+                return ((Double)value) * 2;
             }
             else
             {
-                string paramString = (string)parameter;
-                return ((double)value) * System.Convert.ToDouble(paramString);
+                var paramString = (String)parameter;
+                return ((Double)value) * System.Convert.ToDouble(paramString);
             }
         }
     }
 
     public class BoolToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
-            if ((bool)value)
+            if ((Boolean)value)
             {
                 return Visibility.Visible;
             }
@@ -102,8 +102,8 @@ namespace Start9.Api.Objects
             }
         }
 
-        public object ConvertBack(object value, Type targetType,
-            object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
         {
             if ((Visibility)value == Visibility.Visible)
             {
@@ -118,7 +118,7 @@ namespace Start9.Api.Objects
 
     public class GetResourceForImageBrushConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             //.IceIconFrame
             System.Drawing.Bitmap resource = Start9.Api.Properties.Resources.IceIconFrame;
@@ -137,7 +137,7 @@ namespace Start9.Api.Objects
             return brushFromResource.ImageSource;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -145,23 +145,23 @@ namespace Start9.Api.Objects
 
     public class DependencyPoint : DependencyObject
     {
-        public double X
+        public Double X
         {
-            get => (double)GetValue(XProperty);
+            get => (Double)GetValue(XProperty);
             set => SetValue(XProperty, (value));
         }
 
         public static readonly DependencyProperty XProperty =
-            DependencyProperty.Register("X", typeof(double), typeof(DependencyPoint), new PropertyMetadata((double)0));
+            DependencyProperty.Register("X", typeof(Double), typeof(DependencyPoint), new PropertyMetadata((Double)0));
 
-        public double Y
+        public Double Y
         {
-            get => (double)GetValue(YProperty);
+            get => (Double)GetValue(YProperty);
             set => SetValue(YProperty, (value));
         }
 
         public static readonly DependencyProperty YProperty =
-            DependencyProperty.Register("Y", typeof(double), typeof(DependencyPoint), new PropertyMetadata((double)0));
+            DependencyProperty.Register("Y", typeof(Double), typeof(DependencyPoint), new PropertyMetadata((Double)0));
     }
 
     public class Dimensions : DependencyObject
@@ -199,7 +199,7 @@ namespace Start9.Api.Objects
 
     public class MarginToRelativeMarginConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
 
             Dimensions paramDim = (Dimensions)parameter;
@@ -219,16 +219,16 @@ namespace Start9.Api.Objects
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             if (parameter == null)
             {
-                return ((double)value) * 2;
+                return ((Double)value) * 2;
             }
             else
             {
-                string paramString = (string)parameter;
-                return ((double)value) * System.Convert.ToDouble(paramString);
+                var paramString = (String)parameter;
+                return ((Double)value) * System.Convert.ToDouble(paramString);
             }
         }
     }

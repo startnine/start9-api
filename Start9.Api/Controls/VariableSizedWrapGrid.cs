@@ -24,50 +24,50 @@ namespace Start9.Api.Objects.Controls
         #endregion
 
         #region double ItemHeight
-        public double ItemHeight
+        public Double ItemHeight
         {
-            get { return (double)GetValue(ItemHeightProperty); }
+            get { return (Double)GetValue(ItemHeightProperty); }
             set { SetValue(ItemHeightProperty, value); }
         }
 
         public static readonly DependencyProperty ItemHeightProperty =
-            DependencyProperty.Register("ItemHeight", typeof(double), typeof(VariableSizedWrapGrid),
+            DependencyProperty.Register("ItemHeight", typeof(Double), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         #endregion
 
         #region double ItemWidth
-        public double ItemWidth
+        public Double ItemWidth
         {
-            get { return (double)GetValue(ItemWidthProperty); }
+            get { return (Double)GetValue(ItemWidthProperty); }
             set { SetValue(ItemWidthProperty, value); }
         }
 
         public static readonly DependencyProperty ItemWidthProperty =
-            DependencyProperty.Register("ItemWidth", typeof(double), typeof(VariableSizedWrapGrid),
+            DependencyProperty.Register("ItemWidth", typeof(Double), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(double.NaN, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         #endregion
 
         #region bool LatchIemSize
-        public bool LatchItemSize
+        public Boolean LatchItemSize
         {
-            get { return (bool)GetValue(LatchItemSizeProperty); }
+            get { return (Boolean)GetValue(LatchItemSizeProperty); }
             set { SetValue(LatchItemSizeProperty, value); }
         }
 
         public static readonly DependencyProperty LatchItemSizeProperty =
-            DependencyProperty.Register("LatchItemSize", typeof(bool), typeof(VariableSizedWrapGrid),
+            DependencyProperty.Register("LatchItemSize", typeof(Boolean), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         #endregion
 
         #region int MaximumRowsOrColumns
-        public int MaximumRowsOrColumns
+        public Int32 MaximumRowsOrColumns
         {
-            get { return (int)GetValue(MaximumRowsOrColumnsProperty); }
+            get { return (Int32)GetValue(MaximumRowsOrColumnsProperty); }
             set { SetValue(MaximumRowsOrColumnsProperty, value); }
         }
 
         public static readonly DependencyProperty MaximumRowsOrColumnsProperty =
-            DependencyProperty.Register("MaximumRowsOrColumns", typeof(int), typeof(VariableSizedWrapGrid),
+            DependencyProperty.Register("MaximumRowsOrColumns", typeof(Int32), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         #endregion
 
@@ -84,14 +84,14 @@ namespace Start9.Api.Objects.Controls
         #endregion
 
         #region bool StrictItemOrder
-        public bool StrictItemOrder
+        public Boolean StrictItemOrder
         {
-            get { return (bool)GetValue(StrictItemOrderProperty); }
+            get { return (Boolean)GetValue(StrictItemOrderProperty); }
             set { SetValue(StrictItemOrderProperty, value); }
         }
 
         public static readonly DependencyProperty StrictItemOrderProperty =
-            DependencyProperty.Register("StrictItemOrder", typeof(bool), typeof(VariableSizedWrapGrid),
+            DependencyProperty.Register("StrictItemOrder", typeof(Boolean), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure));
         #endregion
 
@@ -108,40 +108,40 @@ namespace Start9.Api.Objects.Controls
         #endregion
 
         #region int ColumnSpan
-        public static int GetColumnSpan(DependencyObject obj)
+        public static Int32 GetColumnSpan(DependencyObject obj)
         {
-            return (int)obj.GetValue(ColumnSpanProperty);
+            return (Int32)obj.GetValue(ColumnSpanProperty);
         }
 
-        public static void SetColumnSpan(DependencyObject obj, int value)
+        public static void SetColumnSpan(DependencyObject obj, Int32 value)
         {
             obj.SetValue(ColumnSpanProperty, value);
         }
 
         public static readonly DependencyProperty ColumnSpanProperty =
-            DependencyProperty.RegisterAttached("ColumnSpan", typeof(int), typeof(VariableSizedWrapGrid),
+            DependencyProperty.RegisterAttached("ColumnSpan", typeof(Int32), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.AffectsParentMeasure));
         #endregion
 
         #region int RowSpan
-        public static int GetRowSpan(DependencyObject obj)
+        public static Int32 GetRowSpan(DependencyObject obj)
         {
-            return (int)obj.GetValue(RowSpanProperty);
+            return (Int32)obj.GetValue(RowSpanProperty);
         }
 
-        public static void SetRowSpan(DependencyObject obj, int value)
+        public static void SetRowSpan(DependencyObject obj, Int32 value)
         {
             obj.SetValue(RowSpanProperty, value);
         }
 
         public static readonly DependencyProperty RowSpanProperty =
-            DependencyProperty.RegisterAttached("RowSpan", typeof(int), typeof(VariableSizedWrapGrid),
+            DependencyProperty.RegisterAttached("RowSpan", typeof(Int32), typeof(VariableSizedWrapGrid),
                 new FrameworkPropertyMetadata(1, FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.AffectsParentMeasure));
         #endregion
 
         private class PlotSorterVertical : IComparer<Rect>
         {
-            public int Compare(Rect x, Rect y)
+            public Int32 Compare(Rect x, Rect y)
             {
                 if (x.Left < y.Left)
                     return -1;
@@ -157,7 +157,7 @@ namespace Start9.Api.Objects.Controls
 
         private class PlotSorterHorizontal : IComparer<Rect>
         {
-            public int Compare(Rect x, Rect y)
+            public Int32 Compare(Rect x, Rect y)
             {
                 if (x.Top < y.Top)
                     return -1;
@@ -210,7 +210,7 @@ namespace Start9.Api.Objects.Controls
         }
 
         private Point PlaceElement(Size requiredSize, ref List<Rect> plots,
-            double itemWidth, double itemHeight)
+            Double itemWidth, Double itemHeight)
         {
             var location = new Point();
 
@@ -310,8 +310,8 @@ namespace Start9.Api.Objects.Controls
             return rect;
         }
 
-        double _itemHeight;
-        double _itemWidth;
+        Double _itemHeight;
+        Double _itemWidth;
 
         private ScrollViewer _owner;
         private Size _extent = new Size();
@@ -467,45 +467,45 @@ namespace Start9.Api.Objects.Controls
 
         #region IScrollInfo
         // This property is not intended for use in your code. It is exposed publicly to fulfill an interface contract (IScrollInfo). Setting this property has no effect.
-        public bool CanVerticallyScroll
+        public Boolean CanVerticallyScroll
         {
             get { return false; }
             set { }
         }
 
         // This property is not intended for use in your code. It is exposed publicly to fulfill an interface contract (IScrollInfo). Setting this property has no effect.
-        public bool CanHorizontallyScroll
+        public Boolean CanHorizontallyScroll
         {
             get { return false; }
             set { }
         }
 
-        public double ExtentWidth
+        public Double ExtentWidth
         {
             get { return _extent.Width; }
         }
 
-        public double ExtentHeight
+        public Double ExtentHeight
         {
             get { return _extent.Height; }
         }
 
-        public double ViewportWidth
+        public Double ViewportWidth
         {
             get { return _viewport.Width; }
         }
 
-        public double ViewportHeight
+        public Double ViewportHeight
         {
             get { return _viewport.Height; }
         }
 
-        public double HorizontalOffset
+        public Double HorizontalOffset
         {
             get { return _offset.X; }
         }
 
-        public double VerticalOffset
+        public Double VerticalOffset
         {
             get { return _offset.Y; }
         }
@@ -576,7 +576,7 @@ namespace Start9.Api.Objects.Controls
             LineRight();
         }
 
-        public void SetHorizontalOffset(double offset)
+        public void SetHorizontalOffset(Double offset)
         {
             offset = Math.Max(0, Math.Min(offset, ExtentWidth - ViewportWidth));
             if (offset != _offset.X)
@@ -590,7 +590,7 @@ namespace Start9.Api.Objects.Controls
             }
         }
 
-        public void SetVerticalOffset(double offset)
+        public void SetVerticalOffset(Double offset)
         {
             offset = Math.Max(0, Math.Min(offset, ExtentHeight - ViewportHeight));
             if (offset != _offset.Y)

@@ -29,21 +29,21 @@ namespace Start9.Api.DiskItems
                 List<DiskItem> items = new List<DiskItem>();
 
                 List<DiskItem> AllAppsAppDataItems = new List<DiskItem>();
-                foreach (string s in Directory.EnumerateFiles(Environment.ExpandEnvironmentVariables(@"%appdata%\Microsoft\Windows\Start Menu\Programs")))
+                foreach (var s in Directory.EnumerateFiles(Environment.ExpandEnvironmentVariables(@"%appdata%\Microsoft\Windows\Start Menu\Programs")))
                 {
                     AllAppsAppDataItems.Add(new DiskItem(s));
                 }
-                foreach (string s in Directory.EnumerateDirectories(Environment.ExpandEnvironmentVariables(@"%appdata%\Microsoft\Windows\Start Menu\Programs")))
+                foreach (var s in Directory.EnumerateDirectories(Environment.ExpandEnvironmentVariables(@"%appdata%\Microsoft\Windows\Start Menu\Programs")))
                 {
                     AllAppsAppDataItems.Add(new DiskItem(s));
                 }
 
                 List<DiskItem> AllAppsProgramDataItems = new List<DiskItem>();
-                foreach (string s in Directory.EnumerateFiles(Environment.ExpandEnvironmentVariables(@"%programdata%\Microsoft\Windows\Start Menu\Programs")))
+                foreach (var s in Directory.EnumerateFiles(Environment.ExpandEnvironmentVariables(@"%programdata%\Microsoft\Windows\Start Menu\Programs")))
                 {
                     AllAppsProgramDataItems.Add(new DiskItem(s));
                 }
-                foreach (string s in Directory.EnumerateDirectories(Environment.ExpandEnvironmentVariables(@"%programdata%\Microsoft\Windows\Start Menu\Programs")))
+                foreach (var s in Directory.EnumerateDirectories(Environment.ExpandEnvironmentVariables(@"%programdata%\Microsoft\Windows\Start Menu\Programs")))
                 {
                     AllAppsProgramDataItems.Add(new DiskItem(s));
                 }
@@ -52,7 +52,7 @@ namespace Start9.Api.DiskItems
                 List<DiskItem> AllAppsReorgItems = new List<DiskItem>();
                 foreach (DiskItem t in AllAppsAppDataItems)
                 {
-                    bool FolderIsDuplicate = false;
+                    var FolderIsDuplicate = false;
 
                     foreach (DiskItem v in AllAppsProgramDataItems)
                     {
@@ -63,12 +63,12 @@ namespace Start9.Api.DiskItems
                             if (((t.ItemType == DiskItemType.Directory) & (v.ItemType == DiskItemType.Directory)) && ((t.ItemPath.Substring(t.ItemPath.LastIndexOf(@"\"))) == (v.ItemPath.Substring(v.ItemPath.LastIndexOf(@"\")))))
                             {
                                 FolderIsDuplicate = true;
-                                foreach (string i in Directory.EnumerateDirectories(t.ItemPath))
+                                foreach (var i in Directory.EnumerateDirectories(t.ItemPath))
                                 {
                                     SubItemsList.Add(new DiskItem(i));
                                 }
 
-                                foreach (string j in Directory.EnumerateFiles(v.ItemPath))
+                                foreach (var j in Directory.EnumerateFiles(v.ItemPath))
                                 {
                                     SubItemsList.Add(new DiskItem(j));
                                 }
@@ -107,7 +107,7 @@ namespace Start9.Api.DiskItems
             }
         }
 
-        public string ItemName
+        public String ItemName
         {
             get
             {
@@ -125,24 +125,24 @@ namespace Start9.Api.DiskItems
         public static readonly DependencyProperty ItemNameProperty =
             DependencyProperty.Register("ItemName", typeof(string), typeof(DiskItem), new PropertyMetadata());*/
 
-        public bool Selected
+        public Boolean Selected
         {
-            get => (bool)GetValue(SelectedProperty);
+            get => (Boolean)GetValue(SelectedProperty);
             set => SetValue(SelectedProperty, value);
         }
 
         public static readonly DependencyProperty SelectedProperty =
-            DependencyProperty.Register("Selected", typeof(bool), typeof(DiskItem), new PropertyMetadata(false));
+            DependencyProperty.Register("Selected", typeof(Boolean), typeof(DiskItem), new PropertyMetadata(false));
 
-        public string ItemPath
+        public String ItemPath
         {
             get
             {
                 if (ItemType == DiskItemType.Shortcut)
                 {
-                    string raw = (string)GetValue(ItemPathProperty);
+                    var raw = (String)GetValue(ItemPathProperty);
 
-                    string targetPath = GetMsiShortcut(raw);
+                    var targetPath = GetMsiShortcut(raw);
 
                     if (targetPath == null)
                     {
@@ -163,28 +163,28 @@ namespace Start9.Api.DiskItems
                         return targetPath;
                     }
                 }
-                else return (string)GetValue(ItemPathProperty);
+                else return (String)GetValue(ItemPathProperty);
             }
             set => SetValue(ItemPathProperty, (value));
         }
 
         public static readonly DependencyProperty ItemPathProperty =
-            DependencyProperty.Register("ItemPath", typeof(string), typeof(DiskItem), new PropertyMetadata(""));
+            DependencyProperty.Register("ItemPath", typeof(String), typeof(DiskItem), new PropertyMetadata(""));
 
-        string GetInternetShortcut(string _rawPath)
+        String GetInternetShortcut(String _rawPath)
         {
             try
             {
-                string url = "";
+                var url = "";
 
                 using (TextReader reader = new StreamReader(_rawPath))
                 {
-                    string line = "";
+                    var line = "";
                     while ((line = reader.ReadLine()) != null)
                     {
                         if (line.StartsWith("URL="))
                         {
-                            string[] splitLine = line.Split('=');
+                            String[] splitLine = line.Split('=');
                             if (splitLine.Length > 0)
                             {
                                 url = splitLine[1];
@@ -201,7 +201,7 @@ namespace Start9.Api.DiskItems
             }
         }
 
-        string ResolveShortcut(string _rawPath)
+        String ResolveShortcut(String _rawPath)
         {
             // IWshRuntimeLibrary is in the COM library "Windows Script Host Object Model"
             IWshRuntimeLibrary.WshShell shell = new IWshRuntimeLibrary.WshShell();
@@ -218,16 +218,16 @@ namespace Start9.Api.DiskItems
             }
         }
 
-        string GetMsiShortcut(string _rawPath)
+        String GetMsiShortcut(String _rawPath)
         {
-            StringBuilder product = new StringBuilder(WinApi.MaxGuidLength + 1);
-            StringBuilder feature = new StringBuilder(WinApi.MaxFeatureLength + 1);
-            StringBuilder component = new StringBuilder(WinApi.MaxGuidLength + 1);
+            var product = new StringBuilder(WinApi.MaxGuidLength + 1);
+            var feature = new StringBuilder(WinApi.MaxFeatureLength + 1);
+            var component = new StringBuilder(WinApi.MaxGuidLength + 1);
 
             WinApi.MsiGetShortcutTarget(_rawPath, product, feature, component);
 
-            int pathLength = WinApi.MaxPathLength;
-            StringBuilder path = new StringBuilder(pathLength);
+            var pathLength = WinApi.MaxPathLength;
+            var path = new StringBuilder(pathLength);
 
             WinApi.InstallState installState = WinApi.MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
             if (installState == WinApi.InstallState.Local)
@@ -285,14 +285,14 @@ namespace Start9.Api.DiskItems
         public static readonly DependencyProperty ItemTypeProperty =
             DependencyProperty.Register("ItemType", typeof(DiskItemType), typeof(DiskItem), new PropertyMetadata(DiskItemType.Directory));
 
-        public string FriendlyItemType
+        public String FriendlyItemType
         {
-            get => (string)GetValue(FriendlyItemTypeProperty);
+            get => (String)GetValue(FriendlyItemTypeProperty);
             set => SetValue(FriendlyItemTypeProperty, value);
         }
 
         public static readonly DependencyProperty FriendlyItemTypeProperty =
-            DependencyProperty.Register("FriendlyItemType", typeof(string), typeof(DiskItem), new PropertyMetadata(""));
+            DependencyProperty.Register("FriendlyItemType", typeof(String), typeof(DiskItem), new PropertyMetadata(""));
 
         /*public ImageSource RealIcon
         {
@@ -310,11 +310,11 @@ namespace Start9.Api.DiskItems
                 ObservableCollection<DiskItem> items = new ObservableCollection<DiskItem>();
                 if (ItemType == DiskItemType.Directory)
                 {
-                    foreach (string s in Directory.EnumerateDirectories(ItemPath))
+                    foreach (var s in Directory.EnumerateDirectories(ItemPath))
                     {
                         items.Add(new DiskItem(s));
                     }
-                    foreach (string s in Directory.EnumerateFiles(ItemPath))
+                    foreach (var s in Directory.EnumerateFiles(ItemPath))
                     {
                         items.Add(new DiskItem(s));
                     }
@@ -328,7 +328,7 @@ namespace Start9.Api.DiskItems
 
         ShFileInfo _fileInfo = new ShFileInfo();
 
-        public DiskItem(string path)
+        public DiskItem(String path)
         {
             ItemPath = path;
             if (File.Exists(ItemPath))
@@ -411,18 +411,18 @@ namespace Start9.Api.DiskItems
 
     static class DiskItemToIconShared
     {
-        static Icon GetIconFromFilePath(string path, int size, uint flags)
+        static Icon GetIconFromFilePath(String path, Int32 size, UInt32 flags)
         {
             ShFileInfo shInfo = new ShFileInfo();
-            SHGetFileInfo(path, 0, ref shInfo, (uint)Marshal.SizeOf(shInfo), flags);
+            SHGetFileInfo(path, 0, ref shInfo, (UInt32)Marshal.SizeOf(shInfo), flags);
             System.Drawing.Icon entryIcon = System.Drawing.Icon.FromHandle(shInfo.hIcon);
             return entryIcon;
         }
 
-        public static ImageBrush GetImageBrush(object value, Type targetType, object parameter, CultureInfo culture)
+        public static ImageBrush GetImageBrush(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             DiskItem info = value as DiskItem;
-            int size = int.Parse(parameter.ToString());
+            var size = int.Parse(parameter.ToString());
             IconOverride over = null;
             foreach (IconOverride i in IconPref.FileIconOverrides)
             {
@@ -444,7 +444,7 @@ namespace Start9.Api.DiskItems
             }
             else if (info.ItemType != DiskItem.DiskItemType.App)
             {
-                uint flags = (0x00000000 | 0x100);
+                UInt32 flags = (0x00000000 | 0x100);
                 if (size <= 20)
                 {
                     flags = (0x00000001 | 0x100);
@@ -466,14 +466,14 @@ namespace Start9.Api.DiskItems
 
     public class DiskItemToIconImageBrushOrThumbnailConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             DiskItem info = value as DiskItem;
             ImageBrush returnValue = DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
 
-            bool isThumbnailable = false;
-            List<string> extensions = new List<string> { "png", "jpg", "bmp" };
-            foreach (string e in extensions)
+            var isThumbnailable = false;
+            List<String> extensions = new List<String> { "png", "jpg", "bmp" };
+            foreach (var e in extensions)
             {
                 if (Path.GetExtension(info.ItemPath).EndsWith(e))
                 {
@@ -497,7 +497,7 @@ namespace Start9.Api.DiskItems
             return returnValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
@@ -505,13 +505,13 @@ namespace Start9.Api.DiskItems
 
     public class DiskItemToIconImageBrushConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             DiskItem info = value as DiskItem;
             return DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public Object ConvertBack(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

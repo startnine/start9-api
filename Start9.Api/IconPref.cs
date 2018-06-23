@@ -13,15 +13,15 @@ namespace Start9.Api
     public static class IconPref
     {
         static XmlDocument prefDocument = new XmlDocument();
-        static string prefPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\IconPref.xml");
-        public static string iconsPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\IconOverrides");
+        static String prefPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\IconPref.xml");
+        public static String iconsPath = Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\IconOverrides");
 
         static IconPref()
         {
             if (!File.Exists(prefPath))
             {
                 //File.Create(prefPath);
-                File.WriteAllLines(prefPath, new List<string>()
+                File.WriteAllLines(prefPath, new List<String>()
                 {
                     "<?xml version=\"1.0\" encoding=\"utf-8\"?>",
                     "<icon>",
@@ -64,11 +64,11 @@ namespace Start9.Api
     {
         XmlNode target;
 
-        public string TargetName
+        public String TargetName
         {
             get
             {
-                string result = "";
+                var result = "";
                 if (target.Attributes["targetName"] != null)
                 {
                     result = target.Attributes["targetName"].Value;
@@ -82,11 +82,11 @@ namespace Start9.Api
             }
         }
 
-        public bool IsFullPath
+        public Boolean IsFullPath
         {
             get
             {
-                bool result = false;
+                var result = false;
                 if (target.Attributes["fullPath"] != null)
                 {
                     result = bool.Parse(target.Attributes["fullPath"].Value);
@@ -100,11 +100,11 @@ namespace Start9.Api
             }
         }
 
-        public string ReplacementName
+        public String ReplacementName
         {
             get
             {
-                string result = "";
+                var result = "";
                 if (target.Attributes["replacement"] != null)
                 {
                     result = target.Attributes["replacement"].Value;
