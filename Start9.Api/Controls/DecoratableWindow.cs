@@ -195,6 +195,11 @@ namespace Start9.Api.Controls
                 var helper = new WindowInteropHelper(_shadowWindow);
                 WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
             };
+
+            Closed += (sneder, args) =>
+            {
+                _shadowWindow.Close();
+            };
         }
 
         public void SyncShadowToWindow()
