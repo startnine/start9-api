@@ -23,13 +23,14 @@ using System.Windows.Interop;
 using static Start9.Api.SystemScaling;
 using AppInfo = Start9.Api.Appx.AppInfo;
 using System.Collections.ObjectModel;
+using Start9.Api.Controls;
 
 namespace FrontEndTest
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : PlexWindow
+    public partial class MainWindow : DecoratableWindow
     {
         [DllImport("dwmapi.dll")]
         static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
@@ -105,7 +106,7 @@ namespace FrontEndTest
                 AllowsTransparency = true,
                 Background = SystemContext.WindowGlassColor
             }.Show();
-            ResizeMode = PlexResizeMode.CanResize;
+            //ResizeMode = PlexResizeMode.CanResize;
             //AllowsTransparency = false;
             //Loaded += MainWindow_Loaded;
         }
@@ -345,7 +346,7 @@ namespace FrontEndTest
 
         private void ToggleButton_Click(Object sender, RoutedEventArgs e)
         {
-            Start9.Api.Plex.MessageBox.Show(this, "Yes, I'm working on these for some reason.\n\n...blame Fleccy :P", "This is a Plex MessageBox");
+            System.Windows.MessageBox.Show(this, "Yes, I'm working on these for some reason.\n\n...blame Fleccy :P", "This is a Plex MessageBox");
         }
 
         private void FavButton_Click(object sender, RoutedEventArgs e)

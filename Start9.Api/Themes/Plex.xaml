@@ -5,7 +5,7 @@
                     xmlns:controls="clr-namespace:Start9.Api.Controls"
                     xmlns:obj="clr-namespace:Start9.Api.Objects">
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Generic.xaml"/>
+        <!--ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Generic.xaml"/-->
         <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Colors/PlexBlue.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 
@@ -125,29 +125,6 @@
                             <SolidColorBrush Color="#01000000" />
                         </Rectangle.Fill>
                     </Rectangle>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <Style x:Key="ResizeGripThumb" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
-        <Setter Property="Width" Value="18" />
-        <Setter Property="Height" Value="18" />
-        <Setter Property="Margin" Value="2" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="VerticalAlignment" Value="Bottom" />
-        <Setter Property="Cursor" Value="SizeNWSE"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Thumb">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <ResizeGrip x:Name="PART_ResizeGrip" Style="{DynamicResource {x:Type ResizeGrip}}" Visibility="Visible"/>
-                        <Rectangle StrokeThickness="0">
-                            <Rectangle.Fill>
-                                <SolidColorBrush Color="#01000000" />
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

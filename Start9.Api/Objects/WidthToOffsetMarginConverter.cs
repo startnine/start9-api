@@ -232,4 +232,100 @@ namespace Start9.Api.Objects
             }
         }
     }
+
+    public class ThicknessToDoubleConverter : IValueConverter
+    {
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            Thickness val = (Thickness)value;
+            var param = parameter.ToString();
+            if (param == "Top")
+            {
+                return val.Top;
+            }
+            else if (param == "Right")
+            {
+                return val.Right;
+            }
+            else if (param == "Bottom")
+            {
+                return val.Bottom;
+            }
+            else
+            {
+                return val.Left;
+            }
+        }
+
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            var param = parameter.ToString();
+            if (param == "Top")
+            {
+                return (Double)(((Thickness)(value)).Top);
+            }
+            else if (param == "Right")
+            {
+                return (Double)(((Thickness)(value)).Right);
+            }
+            else if (param == "Bottom")
+            {
+                return (Double)(((Thickness)(value)).Bottom);
+            }
+            else
+            {
+                return (Double)(((Thickness)(value)).Left); //return new Thickness((double)value, 0, (double)value * -1, 0);
+            }
+        }
+    }
+
+    public class ShadowOffsetThicknessToDoubleConverter : IValueConverter
+    {
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            Thickness val = (Thickness)value;
+            var param = parameter.ToString();
+            if (param == "Top")
+            {
+                return val.Top;
+            }
+            else if (param == "Right")
+            {
+                return val.Right;
+            }
+            else if (param == "Bottom")
+            {
+                return val.Bottom;
+            }
+            else
+            {
+                return val.Left;
+            }
+        }
+
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            var param = parameter.ToString();
+            if (param == "Top")
+            {
+                return (Double)(((Thickness)(value)).Top);
+            }
+            else if (param == "Right")
+            {
+                return (Double)(((Thickness)(value)).Right);
+            }
+            else if (param == "Bottom")
+            {
+                return (Double)(((Thickness)(value)).Bottom);
+            }
+            else
+            {
+                return (Double)(((Thickness)(value)).Left); //return new Thickness((double)value, 0, (double)value * -1, 0);
+            }
+        }
+    }
 }
