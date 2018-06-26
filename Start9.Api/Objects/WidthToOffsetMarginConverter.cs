@@ -328,4 +328,26 @@ namespace Start9.Api.Objects
             }
         }
     }
+
+    public class WindowStateIsMaximizedToBoolConverter : IValueConverter
+    {
+        public Object Convert(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            if ((WindowState)value == WindowState.Maximized)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public Object ConvertBack(Object value, Type targetType,
+            Object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

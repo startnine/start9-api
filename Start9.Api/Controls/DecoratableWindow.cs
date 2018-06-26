@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Start9.Api.Objects;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -89,11 +90,25 @@ namespace Start9.Api.Controls
         public static readonly DependencyProperty ShadowStyleProperty =
             DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(DecoratableWindow), new PropertyMetadata());
 
-        readonly Window _shadowWindow = new Window()
+        /*public double ShadowOpacity
         {
-            WindowStyle = WindowStyle.None,
-            AllowsTransparency = true
-        };
+            get => (double)GetValue(ShadowOpacityProperty);
+            set => SetValue(ShadowOpacityProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowOpacityProperty =
+            DependencyProperty.Register("ShadowOpacity", typeof(double), typeof(DecoratableWindow), new PropertyMetadata((double)1));
+
+        public Visibility ShadowVisibility
+        {
+            get => (Visibility)GetValue(ShadowVisibilityProperty);
+            set => SetValue(ShadowVisibilityProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowVisibilityProperty =
+            DependencyProperty.Register("ShadowVisibility", typeof(Visibility), typeof(DecoratableWindow), new PropertyMetadata(Visibility.Visible));*/
+
+        readonly Window _shadowWindow;
 
         public object TitleBarContent
         {
@@ -126,6 +141,12 @@ namespace Start9.Api.Controls
             base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;
 
+            _shadowWindow = new Window()
+            {
+                WindowStyle = WindowStyle.None,
+                AllowsTransparency = true
+            };
+
             Binding shadowStyleBinding = new Binding()
             {
                 Source = this,
@@ -143,6 +164,31 @@ namespace Start9.Api.Controls
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
             BindingOperations.SetBinding(_shadowWindow, Window.TopmostProperty, shadowTopmostBinding);
+
+            Binding shadowIsEnabledBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("IsActive"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowTopmostBinding);
+
+            _shadowWindow.SourceInitialized += (sneder, args) =>
+            {
+                var helper = new WindowInteropHelper(_shadowWindow);
+                WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
+            };
+
+            Binding shadowIsHitTestVisibleBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("WindowState"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
+                Converter = new WindowStateIsMaximizedToBoolConverter()
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.IsHitTestVisibleProperty, shadowIsHitTestVisibleBinding);
 
             _shadowWindow.SourceInitialized += (sneder, args) =>
             {
