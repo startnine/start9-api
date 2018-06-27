@@ -144,7 +144,14 @@ namespace Start9.Api.Controls
             _shadowWindow = new Window()
             {
                 WindowStyle = WindowStyle.None,
-                AllowsTransparency = true
+                AllowsTransparency = true,
+                ShowInTaskbar = false
+            };
+
+            _shadowWindow.SourceInitialized += (sneder, args) =>
+            {
+                var helper = new WindowInteropHelper(_shadowWindow);
+                WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | WinApi.WsExToolwindow | WinApi.WsExTransparent);
             };
 
             Binding shadowStyleBinding = new Binding()
@@ -174,12 +181,6 @@ namespace Start9.Api.Controls
             };
             BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowTopmostBinding);
 
-            _shadowWindow.SourceInitialized += (sneder, args) =>
-            {
-                var helper = new WindowInteropHelper(_shadowWindow);
-                WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
-            };
-
             Binding shadowIsHitTestVisibleBinding = new Binding()
             {
                 Source = this,
@@ -189,12 +190,6 @@ namespace Start9.Api.Controls
                 Converter = new WindowStateIsMaximizedToBoolConverter()
             };
             BindingOperations.SetBinding(_shadowWindow, Window.IsHitTestVisibleProperty, shadowIsHitTestVisibleBinding);
-
-            _shadowWindow.SourceInitialized += (sneder, args) =>
-            {
-                var helper = new WindowInteropHelper(_shadowWindow);
-                WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | 0x00000080 | 0x00000020);
-            };
 
             Closed += (sneder, args) =>
             {
