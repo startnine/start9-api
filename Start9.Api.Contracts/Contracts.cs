@@ -1,7 +1,9 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.AddIn.Contract;
 using System.AddIn.Pipeline;
-using System.Collections;
 
 namespace Start9.Api.Contracts
 {
@@ -10,7 +12,7 @@ namespace Start9.Api.Contracts
     [AddInContract]
     public interface IModuleContract : IContract
     {
-        IConfigurationContract Configuration { get; }
+        IConfigurationContract Configuration { get; set; }
         IMessageContractContract MessageContract { get; }
         IReceiverContractContract ReceiverContract { get; }
         void Initialize(IHostContract host);
@@ -27,10 +29,8 @@ namespace Start9.Api.Contracts
 
     public interface IMessageEntryContract : IContract
     {
-        Type MessageObjectType { get; }
+        Type Type { get; }
         String FriendlyName { get; }
-        void MessageSentEventAdd(IMessageEventHandlerContract handler);
-        void MessageSentEventRemove(IMessageEventHandlerContract handler);
     }
 
     public interface IMessageContract : IContract
@@ -40,8 +40,7 @@ namespace Start9.Api.Contracts
     }
 
     #endregion
-
-
+    
     #region Receivers
 
     public interface IReceiverContractContract : IContract
@@ -51,7 +50,9 @@ namespace Start9.Api.Contracts
 
     public interface IReceiverEntryContract : IContract
     {
+        Type Type { get; }
         String FriendlyName { get; }
+        void SendMessage(IMessageContract mesage);
         void MessageReceivedEventAdd(IMessageEventHandlerContract handler);
         void MessageReceivedEventRemove(IMessageEventHandlerContract handler);
     }
@@ -67,7 +68,6 @@ namespace Start9.Api.Contracts
     }
 
     #endregion
-
 
     #region Configuration
 
@@ -91,5 +91,26 @@ namespace Start9.Api.Contracts
         IListContract<IModuleContract> GetModules();
         IConfigurationContract GetGlobalConfiguration();
     }
+
+    public interface IModuleAssemblyContract : IContract
+    {
+        String Name { get; }
+        String Description { get; }
+        String Publisher { get; }
+        Version Version { get; }
+        IListContract<IModuleInstanceContract> Instances { get; }
+        IConfigurationContract SavedConfiguration { get; }
+        IConfigurationContract CurrentConfiguration { get; }
+        IMessageContractContract MessageContract { get; }
+        IReceiverContractContract ReceiverContract { get; }
+        void Kill(IModuleInstanceContract instance);
+        void KillAll();
+        void Activate(Boolean initialize);
+    }
+
+    public interface IModuleInstanceContract : IContract
+    {
+        IModuleContract Instance { get; }
+        Int32 ProcessId { get; }
+    }
 }
-    
