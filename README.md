@@ -1,5 +1,5 @@
 # Start9 API ![Start9](https://startnine.github.io/assets/img/icon32.png)
-This is the home to the Start9 API, a way for module and application developers to integrate their application with Start9. Developers will be able to use this to create open, univeral modules for Start9 that support interoperability with Windows and other modules and open-ended customization with little restrictions, while still being secure. Application developers will be able to send metadata about their applications for module developers to take advantage of.
+This is the home to the Start9 API, a way for module and application developers to integrate their application with Start9. Developers will be able to use this to create open, universal modules for Start9 that support interoperability with Windows and other modules and open-ended customization with little restrictions, while still being secure. Application developers will be able to send metadata about their applications for module developers to take advantage of.
 
 ## Contributing and Conduct
 This project has adopted the code of conduct defined by the Contributor Covenant to clarify expected behavior in our community.
@@ -10,7 +10,7 @@ In addition, Please follow the [contributing guidelines](https://github.com/Star
 
 ## Dependencies and Frameworks
 - .NET Framework 4.0
-	- Official builds of Start9.Api are built with .NET Framework 4.0. However, you may want to retarget it to be able to access newer introduced in later versions of .NET. However, you may want to recompile any dependants to use the same framework version.
+	- Official builds of Start9.Api are built with .NET Framework 4.0. However, you may want to retarget it to be able to access newer introduced in later versions of .NET. However, you may want to recompile any dependents to use the same framework version.
 - WPF related assemblies (PresentationFramework, etc.)
 	- These assemblies make Start9 incompatible with .NET Core and other non-Microsoft .NET implementations. 
 - System.Windows.Forms
