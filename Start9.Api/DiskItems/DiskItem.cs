@@ -114,7 +114,7 @@ namespace Start9.Api.DiskItems
                 if (ItemType == DiskItemType.App)
                     return ItemAppInfo.DisplayName;
                 else if (ItemType == DiskItemType.Shortcut)
-                    return Path.GetFileName(ItemPath); //Temporary?
+                    return Path.GetFileName(ItemPath); //Temporary maybe?
                 else
                 {
                     /*if (Path.GetExtension(ItemPath).ToLower().EndsWith("exe"))
