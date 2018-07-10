@@ -111,13 +111,25 @@ namespace Start9.Api.DiskItems
         {
             get
             {
-                if ((ItemType == DiskItemType.Directory) | (ItemType == DiskItemType.File))
-                {
-                    return Path.GetFileName(ItemPath);
-                }
+                if (ItemType == DiskItemType.App)
+                    return ItemAppInfo.DisplayName;
+                else if (ItemType == DiskItemType.Shortcut)
+                    return Path.GetFileName(ItemPath); //Temporary?
                 else
                 {
-                    return ItemAppInfo.DisplayName;// "If you see this text, remind me to look into getting Apps' display names.";
+                    /*if (Path.GetExtension(ItemPath).ToLower().EndsWith("exe"))
+                        try
+                        {
+                            return new FileInfo(ItemPath).;
+                            return System.Reflection.Assembly.LoadFile(ItemPath).FullName;
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine(ex);
+                            return Path.GetFileName(ItemPath);
+                        }
+                    else*/
+                    return Path.GetFileName(ItemPath);
                 }
             }
         }/*
@@ -469,7 +481,7 @@ namespace Start9.Api.DiskItems
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
             DiskItem info = value as DiskItem;
-            ImageBrush returnValue = DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
+            ImageBrush returnValue = new ImageBrush();
 
             var isThumbnailable = false;
             List<String> extensions = new List<String> { "png", "jpg", "bmp" };
@@ -490,6 +502,19 @@ namespace Start9.Api.DiskItems
                 }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine("DISKITEM IS THUMBNAILABLE");
+                    Debug.WriteLine(ex);
+                }
+            }
+            else
+            {
+                try
+                {
+                    DiskItemToIconShared.GetImageBrush(value, targetType, parameter, culture);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("DISKITEM IS NOT THUMBNAILABLE");
                     Debug.WriteLine(ex);
                 }
             }
