@@ -32,57 +32,6 @@ namespace FrontEndTest
     /// </summary>
     public partial class MainWindow : DecoratableWindow
     {
-        [DllImport("dwmapi.dll")]
-        static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
-
-        [StructLayout(LayoutKind.Sequential)]
-        struct DWM_BLURBEHIND
-        {
-            public DWM_BB dwFlags;
-            public Boolean fEnable;
-            public IntPtr hRgnBlur;
-            public Boolean fTransitionOnMaximized;
-
-            public DWM_BLURBEHIND(Boolean enabled)
-            {
-                fEnable = enabled ? true : false;
-                hRgnBlur = IntPtr.Zero;
-                fTransitionOnMaximized = false;
-                dwFlags = DWM_BB.Enable;
-            }
-
-            public System.Drawing.Region Region
-            {
-                get { return System.Drawing.Region.FromHrgn(hRgnBlur); }
-            }
-
-            public Boolean TransitionOnMaximized
-            {
-                get { return fTransitionOnMaximized != false; }
-                set
-                {
-                    fTransitionOnMaximized = value ? true : false;
-                    dwFlags |= DWM_BB.TransitionMaximized;
-                }
-            }
-
-            public void SetRegion(System.Drawing.Graphics graphics, System.Drawing.Region region)
-            {
-                hRgnBlur = region.GetHrgn(graphics);
-                dwFlags |= DWM_BB.BlurRegion;
-            }
-        }
-
-        [Flags]
-        enum DWM_BB
-        {
-            Enable = 1,
-            BlurRegion = 2,
-            TransitionMaximized = 4
-        }
-
-        IntPtr helper;
-
         public ObservableCollection<DiskItem> DiskItems
         {
             get => (ObservableCollection<DiskItem>)GetValue(DiskItemsProperty);
@@ -95,20 +44,7 @@ namespace FrontEndTest
         public MainWindow()
         {
             InitializeComponent();
-            new Window()
-            {
-                Width = 512,
-                Height = 512,
-                Left = 100,
-                Top = 100,
-                Topmost = true,
-                WindowStyle = WindowStyle.None,
-                AllowsTransparency = true,
-                Background = SystemContext.WindowGlassColor
-            }.Show();
-            //ResizeMode = PlexResizeMode.CanResize;
-            //AllowsTransparency = false;
-            //Loaded += MainWindow_Loaded;
+            Loaded += MainWindow_Loaded;
         }
 
         /*protected override void OnSourceInitialized(EventArgs e)
@@ -123,13 +59,12 @@ namespace FrontEndTest
 
         private void MainWindow_Loaded(Object sender, RoutedEventArgs e)
         {
-            DWM_BLURBEHIND blur = new DWM_BLURBEHIND()
-            {
-                dwFlags = DWM_BB.Enable,
-                fEnable = true,
-                hRgnBlur = IntPtr.Zero
-            };
-            DwmEnableBlurBehindWindow(helper, ref blur);
+            DiskItem picturesItem = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures"));
+            TestTreeView.ItemsSource = picturesItem.SubItems;
+        }
+
+        private void zMainWindow_Loaded(Object sender, RoutedEventArgs e)
+        {
             DiskItem picturesItem = new DiskItem(Environment.ExpandEnvironmentVariables(@"%userprofile%\Pictures"));
             TestTreeView.ItemsSource = picturesItem.SubItems;
             foreach (DiskItem d in picturesItem.SubItems)

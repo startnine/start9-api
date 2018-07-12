@@ -11,7 +11,8 @@
         xmlns:api="clr-namespace:Start9.Api;assembly=Start9.Api"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
-        Title="MainWindow" Width="640" Height="350" BorderThickness="0,75,0,0"><!--Style="{DynamicResource PlexWindowStyle}" TitleBarHeight="75">
+        Title="MainWindow" Width="640" Height="350" BorderThickness="0,75,0,0">
+    <!--Style="{DynamicResource PlexWindowStyle}" TitleBarHeight="75">
     <plex:PlexWindow.Background>
         <SolidColorBrush Opacity="0" Color="Transparent"/>
     </plex:PlexWindow.Background-->
@@ -29,24 +30,20 @@
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
             <obj:WidthToHalfWidthConverter x:Key="WidthToHalfWidthConverter"/>
 
-            <DataTemplate x:Key="DiskItemTemplate" DataType="{x:Type disk:DiskItem}">
-                <TreeViewItem ItemsSource="{Binding SubItems}" ItemTemplate="{DynamicResource DiskItemTemplate}">
-                    <TreeViewItem.Header>
-                        <DockPanel Margin="0,2">
-                            <Canvas Width="16" Height="16" DockPanel.Dock="Left">
-                                <Canvas.Background>
-                                    <Binding ConverterParameter="16">
-                                        <Binding.Converter>
-                                            <disk:DiskItemToIconImageBrushConverter/>
-                                        </Binding.Converter>
-                                    </Binding>
-                                </Canvas.Background>
-                            </Canvas>
-                            <TextBlock Text="{Binding ItemName}"/>
-                        </DockPanel>
-                    </TreeViewItem.Header>
-                </TreeViewItem>
-            </DataTemplate>
+            <HierarchicalDataTemplate x:Key="DiskItemTemplate" DataType="{x:Type disk:DiskItem}" ItemsSource="{Binding SubItems}">
+                <DockPanel Margin="0,2">
+                    <Canvas Width="16" Height="16" DockPanel.Dock="Left" Margin="0,0,8,0">
+                            <Canvas.Background>
+                                <Binding ConverterParameter="16">
+                                    <Binding.Converter>
+                                        <disk:DiskItemToIconImageBrushConverter/>
+                                    </Binding.Converter>
+                                </Binding>
+                            </Canvas.Background>
+                        </Canvas>
+                    <TextBlock Text="{Binding ItemName}" Foreground="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=TreeView}}"/>
+                </DockPanel>
+            </HierarchicalDataTemplate>
 
             <QuinticEase x:Key="TileScalingEase" EasingMode="EaseOut"/>
 
@@ -309,82 +306,82 @@
         </Grid>
     </plex:PlexWindow.ToolBarContent-->
     <!--plex:PlexWindow.Content-->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <ToggleButton x:Name="ShowHideRevealToggleButton" Visibility="Collapsed">Show/Hide Reveal Demo</ToggleButton>
-        <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Grid.Column="0"/>
-            <Grid Grid.Column="1">
-                <ListView ItemsSource="{Binding DiskItems}">
-                    <ListView.Template>
-                        <ControlTemplate>
-                            <WrapPanel IsItemsHost="True"/>
-                        </ControlTemplate>
-                    </ListView.Template>
-                    <ListView.ItemTemplate>
-                        <DataTemplate DataType="{x:Type disk:DiskItem}">
+        <TreeView x:Name="TestTreeView" ItemTemplate="{DynamicResource DiskItemTemplate}" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" Grid.ColumnSpan="3"/>
+        <Grid Grid.Column="1">
+            <ListView ItemsSource="{Binding DiskItems}">
+                <ListView.Template>
+                    <ControlTemplate>
+                        <WrapPanel IsItemsHost="True"/>
+                    </ControlTemplate>
+                </ListView.Template>
+                <ListView.ItemTemplate>
+                    <DataTemplate DataType="{x:Type disk:DiskItem}">
+                        <Grid>
+                            <apictrl:IconButton Style="{DynamicResource LargeTileStyle}" Content="{Binding ItemName}">
+                                <apictrl:IconButton.Background>
+                                    <SolidColorBrush Color="{Binding ItemAppInfo.Color}"/>
+                                </apictrl:IconButton.Background>
+                                <apictrl:IconButton.Icon>
+                                    <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <Canvas Width="48" Height="48">
+                                            <Canvas.Background>
+                                                <Binding ConverterParameter="48">
+                                                    <Binding.Converter>
+                                                        <disk:DiskItemToIconImageBrushConverter/>
+                                                    </Binding.Converter>
+                                                </Binding>
+                                            </Canvas.Background>
+                                        </Canvas>
+                                    </Border>
+                                </apictrl:IconButton.Icon>
+                            </apictrl:IconButton>
                             <Grid>
-                                <apictrl:IconButton Style="{DynamicResource LargeTileStyle}" Content="{Binding ItemName}">
-                                    <apictrl:IconButton.Background>
-                                        <SolidColorBrush Color="{Binding ItemAppInfo.Color}"/>
-                                    </apictrl:IconButton.Background>
-                                    <apictrl:IconButton.Icon>
-                                        <Border BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Canvas Width="48" Height="48">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <ListView ItemsSource="{Binding ItemAppInfo.LiveText}" Grid.Column="0" Foreground="White">
+                                    <ListView.Template>
+                                        <ControlTemplate TargetType="ListView">
+                                            <StackPanel IsItemsHost="True" Orientation="Vertical"/>
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="string">
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <Binding/>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                                <ListView ItemsSource="{Binding ItemAppInfo.LiveImages}" Grid.Column="1">
+                                    <ListView.Template>
+                                        <ControlTemplate TargetType="ListView">
+                                            <WrapPanel IsItemsHost="True"/>
+                                        </ControlTemplate>
+                                    </ListView.Template>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate DataType="ImageBrush">
+                                            <Canvas Width="{Binding ImageSource.Width}" Height="{Binding ImageSource.Height}">
                                                 <Canvas.Background>
-                                                    <Binding ConverterParameter="48">
-                                                        <Binding.Converter>
-                                                            <disk:DiskItemToIconImageBrushConverter/>
-                                                        </Binding.Converter>
-                                                    </Binding>
+                                                    <ImageBrush ImageSource="{Binding ImageSource}"/>
                                                 </Canvas.Background>
                                             </Canvas>
-                                        </Border>
-                                    </apictrl:IconButton.Icon>
-                                </apictrl:IconButton>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <ListView ItemsSource="{Binding ItemAppInfo.LiveText}" Grid.Column="0" Foreground="White">
-                                        <ListView.Template>
-                                            <ControlTemplate TargetType="ListView">
-                                                <StackPanel IsItemsHost="True" Orientation="Vertical"/>
-                                            </ControlTemplate>
-                                        </ListView.Template>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate DataType="string">
-                                                <TextBlock>
-                                                    <TextBlock.Text>
-                                                        <Binding/>
-                                                    </TextBlock.Text>
-                                                </TextBlock>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                    <ListView ItemsSource="{Binding ItemAppInfo.LiveImages}" Grid.Column="1">
-                                        <ListView.Template>
-                                            <ControlTemplate TargetType="ListView">
-                                                <WrapPanel IsItemsHost="True"/>
-                                            </ControlTemplate>
-                                        </ListView.Template>
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate DataType="ImageBrush">
-                                                <Canvas Width="{Binding ImageSource.Width}" Height="{Binding ImageSource.Height}">
-                                                    <Canvas.Background>
-                                                        <ImageBrush ImageSource="{Binding ImageSource}"/>
-                                                    </Canvas.Background>
-                                                </Canvas>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
                             </Grid>
-                            <!--apictrl:IconButton.Content>
+                        </Grid>
+                        <!--apictrl:IconButton.Content>
                                     <Grid>
                                         <ContentControl Content="{Binding ItemName}"/>
                                         <ListView x:Name="ImagesListView"/>
@@ -392,100 +389,100 @@
                                     </Grid>
                                 </apictrl:IconButton.Content>
                             </apictrl:IconButton-->
-                            <!--DataTemplate.Triggers-->
-                            <!--EventTrigger RoutedEvent="NotificationReceived">
+                        <!--DataTemplate.Triggers-->
+                        <!--EventTrigger RoutedEvent="NotificationReceived">
                                     <Setter TargetName="ImagesListView"  Property="ItemsSource" Value="NewNotification.Images"/>
                                 </EventTrigger-->
-                            <!--/DataTemplate.Triggers-->
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-            <!--TreeView.ItemTemplate>
-                </TreeView.ItemTemplate-->
-            <Grid HorizontalAlignment="Right" Width="256" Height="256" VerticalAlignment="Bottom" Margin="64" Background="Black" Grid.ColumnSpan="5" Visibility="{Binding Path=IsChecked, Source={x:Reference ShowHideRevealToggleButton}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                <Canvas x:Name="RevealDemoSizingAid"/>
-                <apictrl:Reveal HoverWidth="1024" HoverHeight="1024">
-                    <apictrl:Reveal.Hover>
-                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                            <RadialGradientBrush.GradientStops>
-                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
-                                <GradientStop Offset="1" Color="Transparent"/>
-                            </RadialGradientBrush.GradientStops>
-                        </RadialGradientBrush>
-                    </apictrl:Reveal.Hover>
-                    <apictrl:Reveal.OpacityMask>
-                        <VisualBrush>
-                            <VisualBrush.Visual>
-                                <Border Width="{Binding ActualWidth, Source={x:Reference RevealDemoSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference RevealDemoSizingAid}}" BorderThickness="5" BorderBrush="Black" Background="Transparent"/>
-                            </VisualBrush.Visual>
-                        </VisualBrush>
-                    </apictrl:Reveal.OpacityMask>
-                </apictrl:Reveal>
-                <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White">Here, have a Fluent Reveal demo.</TextBlock>
-            </Grid>
-            <Button Grid.Column="2" VerticalAlignment="Top" Content="Right-click me :3">
-                <Button.ContextMenu>
-                    <apictrl:TouchableContextMenu>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <Separator/>
-                        <MenuItem Header="Sub-item Test">
-                            <MenuItem Header="Test"/>
-                            <MenuItem Header="Test"/>
-                            <MenuItem Header="Test"/>
-                        </MenuItem>
-                        <Separator/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                        <MenuItem Header="Test"/>
-                    </apictrl:TouchableContextMenu>
-                </Button.ContextMenu>
-            </Button>
+                        <!--/DataTemplate.Triggers-->
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
+        <!--TreeView.ItemTemplate>
+                </TreeView.ItemTemplate-->
+        <Grid HorizontalAlignment="Right" Width="256" Height="256" VerticalAlignment="Bottom" Margin="64" Background="Black" Grid.ColumnSpan="5">
+            <Canvas x:Name="RevealDemoSizingAid"/>
+            <apictrl:Reveal HoverWidth="1024" HoverHeight="1024">
+                <apictrl:Reveal.Hover>
+                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                        <RadialGradientBrush.GradientStops>
+                            <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                            <GradientStop Offset="1" Color="Transparent"/>
+                        </RadialGradientBrush.GradientStops>
+                    </RadialGradientBrush>
+                </apictrl:Reveal.Hover>
+                <apictrl:Reveal.OpacityMask>
+                    <VisualBrush>
+                        <VisualBrush.Visual>
+                            <Border Width="{Binding ActualWidth, Source={x:Reference RevealDemoSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference RevealDemoSizingAid}}" BorderThickness="5" BorderBrush="Black" Background="Transparent"/>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </apictrl:Reveal.OpacityMask>
+            </apictrl:Reveal>
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Foreground="White">Here, have a Fluent Reveal demo.</TextBlock>
+        </Grid>
+        <Button Grid.Column="2" VerticalAlignment="Top" Content="Right-click me :3">
+            <Button.ContextMenu>
+                <apictrl:TouchableContextMenu>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <Separator/>
+                    <MenuItem Header="Sub-item Test">
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                        <MenuItem Header="Test"/>
+                    </MenuItem>
+                    <Separator/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                    <MenuItem Header="Test"/>
+                </apictrl:TouchableContextMenu>
+            </Button.ContextMenu>
+        </Button>
+    </Grid>
     <!--/plex:PlexWindow.Content-->
     <!--plex:PlexWindow.Content-->
     <!--Grid>

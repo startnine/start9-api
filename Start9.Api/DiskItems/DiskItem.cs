@@ -456,18 +456,25 @@ namespace Start9.Api.DiskItems
             }
             else if (info.ItemType != DiskItem.DiskItemType.App)
             {
-                UInt32 flags = (0x00000000 | 0x100);
-                if (size <= 20)
+                if ((File.Exists(info.ItemPath)) || (Directory.Exists(info.ItemPath)))
                 {
-                    flags = (0x00000001 | 0x100);
+                    UInt32 flags = (0x00000000 | 0x100);
+                    if (size <= 20)
+                    {
+                        flags = (0x00000001 | 0x100);
+                    }
+                    Icon target = GetIconFromFilePath(info.ItemPath, size, flags);
+                    System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
+                    target.Handle,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(RealPixelsToWpfUnits(size)), System.Convert.ToInt32(RealPixelsToWpfUnits(size)))
+                    );
+                    return new ImageBrush(entryIconImageSource);
                 }
-                Icon target = GetIconFromFilePath(info.ItemPath, size, flags);
-                System.Windows.Media.ImageSource entryIconImageSource = Imaging.CreateBitmapSourceFromHIcon(
-                target.Handle,
-                Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(System.Convert.ToInt32(RealPixelsToWpfUnits(size)), System.Convert.ToInt32(RealPixelsToWpfUnits(size)))
-                );
-                return new ImageBrush(entryIconImageSource);
+                else
+                {
+                    return new ImageBrush();
+                }
             }
             else
             {
