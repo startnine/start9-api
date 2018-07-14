@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start9.Api", "Start9.Api.Contracts\Start9.Api.csproj", "{68476FEB-BDCB-4EB2-A26C-B5281F4968D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Start9.Api", "Start9.Api\Start9.Api.csproj", "{68476FEB-BDCB-4EB2-A26C-B5281F4968D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
