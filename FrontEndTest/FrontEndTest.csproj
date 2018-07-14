@@ -89,11 +89,5 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Start9.Api\Start9.Api.csproj">
-      <Project>{3fb2196c-bc3a-4875-bdb7-d417f8cba809}</Project>
-      <Name>Start9.Api</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

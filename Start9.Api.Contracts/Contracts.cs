@@ -5,7 +5,7 @@ using System.Text;
 using System.AddIn.Contract;
 using System.AddIn.Pipeline;
 
-namespace Start9.Api.Contracts
+namespace Start9.Api
 {
     #region Modules
 
