@@ -82,8 +82,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\IConfigurationAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IConfigurationContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IConfigurationEntryAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IConfigurationEntryContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IConfigurationEntryViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IConfigurationViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IHostAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IHostContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IHostViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageContractContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageContractViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageEntryAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageEntryContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageEntryViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageEventHandlerContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageEventHandlerViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IMessageViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleAssemblyAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleAssemblyContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleAssemblyViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleInstanceAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleInstanceContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleInstanceViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IModuleViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverContractContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverContractViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverEntryAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverEntryContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\IReceiverEntryViewToContractAddInAdapter.g.cs" />
+    <Compile Include="Adapters\MessageReceivedEventArgsAddInAdapter.g.cs" />
+    <Compile Include="Adapters\MessageReceivedEventArgsContractToViewAddInAdapter.g.cs" />
+    <Compile Include="Adapters\MessageReceivedEventArgsViewToContractAddInAdapter.g.cs" />
     <Compile Include="Contracts.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\IConfiguration.g.cs" />
+    <Compile Include="Views\IConfigurationEntry.g.cs" />
+    <Compile Include="Views\IHost.g.cs" />
+    <Compile Include="Views\IMessage.g.cs" />
+    <Compile Include="Views\IMessageContract.g.cs" />
+    <Compile Include="Views\IMessageEntry.g.cs" />
+    <Compile Include="Views\IModule.g.cs" />
+    <Compile Include="Views\IModuleAssembly.g.cs" />
+    <Compile Include="Views\IModuleInstance.g.cs" />
+    <Compile Include="Views\IReceiverContract.g.cs" />
+    <Compile Include="Views\IReceiverEntry.g.cs" />
+    <Compile Include="Views\MessageReceivedEventArgs.g.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
@@ -92,6 +142,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
