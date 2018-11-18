@@ -9,9 +9,10 @@ In addition, Please follow the [contributing guidelines](https://github.com/Star
 
 
 ## Dependencies and Frameworks
-- .NET Framework 4.0
-	- Official builds of Start9.Api are built with .NET Framework 4.0. However, you may want to retarget it to be able to access newer introduced in later versions of .NET. However, you may want to recompile any dependents to use the same framework version.
+- [.NET Framework 4.7](https://www.microsoft.com/net/download/dotnet-framework-runtime/net47)
+	- Official builds of Start9 are built with .NET Framework 4.7. However, you may want to retarget it to be able to access newer features and load in modules compiled for later versions of .NET.
 - WPF related assemblies (PresentationFramework, etc.)
+	- These assemblies make Start9 incompatible with .NET Core and other non-Microsoft .NET implementations. 
 	- These assemblies make Start9 incompatible with .NET Core and other non-Microsoft .NET implementations. 
 - System.Windows.Forms
 	- This is used for abstractions like Screen and Mouse. 
