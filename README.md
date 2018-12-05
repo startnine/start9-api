@@ -22,7 +22,7 @@ In addition, Please follow the [contributing guidelines](https://github.com/Star
 - Fluent.Ribbon
 	- ControlsEx is a dependency of this.
 
-Other, smaller dependencies can be seen in the [csproj file for the project](https://github.com/StartNine/Start9.Host/blob/master/Start9/Start9.csproj#L36). 
+Other, smaller dependencies can be seen in the [csproj file for the project](https://github.com/StartNine/start9-api/blob/master/Start9.Api/Start9.ModuleApi.csproj#L33). 
 
 ---
 Interested? Join our Discord: [![Discord](https://img.shields.io/discord/321793250602254336.svg?style=flat-square&colorB=7289DA)](https://discord.gg/6cpvxBS)
